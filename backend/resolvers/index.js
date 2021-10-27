@@ -17,7 +17,12 @@ const resolvers = {
           data: card,
         },
       });
-      return card;
+      return {
+        code: "200",
+        success: true,
+        message: "Card was successfully created",
+        card,
+      };
     },
   },
   Subscription: {
