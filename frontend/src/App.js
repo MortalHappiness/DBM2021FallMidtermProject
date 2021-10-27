@@ -1,30 +1,9 @@
 import "./App.css";
 import { useEffect } from "react";
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
-const GET_CARDS = gql`
-  query Query {
-    cards {
-      id
-      title
-      content
-    }
-  }
-`;
-
-const CARD_SUBSCRIPTION = gql`
-  subscription Subscription {
-    card {
-      mutation
-      data {
-        id
-        title
-        content
-      }
-    }
-  }
-`;
+import { GET_CARDS, CARD_SUBSCRIPTION } from "./graphql";
 
 function App() {
   const { loading, error, data, subscribeToMore } = useQuery(GET_CARDS);

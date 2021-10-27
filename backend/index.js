@@ -7,6 +7,7 @@ const { ApolloServer } = require("apollo-server-express");
 const { PubSub } = require("graphql-subscriptions");
 const resolvers = require("./resolvers");
 const typeDefs = require("./typeDefs");
+const db = require("./db");
 
 (async function () {
   const PORT = 4000;
@@ -20,6 +21,7 @@ const typeDefs = require("./typeDefs");
     schema,
     context: {
       pubsub,
+      db,
     },
     plugins: [
       {
