@@ -1,18 +1,38 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Book {
+  type Card {
+    id: Int
     title: String
-    author: String
+    content: String
+  }
+
+  input CreateCardInput {
+    title: String!
+    content: String!
+  }
+
+  enum MutationType {
+    CREATED
+    UPDATED
+    DELETED
+  }
+
+  type CardSubscriptionPayload {
+    mutation: MutationType!
+    data: Card!
   }
 
   type Query {
-    books: [Book]
-    currentNumber: Int
+    cards: [Card!]!
+  }
+
+  type Mutation {
+    createCard(data: CreateCardInput!): Card!
   }
 
   type Subscription {
-    numberIncremented: Int
+    card: CardSubscriptionPayload!
   }
 `;
 

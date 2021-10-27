@@ -1,22 +1,30 @@
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
+const db = require("./db");
 
 const resolvers = {
   Query: {
-    books: () => books,
+    cards: () => db.cards,
+  },
+  Mutation: {
+    createCard(parent, args, context, info) {
+      const { data: card } = args;
+      const { pubsub } = context;
+
+      card.id = db.cards.length;
+      db.cards.push(card);
+      pubsub.publish("CARD", {
+        card: {
+          mutation: "CREATED",
+          data: card,
+        },
+      });
+      return card;
+    },
   },
   Subscription: {
-    numberIncremented: {
-      subscribe: (parent, args, context, info) => {
-        return context.pubsub.asyncIterator(["NUMBER_INCREMENTED"]);
+    card: {
+      subscribe(parent, args, context, info) {
+        const { pubsub } = context;
+        return pubsub.asyncIterator(["CARD"]);
       },
     },
   },

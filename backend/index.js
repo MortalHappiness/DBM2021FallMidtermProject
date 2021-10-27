@@ -18,6 +18,9 @@ const typeDefs = require("./typeDefs");
 
   const server = new ApolloServer({
     schema,
+    context: {
+      pubsub,
+    },
     plugins: [
       {
         async serverWillStart() {
@@ -51,12 +54,4 @@ const typeDefs = require("./typeDefs");
   httpServer.listen(PORT, () =>
     console.log(`Server is now running on http://localhost:${PORT}/graphql`)
   );
-
-  let currentNumber = 0;
-  function incrementNumber() {
-    currentNumber++;
-    pubsub.publish("NUMBER_INCREMENTED", { numberIncremented: currentNumber });
-    setTimeout(incrementNumber, 1000);
-  }
-  incrementNumber();
 })();
