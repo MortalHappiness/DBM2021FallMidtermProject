@@ -1,5 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { useEffect } from "react";
 
 import { useQuery, gql } from "@apollo/client";
 
@@ -13,12 +13,37 @@ const GET_CARDS = gql`
   }
 `;
 
+const CARD_SUBSCRIPTION = gql`
+  subscription Subscription {
+    card {
+      mutation
+      data {
+        id
+        title
+        content
+      }
+    }
+  }
+`;
+
 function App() {
-  const { loading, error, data } = useQuery(GET_CARDS);
+  const { loading, error, data, subscribeToMore } = useQuery(GET_CARDS);
+  useEffect(() => {
+    try {
+      subscribeToMore({
+        document: CARD_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+          const newCard = subscriptionData.data;
+          return { ...prev, cards: [...prev.cards, newCard.card.data] };
+        },
+      });
+    } catch (e) {}
+  }, [subscribeToMore]);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  console.log(data);
   return (
     <div className="App">
       {data.cards.map((card) => (
