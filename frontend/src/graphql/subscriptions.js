@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const CARD_SUBSCRIPTION = gql`
-  subscription Subscription {
+  subscription CardSubscription {
     card {
       mutation
       data {

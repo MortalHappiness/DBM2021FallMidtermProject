@@ -6,7 +6,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createCard(data: CreateCardInput!): CreateCardMutationResponse!
+    createCard(data: CreateCardInput!): CardMutationResponse!
+    deleteCard(id: ID!): CardMutationResponse!
   }
 
   type Subscription {
@@ -14,7 +15,7 @@ const typeDefs = gql`
   }
 
   type Card {
-    id: Int
+    id: ID
     title: String
     content: String
   }
@@ -30,7 +31,7 @@ const typeDefs = gql`
     message: String!
   }
 
-  type CreateCardMutationResponse implements MutationResponse {
+  type CardMutationResponse implements MutationResponse {
     code: String!
     success: Boolean!
     message: String!

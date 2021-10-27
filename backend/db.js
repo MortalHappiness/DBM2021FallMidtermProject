@@ -1,11 +1,11 @@
 const cards = [
   {
-    id: 0,
+    id: "0",
     title: "Hi",
     content: "Hello world",
   },
   {
-    id: 1,
+    id: "1",
     title: "ABC",
     content: "Hello ABC",
   },
