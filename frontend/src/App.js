@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+
+import { useQuery, gql } from "@apollo/client";
+
+const GET_CARDS = gql`
+  query Query {
+    cards {
+      id
+      title
+      content
+    }
+  }
+`;
 
 function App() {
+  const { loading, error, data } = useQuery(GET_CARDS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  console.log(data);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data.cards.map((card) => (
+        <ul key={card.id}>
+          <li>{`Title: ${card.title}`}</li>
+          <li>{`Content: ${card.content}`}</li>
+        </ul>
+      ))}
     </div>
   );
 }
