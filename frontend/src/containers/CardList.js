@@ -24,7 +24,10 @@ export default function CardList() {
           if (newCard.mutation === "CREATED") {
             return update(prev, { cards: { $push: [newCard.data] } });
           } else if (newCard.mutation === "UPDATED") {
-            return prev;
+            const idx = prev.cards.findIndex(
+              (card) => card.id === newCard.data.id
+            );
+            return update(prev, { cards: { [idx]: { $merge: newCard.data } } });
           } else {
             // DELETED
             const idx = prev.cards.findIndex(

@@ -18,13 +18,53 @@ const Mutation = {
       card,
     };
   },
+  updateCard(parent, args, context, info) {
+    const { id, data } = args;
+    const { pubsub, db } = context;
+
+    const card = db.cards.find((card) => card.id === id);
+
+    if (!card) {
+      return {
+        code: "400",
+        success: false,
+        message: "Card not found",
+        card: null,
+      };
+    }
+
+    if (data.title) {
+      card.title = data.title;
+    }
+    if (data.content) {
+      card.content = data.content;
+    }
+
+    pubsub.publish("CARD", {
+      card: {
+        mutation: "UPDATED",
+        data: card,
+      },
+    });
+    return {
+      code: "200",
+      success: true,
+      message: "Card was successfully updated",
+      card,
+    };
+  },
   deleteCard(parent, args, context, info) {
     const { id } = args;
     const { pubsub, db } = context;
 
     const idx = db.cards.findIndex((card) => card.id === id);
     if (idx === -1) {
-      throw new Error("Card not found");
+      return {
+        code: "400",
+        success: false,
+        message: "Card not found",
+        card: null,
+      };
     }
     const [card] = db.cards.splice(idx, 1);
 

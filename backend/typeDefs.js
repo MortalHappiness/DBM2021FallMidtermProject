@@ -7,6 +7,7 @@ const typeDefs = gql`
 
   type Mutation {
     createCard(data: CreateCardInput!): CardMutationResponse!
+    updateCard(id: ID!, data: UpdateCardInput!): CardMutationResponse!
     deleteCard(id: ID!): CardMutationResponse!
   }
 
@@ -23,6 +24,11 @@ const typeDefs = gql`
   input CreateCardInput {
     title: String!
     content: String!
+  }
+
+  input UpdateCardInput {
+    title: String
+    content: String
   }
 
   interface MutationResponse {
