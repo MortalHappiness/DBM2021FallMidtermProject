@@ -34,7 +34,6 @@ export default function CardUpdateForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
     updateCard({
       variables: {
         id: input.id,
