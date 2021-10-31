@@ -13,7 +13,7 @@ Midterm project for "Database Management", 2021 Fall
 In the root directory, simply run:
 
 ```bash
-$ yarn
+$ yarn i
 ```
 
 ### Database Setup
@@ -39,6 +39,7 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/dbm2021fall?schema=p
 Run the following command:
 
 ```bash
+$ cd backend/
 $ npx prisma migrate dev
 ```
 
