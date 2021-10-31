@@ -20,6 +20,7 @@ Change directory into `backend/` folder.
 
 ```
 cd backend/
+yarn install
 ```
 
 Write the following content into `.env` file.
@@ -46,7 +47,6 @@ Everytime the file `prisma/schema.prisma` is changed, you need to run the comman
 
 ```
 cd backend/
-yarn install
 yarn start
 ```
 
