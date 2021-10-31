@@ -1,5 +1,7 @@
+import { IContext } from "../context";
+
 const Mutation = {
-  createCard(parent, args, context, info) {
+  createCard(parent: any, args: any, context: IContext, info: any) {
     const { data: card } = args;
     const { pubsub, db } = context;
 
@@ -18,11 +20,11 @@ const Mutation = {
       card,
     };
   },
-  updateCard(parent, args, context, info) {
+  updateCard(parent: any, args: any, context: IContext, info: any) {
     const { id, data } = args;
     const { pubsub, db } = context;
 
-    const card = db.cards.find((card) => card.id === id);
+    const card = db.cards.find((card: { id: any }) => card.id === id);
 
     if (!card) {
       return {
@@ -53,11 +55,11 @@ const Mutation = {
       card,
     };
   },
-  deleteCard(parent, args, context, info) {
+  deleteCard(parent: any, args: any, context: IContext, info: any) {
     const { id } = args;
     const { pubsub, db } = context;
 
-    const idx = db.cards.findIndex((card) => card.id === id);
+    const idx = db.cards.findIndex((card: { id: any }) => card.id === id);
     if (idx === -1) {
       return {
         code: "400",
