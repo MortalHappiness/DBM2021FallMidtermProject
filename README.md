@@ -11,14 +11,14 @@ Midterm project for "Database management", 2021 Fall
 
 ```
 cd backend/
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ### Frontend
 
 ```
 cd frontend/
-npm install
-npm start
+yarn install
+yarn start
 ```
