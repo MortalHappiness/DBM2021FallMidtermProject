@@ -1,0 +1,18 @@
+{
+  "name": "DBM2021FallMidtermProject",
+  "version": "1.0.0",
+  "main": "backend/index.js",
+  "repository": "https://github.com/MortalHappiness/DBM2021FallMidtermProject.git",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "npx concurrently \"cd frontend && yarn start\" \"cd backend && yarn start\""
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
+}
