@@ -1,12 +1,26 @@
 import { IContext } from "../context";
 
-const Mutation = {
-  createCard(parent: any, args: any, context: IContext, info: any) {
-    const { data: card } = args;
-    const { pubsub, db } = context;
+interface CreateCardInput {
+  title: string;
+  content?: string;
+}
 
-    card.id = (parseInt(db.cards[db.cards.length - 1].id) + 1).toString();
-    db.cards.push(card);
+interface UpdateCardInput {
+  title?: string;
+  content?: string;
+}
+
+const Mutation = {
+  async createCard(
+    parent: any,
+    args: { data: CreateCardInput },
+    context: IContext,
+    info: any
+  ) {
+    const { data } = args;
+    const { pubsub, prisma } = context;
+
+    const card = await prisma.card.create({ data });
     pubsub.publish("CARD", {
       card: {
         mutation: "CREATED",
@@ -20,26 +34,28 @@ const Mutation = {
       card,
     };
   },
-  updateCard(parent: any, args: any, context: IContext, info: any) {
+  async updateCard(
+    parent: any,
+    args: { id: string; data: UpdateCardInput },
+    context: IContext,
+    info: any
+  ) {
     const { id, data } = args;
-    const { pubsub, db } = context;
+    const { pubsub, prisma } = context;
 
-    const card = db.cards.find((card: { id: any }) => card.id === id);
-
-    if (!card) {
+    let card;
+    try {
+      card = await prisma.card.update({
+        where: { id: parseInt(id) },
+        data,
+      });
+    } catch (e) {
       return {
         code: "400",
         success: false,
         message: "Card not found",
         card: null,
       };
-    }
-
-    if (data.title) {
-      card.title = data.title;
-    }
-    if (data.content) {
-      card.content = data.content;
     }
 
     pubsub.publish("CARD", {
@@ -55,12 +71,19 @@ const Mutation = {
       card,
     };
   },
-  deleteCard(parent: any, args: any, context: IContext, info: any) {
+  async deleteCard(
+    parent: any,
+    args: { id: string },
+    context: IContext,
+    info: any
+  ) {
     const { id } = args;
-    const { pubsub, db } = context;
+    const { pubsub, prisma } = context;
 
-    const idx = db.cards.findIndex((card: { id: any }) => card.id === id);
-    if (idx === -1) {
+    let card;
+    try {
+      card = await prisma.card.delete({ where: { id: parseInt(id) } });
+    } catch (e) {
       return {
         code: "400",
         success: false,
@@ -68,7 +91,6 @@ const Mutation = {
         card: null,
       };
     }
-    const [card] = db.cards.splice(idx, 1);
 
     pubsub.publish("CARD", {
       card: {

@@ -8,7 +8,7 @@ import resolvers from "./resolvers";
 import typeDefs from "./typeDefs";
 import { context } from "./context";
 
-(async function () {
+async function main() {
   const PORT = 4000;
   const app = express();
   const httpServer = createServer(app);
@@ -49,4 +49,12 @@ import { context } from "./context";
   httpServer.listen(PORT, () =>
     console.log(`Server is now running on http://localhost:${PORT}/graphql`)
   );
-})();
+}
+
+main()
+  .catch((e) => {
+    throw e;
+  })
+  .finally(async () => {
+    await context.prisma.$disconnect();
+  });

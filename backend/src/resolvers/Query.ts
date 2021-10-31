@@ -1,9 +1,9 @@
 import { IContext } from "../context";
 
 const Query = {
-  cards(parent: any, args: any, context: IContext, info: any) {
-    const { db } = context;
-    return db.cards;
+  async cards(parent: any, args: any, context: IContext, info: any) {
+    const { prisma } = context;
+    return await prisma.card.findMany();
   },
 };
 
