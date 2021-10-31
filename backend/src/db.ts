@@ -15,4 +15,4 @@ const db = {
   cards,
 };
 
-module.exports = db;
+export default db;

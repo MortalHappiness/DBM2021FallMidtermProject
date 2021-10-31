@@ -83,4 +83,4 @@ const Mutation = {
   },
 };
 
-module.exports = Mutation;
+export default Mutation;

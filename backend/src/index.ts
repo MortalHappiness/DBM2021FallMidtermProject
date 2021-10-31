@@ -1,13 +1,13 @@
-const { createServer } = require("http");
-const { execute, subscribe } = require("graphql");
-const { SubscriptionServer } = require("subscriptions-transport-ws");
-const { makeExecutableSchema } = require("@graphql-tools/schema");
-const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
-const { PubSub } = require("graphql-subscriptions");
-const resolvers = require("./resolvers");
-const typeDefs = require("./typeDefs");
-const db = require("./db");
+import { createServer } from "http";
+import { execute, subscribe } from "graphql";
+import { SubscriptionServer } from "subscriptions-transport-ws";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import express = require("express");
+import { ApolloServer } from "apollo-server-express";
+import { PubSub } from "graphql-subscriptions";
+import resolvers from "./resolvers";
+import typeDefs from "./typeDefs";
+import db from "./db";
 
 (async function () {
   const PORT = 4000;
