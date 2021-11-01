@@ -4,6 +4,7 @@ import { useState } from "react";
 import NavBar from "./NavBar.js";
 import OrgDashboard from "./OrgDashboard.js";
 import OrgSelect from "./OrgSelect.js";
+import ProjDashboard from "./ProjDashboard.js";
 
 function Dashboard({ user, setUser }) {
   const [currentPage, setCurrentPage] = useState("org-select");
@@ -23,9 +24,29 @@ function Dashboard({ user, setUser }) {
   const getPageContent = () => {
     switch (currentPage) {
       case "org-select":
-        return (<OrgSelect {...{user, currentOrg, setCurrentOrg: setCurrentOrgWrap}} />);
+        return (
+          <OrgSelect {...{
+            user,
+            currentOrg,
+            setCurrentOrg: setCurrentOrgWrap
+          }} />
+        );
       case "org":
-        return (<OrgDashboard {...{user, org: currentOrg, setCurrentProj: setCurrentProjWrap}} />);
+        return (
+          <OrgDashboard {...{
+            user,
+            org: currentOrg,
+            setCurrentProj: setCurrentProjWrap
+          }} />
+        );
+      case "proj":
+        return (
+          <ProjDashboard {...{
+            user,
+            org: currentOrg,
+            proj: currentProj
+          }} />
+        );
       default:
         return (<div> constructing </div>);
     }
@@ -34,10 +55,7 @@ function Dashboard({ user, setUser }) {
   return (
     <div>
       <NavBar user={user} setUser={setUser} />
-      { getPageContent() }
-      {/* <CardList />
-      <CardCreationForm />
-      <CardUpdateForm /> */}
+      {getPageContent()}
     </div>
   )
 }
