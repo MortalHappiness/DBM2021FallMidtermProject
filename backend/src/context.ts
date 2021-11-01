@@ -1,12 +1,9 @@
-import { PubSub } from "graphql-subscriptions";
 import { PrismaClient } from "@prisma/client";
 
-const pubsub = new PubSub();
 const prisma = new PrismaClient();
 
-export interface IContext {
-  pubsub: PubSub;
+export interface Context {
   prisma: PrismaClient;
 }
 
-export const context: IContext = { pubsub, prisma };
+export const context: Context = { prisma };

@@ -36,7 +36,7 @@ export default function CardUpdateForm() {
     e.preventDefault();
     updateCard({
       variables: {
-        id: input.id,
+        id: parseInt(input.id),
         data: { title: input.title, content: input.content },
       },
     });

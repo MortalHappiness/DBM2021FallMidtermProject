@@ -11,7 +11,15 @@ import Loading from "../components/Loading";
 import Card from "./Card";
 
 export default function CardList() {
-  const { loading, error, data, subscribeToMore } = useQuery(GET_CARDS_QUERY);
+  const { loading, error, data, subscribeToMore } = useQuery(GET_CARDS_QUERY, {
+    variables: {
+      cardsOrderBy: [
+        {
+          id: "asc",
+        },
+      ],
+    },
+  });
   const [deleteCard] = useMutation(DELETE_CARD_MUTATION);
 
   useEffect(() => {
@@ -20,19 +28,16 @@ export default function CardList() {
         document: CARD_SUBSCRIPTION,
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev;
-          const newCard = subscriptionData.data.card;
-          if (newCard.mutation === "CREATED") {
-            return update(prev, { cards: { $push: [newCard.data] } });
-          } else if (newCard.mutation === "UPDATED") {
-            const idx = prev.cards.findIndex(
-              (card) => card.id === newCard.data.id
-            );
-            return update(prev, { cards: { [idx]: { $merge: newCard.data } } });
+          const { mutationType, card: newCard } =
+            subscriptionData.data.cardSubscription;
+          if (mutationType === "CREATED") {
+            return update(prev, { cards: { $push: [newCard] } });
+          } else if (mutationType === "UPDATED") {
+            const idx = prev.cards.findIndex((card) => card.id === newCard.id);
+            return update(prev, { cards: { [idx]: { $merge: newCard } } });
           } else {
             // DELETED
-            const idx = prev.cards.findIndex(
-              (card) => card.id === newCard.data.id
-            );
+            const idx = prev.cards.findIndex((card) => card.id === newCard.id);
             return update(prev, { cards: { $splice: [[idx, 1]] } });
           }
         },

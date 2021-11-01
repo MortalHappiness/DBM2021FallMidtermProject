@@ -1,11 +1,4 @@
-import Query from "./Query";
-import Mutation from "./Mutation";
-import Subscription from "./Subscription";
+import { FindManyCardResolver } from "@generated/type-graphql";
+import CardResolver from "./CardResolver";
 
-const resolvers = {
-  Query,
-  Mutation,
-  Subscription,
-};
-
-export default resolvers;
+export const resolvers = [CardResolver, FindManyCardResolver] as const;

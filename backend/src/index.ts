@@ -1,11 +1,11 @@
+import "reflect-metadata";
 import { createServer } from "http";
 import { execute, subscribe } from "graphql";
 import { SubscriptionServer } from "subscriptions-transport-ws";
-import { makeExecutableSchema } from "@graphql-tools/schema";
 import express = require("express");
 import { ApolloServer } from "apollo-server-express";
-import resolvers from "./resolvers";
-import typeDefs from "./typeDefs";
+import { buildSchema } from "type-graphql";
+import { resolvers } from "./resolvers";
 import { context } from "./context";
 
 async function main() {
@@ -13,7 +13,7 @@ async function main() {
   const app = express();
   const httpServer = createServer(app);
 
-  const schema = makeExecutableSchema({ typeDefs, resolvers });
+  const schema = await buildSchema({ resolvers });
 
   const server = new ApolloServer({
     schema,
