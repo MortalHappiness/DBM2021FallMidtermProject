@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import MuiCard from "@mui/material/Card";
 import { Button, CardActions, CardContent, Typography } from "@mui/material";
 
-function OrgSelect({ user, currentOrg, setCurrentOrg }) {
+function OrgSelect({ user, setCurrentOrg }) {
   const [orgList, setOrgList] = useState([
     { name: "fake org1", id: 1 },
     { name: "fake org2", id: 2 },

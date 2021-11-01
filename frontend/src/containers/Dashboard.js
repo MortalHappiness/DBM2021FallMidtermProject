@@ -1,29 +1,33 @@
 
 import { useState } from "react";
 
-import CardCreationForm from "./CardCreationForm.js";
-import CardList from "./CardList.js";
-import CardUpdateForm from "./CardUpdateForm.js";
 import NavBar from "./NavBar.js";
+import OrgDashboard from "./OrgDashboard.js";
 import OrgSelect from "./OrgSelect.js";
 
 function Dashboard({ user, setUser }) {
-  const [currentPage, setCurrentPage] = useState("org");
+  const [currentPage, setCurrentPage] = useState("org-select");
   const [currentOrg, setCurrentOrg] = useState();
+  const [currentProj, setCurrentProj] = useState();
 
   const setCurrentOrgWrap = (org) => {
     setCurrentOrg(org);
+    setCurrentPage("org");
+  };
+
+  const setCurrentProjWrap = (proj) => {
+    setCurrentProj(proj);
     setCurrentPage("proj");
   };
 
   const getPageContent = () => {
     switch (currentPage) {
-      case "org":
+      case "org-select":
         return (<OrgSelect {...{user, currentOrg, setCurrentOrg: setCurrentOrgWrap}} />);
-      case "proj":
-        return (<div>constructing</div>)
+      case "org":
+        return (<OrgDashboard {...{user, org: currentOrg, setCurrentProj: setCurrentProjWrap}} />);
       default:
-        break;
+        return (<div> constructing </div>);
     }
   };
 
