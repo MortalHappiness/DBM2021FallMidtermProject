@@ -1,13 +1,19 @@
-import CardList from "./containers/CardList";
-import CardCreationForm from "./containers/CardCreationForm";
-import CardUpdateForm from "./containers/CardUpdateForm";
+
+import { useState } from "react";
+import Dashboard from "./containers/Dashboard.js";
+import Login from "./containers/Login.js";
 
 function App() {
+  const [user, setUser] = useState({ current: undefined, previous: undefined });
+  console.log('user', user);
+
   return (
     <div>
-      <CardList />
-      <CardCreationForm />
-      <CardUpdateForm />
+      {
+        user.current ?
+        (<Dashboard user={user.current} setUser={setUser} />) :
+        (<Login user={user} setUser={setUser} />)
+      }
     </div>
   );
 }
