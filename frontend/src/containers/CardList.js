@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import update from "immutability-helper";
@@ -8,9 +9,9 @@ import {
   CARD_SUBSCRIPTION,
 } from "../graphql";
 import Loading from "../components/Loading";
-import Card from "./Card";
+import CardItem from "./CardItem";
 
-export default function CardList() {
+export default function CardList({ viewCard }) {
   const { loading, error, data, subscribeToMore } = useQuery(GET_CARDS_QUERY, {
     variables: {
       cardsOrderBy: [
@@ -20,6 +21,7 @@ export default function CardList() {
       ],
     },
   });
+
   const [deleteCard] = useMutation(DELETE_CARD_MUTATION);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function CardList() {
           }
         },
       });
-    } catch (e) {}
+    } catch (e) { }
   }, [subscribeToMore]);
 
   if (loading) return <Loading />;
@@ -51,7 +53,12 @@ export default function CardList() {
   return (
     <div>
       {data.cards.map((card) => (
-        <Card key={card.id} data={card} deleteCard={deleteCard} />
+        <CardItem
+          key={card.id}
+          data={card}
+          deleteCard={deleteCard}
+          viewCard={viewCard}
+        />
       ))}
     </div>
   );
