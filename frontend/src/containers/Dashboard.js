@@ -36,7 +36,8 @@ function Dashboard({ user, setUser }) {
           <OrgDashboard {...{
             user,
             org: currentOrg,
-            setCurrentProj: setCurrentProjWrap
+            setCurrentProj: setCurrentProjWrap,
+            exit: () => setCurrentPage("org-select"),
           }} />
         );
       case "proj":
@@ -44,7 +45,8 @@ function Dashboard({ user, setUser }) {
           <ProjDashboard {...{
             user,
             org: currentOrg,
-            proj: currentProj
+            proj: currentProj,
+            exit: () => setCurrentPage("org"),
           }} />
         );
       default:
