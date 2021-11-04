@@ -1,4 +1,5 @@
 
+import { Container } from "@mui/material";
 import { useState } from "react";
 
 import NavBar from "./NavBar.js";
@@ -57,7 +58,9 @@ function Dashboard({ user, setUser }) {
   return (
     <div>
       <NavBar user={user} setUser={setUser} />
-      {getPageContent()}
+      <Container>
+        {getPageContent()}
+      </Container>
     </div>
   )
 }

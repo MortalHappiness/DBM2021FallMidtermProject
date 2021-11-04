@@ -12,6 +12,12 @@ function App() {
     setPreviousUser(username);
   };
 
+  const register = (username) => {
+    // TODO: add user
+    setUser(username);
+    setPreviousUser(username);
+  };
+
   return (
     <div>
       {

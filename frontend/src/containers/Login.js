@@ -1,5 +1,6 @@
 
-import { Button, Input } from "@mui/material";
+import { Button, Container, Input } from "@mui/material";
+import { Box } from "@mui/system";
 import { useState } from "react";
 
 function Login({ user, previousUser, login: _login }) {
@@ -8,17 +9,36 @@ function Login({ user, previousUser, login: _login }) {
   const login = () => {
     if (username === "") return;
     _login(username);
-  }
+  };
 
-  const handleKeyDown = e => {
+  const register = () => {
+    if (username === "") return;
+    _login(username);
+  };
+
+  const handleKeyLogin = e => {
     if (e.key === 'Enter') login();
-  }
+  };
+
+  const handleKeyRegister = e => {
+    if (e.key === 'Enter') register();
+  };
 
   return (
-    <div onKeyDown={handleKeyDown}>
-      <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
-      <Button variant="contained" onClick={login}>Login</Button>
-    </div>
+    <Container>
+      <Box m={2}>
+        <div onKeyDown={handleKeyLogin}>
+          <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
+          <Button variant="contained" onClick={login}>Login</Button>
+        </div>
+      </Box>
+      <Box m={2}>
+        <div onKeyDown={handleKeyRegister}>
+          <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
+          <Button variant="contained" onClick={register}>Register</Button>
+        </div>
+      </Box>
+    </Container>
   );
 }
 
