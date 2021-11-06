@@ -1,4 +1,4 @@
-import { FindManyCardResolver } from "@generated/type-graphql";
-import CardResolver from "./CardResolver";
+import { FindManyTaskResolver } from "@generated/type-graphql";
+import TaskResolver from "./TaskResolver";
 
-export const resolvers = [CardResolver, FindManyCardResolver] as const;
+export const resolvers = [TaskResolver, FindManyTaskResolver] as const;
