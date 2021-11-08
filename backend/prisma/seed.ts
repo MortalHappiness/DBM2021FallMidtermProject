@@ -1,14 +1,18 @@
+import bcrypt = require("bcrypt");
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  const saltRounds = 10;
+  const password = "password";
+  const passwordHash = await bcrypt.hash(password, saltRounds);
   await prisma.organization.create({
     data: {
       name: "org_1",
       users: {
         create: [
-          { username: "user_1", displayName: "Alice", passwordHash: "p1" },
-          { username: "user_2", displayName: "Bob", passwordHash: "p2" },
+          { username: "user_1", displayName: "Alice", passwordHash },
+          { username: "user_2", displayName: "Bob", passwordHash },
         ],
       },
       projects: {
