@@ -1,9 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
-
 export interface Context {
   prisma: PrismaClient;
+  secret: string;
+  user?: Express.User;
 }
-
-export const context: Context = { prisma };

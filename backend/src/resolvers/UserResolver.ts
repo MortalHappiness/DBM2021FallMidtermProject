@@ -12,12 +12,14 @@ import {
   Root,
   ObjectType,
   PubSub,
+  Query,
+  Authorized,
 } from "type-graphql";
 import { User } from "@generated/type-graphql";
-import { Context } from "../context";
+import { Context } from "../interfaces/context";
 import MutationType from "./MutationType";
 import SubscriptionPayload from "./SubscriptionPayload";
-import { hashPassword } from '../password';
+import { hashPassword } from "../password";
 
 @InputType()
 class CreateUserInput implements Partial<User> {
@@ -48,6 +50,13 @@ class UserSubscriptionPayload extends SubscriptionPayload {
 
 @Resolver(User)
 class UserResolver {
+  @Authorized()
+  @Query((returns) => [User])
+  async users(@Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.user.findMany();
+  }
+
   @Mutation((returns) => User)
   async createUser(
     @Arg("data") data: CreateUserInput,
