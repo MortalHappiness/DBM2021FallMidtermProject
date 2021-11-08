@@ -1,5 +1,17 @@
 import { gql } from "@apollo/client";
 
+export const REGISTER_MUTATION = gql`
+  mutation RegisterMutation($password: String!, $username: String!) {
+    register(password: $password, username: $username)
+  }
+`;
+
+export const LOGIN_MUTATION = gql`
+  mutation LoginMutation($password: String!, $username: String!) {
+    login(password: $password, username: $username)
+  }
+`;
+
 export const CREATE_CARD_MUTATION = gql`
   mutation CreateCardMutation($data: CreateCardInput!) {
     createCard(data: $data) {

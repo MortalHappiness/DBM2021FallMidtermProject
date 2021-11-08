@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./containers/Dashboard.js";
 import Login from "./containers/Login.js";
 
@@ -19,14 +19,23 @@ function App() {
   };
 
   return (
-    <div>
-      {
-        user ?
-          (<Dashboard {...{ user, setUser }} />) :
-          (<Login {...{ user, previousUser, login }} />)
-      }
-    </div>
+    <Router>
+      <Routes>
+        <Route index element={<IndexPage />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
+}
+
+function IndexPage() {
+  return <h1>hi</h1>;
+}
+
+function NotFound() {
+  return "Not Found";
 }
 
 export default App;
