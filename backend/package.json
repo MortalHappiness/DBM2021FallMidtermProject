@@ -38,5 +38,8 @@
     "reflect-metadata": "^0.1.13",
     "subscriptions-transport-ws": "^0.9.19",
     "type-graphql": "^1.1.1"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
