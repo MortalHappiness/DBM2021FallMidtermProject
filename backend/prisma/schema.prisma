@@ -19,11 +19,11 @@ datasource db {
 // ##########################################################
 
 model User {
-  id           Int     @id @default(autoincrement())
-  username     String  @unique
-  displayName  String  @map("display_name")
+  id           Int    @id @default(autoincrement())
+  username     String @unique
+  displayName  String @map("display_name")
   /// @TypeGraphQL.omit(output: true, input: true)
-  passwordHash String? @map("password_hash")
+  passwordHash String @map("password_hash")
 
   createdTasks Task[]
   Comment      Comment[]
