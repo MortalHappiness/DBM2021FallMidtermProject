@@ -48,6 +48,14 @@ class ProjectResolver {
     return await prisma.project.findMany();
   }
 
+  @Query((returns) => Project)
+  async project(
+    @Arg("id", (type) => Int) id: number,
+    @Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.project.findUnique({ where: { id } });
+  }
+
   @Mutation((returns) => Project)
   async createProject(
     @Arg("data") data: CreateProjectInput,
