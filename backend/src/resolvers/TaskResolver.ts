@@ -66,6 +66,15 @@ class TaskResolver {
     return await prisma.task.findUnique({ where: { id } });
   }
 
+  @Query((returns) => [Task])
+  async tasksByProject(
+    @Arg("projectId", (type) => Int) projectId: number,
+    @Ctx() context: Context,
+  ) {
+    const { prisma } = context;
+    return await prisma.task.findMany({ where: { projectId } });
+  }
+
   @Mutation((returns) => Task)
   async createTask(
     @Arg("data") data: CreateTaskInput,

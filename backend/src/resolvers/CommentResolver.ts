@@ -60,6 +60,15 @@ class CommentResolver {
     return await prisma.comment.findUnique({ where: { id } });
   }
 
+  @Query((returns) => [Comment])
+  async commentsByTask(
+    @Arg("taskId", (type) => Int) taskId: number,
+    @Ctx() context: Context,
+  ) {
+    const { prisma } = context;
+    return await prisma.comment.findMany({ where: { taskId } });
+  }
+
   @Mutation((returns) => Comment)
   async createComment(
     @Arg("data") data: CreateCommentInput,

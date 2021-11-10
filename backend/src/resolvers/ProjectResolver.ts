@@ -25,7 +25,7 @@ class CreateProjectInput implements Partial<Project> {
   name: string;
 
   @Field()
-  organiztaionId: number;
+  organizationId: number;
 }
 
 @InputType()
@@ -56,6 +56,14 @@ class ProjectResolver {
     return await prisma.project.findUnique({ where: { id } });
   }
 
+  @Query((returns) => [Project])
+  async projectsByOrganization(
+    @Arg("organizationId", (type) => Int) organizationId: number,
+    @Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.project.findMany({ where: { organizationId } });
+  }
+
   @Mutation((returns) => Project)
   async createProject(
     @Arg("data") data: CreateProjectInput,
@@ -67,7 +75,7 @@ class ProjectResolver {
     const project = await prisma.project.create({
       data: {
         name: data.name,
-        organiztaionId: data.organiztaionId,
+        organizationId: data.organizationId,
       },
     });
     pubsub.publish("PROJECT", {

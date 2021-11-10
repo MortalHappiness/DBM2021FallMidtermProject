@@ -44,13 +44,13 @@ model Organization {
 model Project {
   id             Int          @id @default(autoincrement())
   name           String
-  organization   Organization @relation(fields: [organiztaionId], references: [id])
-  organiztaionId Int          @map("organiztaion_id")
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int          @map("organiztaion_id")
 
   labels Label[]
   tasks  Task[]
 
-  @@unique([organiztaionId, name])
+  @@unique([organizationId, name])
 }
 
 model Task {
