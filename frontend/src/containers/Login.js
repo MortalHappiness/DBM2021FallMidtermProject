@@ -3,7 +3,7 @@ import { Button, Container, Input } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 
-function Login({ user, previousUser, login: _login }) {
+function Login({ user, previousUser, login: _login, register: _register }) {
   const [ username, setUsername ] = useState(previousUser);
 
   const login = () => {
@@ -13,7 +13,7 @@ function Login({ user, previousUser, login: _login }) {
 
   const register = () => {
     if (username === "") return;
-    _login(username);
+    _register(username);
   };
 
   const handleKeyLogin = e => {
