@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const GET_CARDS_QUERY = gql`
-  query GetCardsQuery($cardsOrderBy: [CardOrderByWithRelationInput!]) {
-    cards(orderBy: $cardsOrderBy) {
+export const GET_TASKS_QUERY = gql`
+  query GetTasksQuery($tasksOrderBy: [TaskOrderByWithRelationInput!]) {
+    tasks(orderBy: $tasksOrderBy) {
       id
       title
       content

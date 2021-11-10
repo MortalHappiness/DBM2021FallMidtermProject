@@ -5,12 +5,12 @@ import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-function Card({ exit, cardId }) {
-  // TODO fetch card
-  const card = {
-    id: cardId,
-    title: `fake card title ${cardId}`,
-    content: `fake card content ${cardId}`,
+function Task({ exit, taskId }) {
+  // TODO fetch task
+  const task = {
+    id: taskId,
+    title: `fake task title ${taskId}`,
+    content: `fake task content ${taskId}`,
     comments: [
       { content: "comment 1" },
       { content: "comment 2" },
@@ -19,7 +19,7 @@ function Card({ exit, cardId }) {
     ]
   };
 
-  const removeCard = () => {
+  const removeTask = () => {
     // TODO
     exit();
   };
@@ -33,28 +33,28 @@ function Card({ exit, cardId }) {
       <Box>
         <Box mx={2} sx={{ display: 'inline' }}>
           <Button size="small" onClick={exit}>
-            Return to card list
+            Return to task list
           </Button>
         </Box>
         <Box mx={2} sx={{ display: 'inline' }}>
-          <Button size="small" onClick={removeCard}>
-            Remove Card
+          <Button size="small" onClick={removeTask}>
+            Remove Task
           </Button>
         </Box>
       </Box>
       <Box>
-        id: {card.id}
+        id: {task.id}
       </Box>
       <Box>
-        <h2> {card.title} </h2>
+        <h2> {task.title} </h2>
       </Box>
       <Box>
-        {card.content}
+        {task.content}
       </Box>
       <Box>
         <MuiCard variant="outlined" sx={{ minWidth: 275, m: 2 }}>
           {
-            card.comments.map(comment => (
+            task.comments.map(comment => (
               <Grid
                 sx={{ justifyContent: "space-between", alignItems: "center" }}
                 container 
@@ -94,4 +94,4 @@ function Card({ exit, cardId }) {
   );
 }
 
-export default Card;
+export default Task;

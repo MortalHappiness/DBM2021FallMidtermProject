@@ -1,10 +1,10 @@
 import { gql } from "@apollo/client";
 
-export const CARD_SUBSCRIPTION = gql`
-  subscription CardSubscription {
-    cardSubscription {
+export const TASK_SUBSCRIPTION = gql`
+  subscription TaskSubscription {
+    taskSubscription {
       mutationType
-      card {
+      task {
         id
         title
         content
