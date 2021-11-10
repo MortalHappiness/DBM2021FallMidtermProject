@@ -1,15 +1,15 @@
-import { FindManyTaskResolver } from "@generated/type-graphql";
-import CommentResolver from './CommentResolver';
-import OrganizationResolver from './OrganizationResolver';
-import ProjectResolver from './ProjectResolver';
+import CommentResolver from "./CommentResolver";
+import OrganizationResolver from "./OrganizationResolver";
+import ProjectResolver from "./ProjectResolver";
 import TaskResolver from "./TaskResolver";
-import UserResolver from './UserResolver';
+import UserResolver from "./UserResolver";
+import MutationResolver from "./MutationResolver";
 
 export const resolvers = [
   CommentResolver,
   OrganizationResolver,
   ProjectResolver,
   TaskResolver,
-  FindManyTaskResolver,
-  UserResolver
+  UserResolver,
+  MutationResolver,
 ] as const;

@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import { CREATE_CARD_MUTATION } from "../graphql";
+import { CREATE_TASK_MUTATION } from "../graphql";
 
-export default function CardCreationForm() {
-  const [createCard] = useMutation(CREATE_CARD_MUTATION);
+export default function TaskCreationForm() {
+  const [createTask] = useMutation(CREATE_TASK_MUTATION);
 
   // ========================================
 
@@ -33,14 +33,14 @@ export default function CardCreationForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createCard({ variables: { data: input } });
+    createTask({ variables: { data: input } });
   };
 
   // ========================================
   return (
     <div>
       <Typography variant="h5" component="h1">
-        Create Card
+        Create Task
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField

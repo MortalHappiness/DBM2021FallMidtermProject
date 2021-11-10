@@ -12,9 +12,10 @@ import {
   Root,
   ObjectType,
   PubSub,
+  Query,
 } from "type-graphql";
 import { Project } from "@generated/type-graphql";
-import { Context } from "../context";
+import { Context } from "../interfaces/context";
 import MutationType from "./MutationType";
 import SubscriptionPayload from "./SubscriptionPayload";
 
@@ -41,6 +42,12 @@ class ProjectSubscriptionPayload extends SubscriptionPayload {
 
 @Resolver(Project)
 class ProjectResolver {
+  @Query((returns) => [Project])
+  async projects(@Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.project.findMany();
+  }
+
   @Mutation((returns) => Project)
   async createProject(
     @Arg("data") data: CreateProjectInput,

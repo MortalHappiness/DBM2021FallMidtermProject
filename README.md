@@ -45,7 +45,13 @@ $ npx prisma migrate dev
 
 Everytime the file `prisma/schema.prisma` is changed, you need to run the command above again.
 
-To clear all data in db, run:
+Seeding the database (inject fake data for development):
+
+```bash
+$ npx prisma db seed
+```
+
+To reset all data in db, run:
 
 ```bash
 $ npx prisma migrate reset

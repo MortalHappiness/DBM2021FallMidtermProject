@@ -1,7 +1,9 @@
-export { GET_CARDS_QUERY } from "./queries";
+export { GET_TASKS_QUERY } from "./queries";
 export {
-  CREATE_CARD_MUTATION,
-  UPDATE_CARD_MUTATION,
-  DELETE_CARD_MUTATION,
+  REGISTER_MUTATION,
+  LOGIN_MUTATION,
+  CREATE_TASK_MUTATION,
+  UPDATE_TASK_MUTATION,
+  DELETE_TASK_MUTATION,
 } from "./mutations";
-export { CARD_SUBSCRIPTION } from "./subscriptions";
+export { TASK_SUBSCRIPTION } from "./subscriptions";

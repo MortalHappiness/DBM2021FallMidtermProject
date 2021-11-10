@@ -12,9 +12,10 @@ import {
   Root,
   ObjectType,
   PubSub,
+  Query,
 } from "type-graphql";
 import { Task } from "@generated/type-graphql";
-import { Context } from "../context";
+import { Context } from "../interfaces/context";
 import MutationType from "./MutationType";
 import SubscriptionPayload from "./SubscriptionPayload";
 
@@ -50,6 +51,12 @@ class TaskSubscriptionPayload extends SubscriptionPayload {
 
 @Resolver(Task)
 class TaskResolver {
+  @Query((returns) => [Task])
+  async tasks(@Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.task.findMany();
+  }
+
   @Mutation((returns) => Task)
   async createTask(
     @Arg("data") data: CreateTaskInput,

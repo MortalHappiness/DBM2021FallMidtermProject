@@ -12,9 +12,10 @@ import {
   Root,
   ObjectType,
   PubSub,
+  Query,
 } from "type-graphql";
 import { Comment } from "@generated/type-graphql";
-import { Context } from "../context";
+import { Context } from "../interfaces/context";
 import MutationType from "./MutationType";
 import SubscriptionPayload from "./SubscriptionPayload";
 
@@ -44,6 +45,12 @@ class CommentSubscriptionPayload extends SubscriptionPayload {
 
 @Resolver(Comment)
 class CommentResolver {
+  @Query((returns) => [Comment])
+  async comments(@Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.comment.findMany();
+  }
+
   @Mutation((returns) => Comment)
   async createComment(
     @Arg("data") data: CreateCommentInput,

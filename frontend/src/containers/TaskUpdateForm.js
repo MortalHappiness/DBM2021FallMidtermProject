@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import { UPDATE_CARD_MUTATION } from "../graphql";
+import { UPDATE_TASK_MUTATION } from "../graphql";
 
-export default function CardUpdateForm() {
-  const [updateCard] = useMutation(UPDATE_CARD_MUTATION);
+export default function TaskUpdateForm() {
+  const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
 
   // ========================================
 
@@ -34,7 +34,7 @@ export default function CardUpdateForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateCard({
+    updateTask({
       variables: {
         id: parseInt(input.id),
         data: { title: input.title, content: input.content },
@@ -46,7 +46,7 @@ export default function CardUpdateForm() {
   return (
     <div>
       <Typography variant="h5" component="h1">
-        Update Card
+        Update Task
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField

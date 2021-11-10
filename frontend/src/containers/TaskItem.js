@@ -6,12 +6,12 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function CardItem({ data, deleteCard: _deleteCard, viewCard: _viewCard }) {
-  const deleteCard = useCallback(() => {
-    _deleteCard({ variables: { id: data.id } });
-  }, [_deleteCard, data.id]);
+export default function TaskItem({ data, deleteTask: _deleteTask, viewTask: _viewTask }) {
+  const deleteTask = useCallback(() => {
+    _deleteTask({ variables: { id: data.id } });
+  }, [_deleteTask, data.id]);
 
-  const viewCard = () => _viewCard(data.id);
+  const viewTask = () => _viewTask(data.id);
 
   return (
     <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
@@ -23,10 +23,10 @@ export default function CardItem({ data, deleteCard: _deleteCard, viewCard: _vie
         <Typography variant="body2">{`Content: ${data.content}`}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={viewCard}>
+        <Button size="small" onClick={viewTask}>
           View
         </Button>
-        <Button size="small" onClick={deleteCard}>
+        <Button size="small" onClick={deleteTask}>
           Delete
         </Button>
       </CardActions>
