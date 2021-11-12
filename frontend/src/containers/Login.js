@@ -2,8 +2,9 @@
 import { Button, Container, Input } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { Navigate } from "react-router";
 
-function Login({ user, previousUser, login: _login, register: _register }) {
+function Login({ username: currentUsername, previousUser, login: _login, register: _register }) {
   const [ username, setUsername ] = useState(previousUser);
 
   const login = () => {
@@ -24,22 +25,24 @@ function Login({ user, previousUser, login: _login, register: _register }) {
     if (e.key === 'Enter') register();
   };
 
-  return (
-    <Container>
-      <Box m={2}>
-        <div onKeyDown={handleKeyLogin}>
-          <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
-          <Button variant="contained" onClick={login}>Login</Button>
-        </div>
-      </Box>
-      <Box m={2}>
-        <div onKeyDown={handleKeyRegister}>
-          <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
-          <Button variant="contained" onClick={register}>Register</Button>
-        </div>
-      </Box>
-    </Container>
-  );
+  return currentUsername ?
+      (<Navigate to="/dashboard" />) :
+      (
+        <Container>
+          <Box m={2}>
+            <div onKeyDown={handleKeyLogin}>
+              <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
+              <Button variant="contained" onClick={login}>Login</Button>
+            </div>
+          </Box>
+          <Box m={2}>
+            <div onKeyDown={handleKeyRegister}>
+              <Input placeholder="username" defaultValue={username} onChange={e => setUsername(e.target.value)} />
+              <Button variant="contained" onClick={register}>Register</Button>
+            </div>
+          </Box>
+        </Container>
+      );
 }
 
 export default Login;

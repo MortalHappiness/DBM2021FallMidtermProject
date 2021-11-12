@@ -7,7 +7,8 @@ import OrgDashboard from "./OrgDashboard.js";
 import OrgSelect from "./OrgSelect.js";
 import ProjDashboard from "./ProjDashboard.js";
 
-function Dashboard({ user, setUser }) {
+function Dashboard({ username, userId, logout }) {
+  console.log('dashboard user', username, userId)
   const [currentPage, setCurrentPage] = useState("org-select");
   const [currentOrg, setCurrentOrg] = useState();
   const [currentProj, setCurrentProj] = useState();
@@ -27,7 +28,8 @@ function Dashboard({ user, setUser }) {
       case "org-select":
         return (
           <OrgSelect {...{
-            user,
+            username,
+            userId,
             currentOrg,
             setCurrentOrg: setCurrentOrgWrap
           }} />
@@ -35,7 +37,8 @@ function Dashboard({ user, setUser }) {
       case "org":
         return (
           <OrgDashboard {...{
-            user,
+            username,
+            userId,
             org: currentOrg,
             setCurrentProj: setCurrentProjWrap,
             exit: () => setCurrentPage("org-select"),
@@ -44,7 +47,8 @@ function Dashboard({ user, setUser }) {
       case "proj":
         return (
           <ProjDashboard {...{
-            user,
+            username,
+            userId,
             org: currentOrg,
             proj: currentProj,
             exit: () => setCurrentPage("org"),
@@ -57,7 +61,7 @@ function Dashboard({ user, setUser }) {
 
   return (
     <div>
-      <NavBar user={user} setUser={setUser} />
+      <NavBar user={username} logout={logout} />
       <Container>
         {getPageContent()}
       </Container>

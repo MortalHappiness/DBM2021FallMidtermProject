@@ -7,11 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function NavBar({ user, setUser }) {
-
-  const logout = () => {
-    setUser(undefined);
-  };
+function NavBar({ user, logout }) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>

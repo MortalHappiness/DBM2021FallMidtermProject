@@ -9,3 +9,13 @@ export const GET_TASKS_QUERY = gql`
     }
   }
 `;
+
+
+export const GET_ORGS_BY_USER = gql`
+  query GetOrganizationsByUser($projectId: Int!, $userId: Int!) {
+    organizationsByUser(userId: $userId) {
+      id
+      name
+    }
+  }
+`
