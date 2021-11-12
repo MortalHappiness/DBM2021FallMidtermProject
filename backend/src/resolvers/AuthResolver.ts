@@ -5,7 +5,7 @@ import { Ctx, Resolver, Mutation, Arg } from "type-graphql";
 import { Context } from "../interfaces/context";
 
 @Resolver()
-class MutationResolver {
+class AuthResolver {
   @Mutation((returns) => String)
   async login(
     @Arg("username") username: string,
@@ -48,4 +48,4 @@ class MutationResolver {
   }
 }
 
-export default MutationResolver;
+export default AuthResolver;

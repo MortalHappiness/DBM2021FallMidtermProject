@@ -52,21 +52,9 @@ class CommentResolver {
   }
 
   @Query((returns) => Comment)
-  async comment(
-    @Arg("id", (type) => Int) id: number,
-    @Ctx() context: Context,
-  ) {
+  async comment(@Arg("id", (type) => Int) id: number, @Ctx() context: Context) {
     const { prisma } = context;
     return await prisma.comment.findUnique({ where: { id } });
-  }
-
-  @Query((returns) => [Comment])
-  async commentsByTask(
-    @Arg("taskId", (type) => Int) taskId: number,
-    @Ctx() context: Context,
-  ) {
-    const { prisma } = context;
-    return await prisma.comment.findMany({ where: { taskId } });
   }
 
   @Mutation((returns) => Comment)

@@ -54,22 +54,6 @@ class OrganizationResolver {
     return await prisma.organization.findUnique({ where: { id } });
   }
 
-  @Query((returns) => [Organization])
-  async organizationsByUser(
-    @Arg("userId", (type) => Int) userId: number,
-    @Ctx() context: Context
-  ) {
-    const { prisma } = context;
-    return await prisma.user.findUnique({
-      where: {
-        id: userId
-      },
-      include: {
-        organizations: true
-      }
-    });
-  }
-
   @Mutation((returns) => Organization)
   async createOrganization(
     @Arg("data") data: CreateOrganizationInput,

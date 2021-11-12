@@ -12,9 +12,10 @@ import {
   Root,
   ObjectType,
   PubSub,
+  Query,
 } from "type-graphql";
 import { Label } from "@generated/type-graphql";
-import { Context } from "../context";
+import { Context } from "../interfaces/context";
 import MutationType from "./MutationType";
 import SubscriptionPayload from "./SubscriptionPayload";
 
@@ -47,6 +48,18 @@ class LabelSubscriptionPayload extends SubscriptionPayload {
 
 @Resolver(Label)
 class LabelResolver {
+  @Query((returns) => [Label])
+  async labels(@Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.label.findMany();
+  }
+
+  @Query((returns) => Label)
+  async label(@Arg("id", (type) => Int) id: number, @Ctx() context: Context) {
+    const { prisma } = context;
+    return await prisma.label.findUnique({ where: { id } });
+  }
+
   @Mutation((returns) => Label)
   async createLabel(
     @Arg("data") data: CreateLabelInput,
@@ -54,6 +67,10 @@ class LabelResolver {
     @PubSub() pubsub: PubSubEngine
   ) {
     const { prisma } = context;
+
+    if (data.color === undefined) {
+      data.color = "blue";
+    }
 
     const label = await prisma.label.create({
       data: {

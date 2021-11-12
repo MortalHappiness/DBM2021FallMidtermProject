@@ -58,21 +58,9 @@ class TaskResolver {
   }
 
   @Query((returns) => Task)
-  async task(
-    @Arg("id", (type) => Int) id: number,
-    @Ctx() context: Context,
-  ) {
+  async task(@Arg("id", (type) => Int) id: number, @Ctx() context: Context) {
     const { prisma } = context;
     return await prisma.task.findUnique({ where: { id } });
-  }
-
-  @Query((returns) => [Task])
-  async tasksByProject(
-    @Arg("projectId", (type) => Int) projectId: number,
-    @Ctx() context: Context,
-  ) {
-    const { prisma } = context;
-    return await prisma.task.findMany({ where: { projectId } });
   }
 
   @Mutation((returns) => Task)

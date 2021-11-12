@@ -49,19 +49,9 @@ class ProjectResolver {
   }
 
   @Query((returns) => Project)
-  async project(
-    @Arg("id", (type) => Int) id: number,
-    @Ctx() context: Context) {
+  async project(@Arg("id", (type) => Int) id: number, @Ctx() context: Context) {
     const { prisma } = context;
     return await prisma.project.findUnique({ where: { id } });
-  }
-
-  @Query((returns) => [Project])
-  async projectsByOrganization(
-    @Arg("organizationId", (type) => Int) organizationId: number,
-    @Ctx() context: Context) {
-    const { prisma } = context;
-    return await prisma.project.findMany({ where: { organizationId } });
   }
 
   @Mutation((returns) => Project)
