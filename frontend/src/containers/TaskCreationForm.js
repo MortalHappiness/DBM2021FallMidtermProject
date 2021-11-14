@@ -50,11 +50,8 @@ export default function TaskCreationForm() {
       </Box>
       <Dialog 
         open={showForm} 
-        onClose={closeCreateForm} 
-        PaperComponent={getDraggablePaperComponent("draggable-task-creation-form")} 
-        aria-labelledby="draggable-task-creation-form">
-        <DialogTitle 
-          style={{ cursor: 'move' }}>
+        onClose={closeCreateForm}>
+        <DialogTitle>
           Create new task
         </DialogTitle>
         <DialogContent>
