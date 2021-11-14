@@ -1,70 +1,95 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
 import { CREATE_TASK_MUTATION } from "../graphql";
+import { Box } from "@mui/system";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 export default function TaskCreationForm() {
+  const [showForm, setShowForm] = useState(false);
   const [createTask] = useMutation(CREATE_TASK_MUTATION);
 
-  // ========================================
+  const openCreateForm = () => {
+    setShowForm(true);
+  };
+
+  const closeCreateForm = () => {
+    setShowForm(false);
+  };
 
   // Handle input fields
-  const [input, setInput] = useState({
+  const [formInput, setFormInput] = useState({
     title: "",
     content: "",
   });
 
-  const handleChange = useCallback(
-    (e) => {
-      const name = e.target.name;
-      setInput({
-        ...input,
-        [name]: e.target.value,
-      });
-    },
-    [input]
-  );
-
-  // ========================================
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createTask({ variables: { data: input } });
+  const handleChange = (e) => {
+    const name = e.target.name;
+    setFormInput((previousFormInput) => ({
+      ...previousFormInput,
+      [name]: e.target.value,
+    }));
   };
 
-  // ========================================
+  const handleSubmit = () => {
+    createTask({ variables: { data: formInput } });
+    closeCreateForm();
+    setFormInput({ title: "", content: "" });
+  };
+
   return (
-    <div>
-      <Typography variant="h5" component="h1">
-        Create Task
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          type="text"
-          required
-          id="title"
-          label="Title"
-          name="title"
-          value={input.title}
-          onChange={handleChange}
-        />
-        <TextField
-          type="text"
-          required
-          id="content"
-          label="Content"
-          name="content"
-          value={input.content}
-          onChange={handleChange}
-        />
-        <Button type="submit" variant="contained" color="primary">
-          Enter
+    <Box>
+      <Box>
+        <Button variant="contained" color="primary" onClick={openCreateForm}>
+          Create new task
         </Button>
-      </form>
-    </div>
+      </Box>
+      <Dialog open={showForm} onClose={closeCreateForm}>
+        <DialogTitle>Create new task</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            name="title"
+            label="Title"
+            fullWidth
+            variant="standard"
+            sx={{ my: 1 }}
+            onChange={handleChange}
+            value={formInput.title}
+          />
+          <TextField
+            name="content"
+            label="Content"
+            fullWidth
+            variant="standard"
+            multiline
+            sx={{ my: 1 }}
+            rows={3}
+            onChange={handleChange}
+            value={formInput.content}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Box 
+            mx={"auto"} my={0}
+            sx={{ color: '#999999', fontSize: 13, display: 'inline' }}>
+            <span> The content will keep if temparary close the pop-up. </span>
+          </Box>
+          <Button
+            onClick={closeCreateForm}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            color="primary">
+            Create
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
