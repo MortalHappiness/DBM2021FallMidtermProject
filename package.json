@@ -10,6 +10,7 @@
     "start": "npx concurrently \"cd frontend && yarn start\" \"cd backend && yarn start\""
   },
   "dependencies": {
-    "concurrently": "^6.3.0"
+    "concurrently": "^6.3.0",
+    "react-draggable": "^4.4.4"
   }
 }
