@@ -7,6 +7,7 @@ import {
   split,
   HttpLink,
 } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,6 +21,18 @@ import reportWebVitals from "./reportWebVitals";
 const httpLink = new HttpLink({
   uri: process.env.REACT_APP_SERVER_URI,
 });
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const authHttpLink = authLink.concat(httpLink);
 
 const wsLink = new WebSocketLink({
   uri: process.env.REACT_APP_SERVER_WS_URI,
@@ -37,7 +50,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  httpLink
+  authHttpLink
 );
 
 const client = new ApolloClient({

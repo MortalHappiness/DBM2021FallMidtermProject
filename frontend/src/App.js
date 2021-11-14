@@ -1,63 +1,52 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./containers/Dashboard.js";
-import Login from "./containers/Login.js";
-import { LOGIN_MUTATION, REGISTER_MUTATION } from "./graphql/mutations.js";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./Auth";
+import IndexPage from "./containers/IndexPage";
+import LoginPage from "./containers/LoginPage";
+import RegisterPage from "./containers/RegisterPage";
+import Dashboard from "./containers/Dashboard";
+import NotFoundPage from "./containers/NotFoundPage";
+import Loading from "./components/Loading";
 
-function App() {
-  const [username, setUsername] = useState();
-  const [userId, setUserId] = useState();
-  const [previousUsername, setPreviousUsername] = useState();
-
-  const [ backendLogin ] = useMutation(LOGIN_MUTATION);
-  const [ backendRegister ] = useMutation(REGISTER_MUTATION);
-
-  const login = (username) => {
-    backendLogin({ variables: { username, password: '123' } }).then(result => {
-      // TODO: I need a ID
-      // TODO: maybe store session
-      setUsername(username);
-      setUserId(2);
-      setPreviousUsername(username);
-      console.log('logined', username);
-    }).catch(e => {
-      console.error("login failed");
-    });
-  };
-
-  const register = (username) => {
-    backendRegister({ variables: { username, password: '123' } }).then(result => {
-      return login(username);
-    }).catch(e => {
-      console.error("register failed", e);
-    });
-  };
-
-  const logout = () => {
-    setUsername(undefined);
-    setUserId(undefined);
-    document.location.href = "/login";
-  };
-
+export default function App() {
   return (
     <Router>
-      <Routes>
-        <Route index element={<IndexPage />} />
-        <Route exact path="/login" element={<Login {...{ username, previousUser: previousUsername, login, register }} />} />
-        <Route exact path="/dashboard" element={<Dashboard {...{ logout, username, userId }} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route index element={<IndexPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }
 
-function IndexPage() {
-  return window.location.replace("/login");
-}
+function RequireAuth({ children }) {
+  let auth = useAuth();
+  let location = useLocation();
 
-function NotFound() {
-  return "Not Found";
-}
+  if (auth.loading) return <Loading />;
 
-export default App;
+  if (!auth.user) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return children;
+}
