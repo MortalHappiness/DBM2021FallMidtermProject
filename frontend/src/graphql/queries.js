@@ -14,21 +14,15 @@ export const GET_ME_QUERY = gql`
   }
 `;
 
-export const GET_TASKS_QUERY = gql`
-  query GetTasksQuery($tasksOrderBy: [TaskOrderByWithRelationInput!]) {
-    tasks(orderBy: $tasksOrderBy) {
-      id
-      title
-      content
-    }
-  }
-`;
-
-export const GET_ORGS_BY_USER = gql`
-  query GetOrganizationsByUser($projectId: Int!, $userId: Int!) {
-    organizationsByUser(userId: $userId) {
+export const GET_ORG_QUERY = gql`
+  query Query($organizationId: Int!) {
+    organization(id: $organizationId) {
       id
       name
+      projects {
+        id
+        name
+      }
     }
   }
 `;
