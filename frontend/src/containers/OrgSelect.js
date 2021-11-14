@@ -28,17 +28,17 @@ function OrgSelect({ username, userId, setCurrentOrg }) {
 
   return (
     <Box>
-      <Box> <h1> Hello! { username } </h1> </Box>
+      <Box> <h1> Hello! {username} </h1> </Box>
       <Box> <h2> Your Organizations </h2> </Box>
       <Box>
         {
           orgList.map(org => {
             return (
-              <Box my={2}>
-                <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
+              <Box my={2} onClick={() => setCurrentOrg(org)} sx={{ cursor: "pointer" }}>
+                <MuiCard variant="outlined" sx={{ minWidth: 275 }} >
                   <CardContent>
                     <Typography variant="h5" component="div">
-                      { org.name }
+                      {org.name}
                     </Typography>
                     {/* <Typography variant="body1">
                       {`Id: ${org.id}`}
@@ -48,10 +48,7 @@ function OrgSelect({ username, userId, setCurrentOrg }) {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => setCurrentOrg(org)}>
-                      Enter
-                    </Button>
-                    <Button size="small" onClick={() => {}}>
+                    <Button size="small" onClick={() => { }}>
                       Exit Organization (Fake) (TODO)
                     </Button>
                   </CardActions>
@@ -60,8 +57,8 @@ function OrgSelect({ username, userId, setCurrentOrg }) {
             )
           })
         }
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   )
 }
 

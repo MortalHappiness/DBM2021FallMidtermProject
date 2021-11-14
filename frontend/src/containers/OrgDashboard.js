@@ -97,7 +97,7 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
           {
             projList.map(proj => {
               return (
-                <Box my={1}>
+                <Box my={1} onClick={() => setCurrentProj(proj)} sx={{ cursor: "pointer" }}>
                   <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
                     <CardContent>
                       <Typography variant="h5" component="div">
@@ -110,11 +110,8 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
                         Task count: {31}
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button size="small" onClick={() => setCurrentProj(proj)}>
-                        Enter
-                      </Button>
-                    </CardActions>
+                    {/* <CardActions>
+                    </CardActions> */}
                   </MuiCard>
                 </Box>
               )
