@@ -6,20 +6,8 @@ import TextField from "@mui/material/TextField";
 
 import { CREATE_TASK_MUTATION } from "../graphql";
 import { Box } from "@mui/system";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material";
-
-import Draggable from "react-draggable";
-
-function PaperComponent(props) {
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} />
-    </Draggable>
-  );
-}
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { getDraggablePaperComponent } from "../components/DraggablePaperComponent.js";
 
 export default function TaskCreationForm() {
   const [showForm, setShowForm] = useState(false);
@@ -63,8 +51,8 @@ export default function TaskCreationForm() {
       <Dialog 
         open={showForm} 
         onClose={closeCreateForm} 
-        PaperComponent={PaperComponent} 
-        aria-labelledby="draggable-dialog-title">
+        PaperComponent={getDraggablePaperComponent("draggable-task-creation-form")} 
+        aria-labelledby="draggable-task-creation-form">
         <DialogTitle 
           style={{ cursor: 'move' }}>
           Create new task
