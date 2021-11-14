@@ -6,10 +6,10 @@ import { Context } from "../interfaces/context";
 @Resolver(User)
 class UserResolver {
   @Authorized()
-  @Query((returns) => [User])
-  async users(@Ctx() context: Context) {
-    const { prisma } = context;
-    return await prisma.user.findMany();
+  @Query((returns) => User)
+  async me(@Ctx() context: Context) {
+    const { prisma, user } = context;
+    return await prisma.user.findUnique({ where: { id: user?.client_id } });
   }
 }
 

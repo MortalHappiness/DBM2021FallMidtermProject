@@ -15,7 +15,7 @@ import { authChecker } from "./authChecker";
 declare global {
   namespace Express {
     interface User {
-      client_id: string;
+      client_id: number;
     }
   }
 }
