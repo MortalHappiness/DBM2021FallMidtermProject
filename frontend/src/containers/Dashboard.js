@@ -1,72 +1,55 @@
+import { useNavigate } from "react-router";
+import { useQuery } from "@apollo/client";
 
-import { Container } from "@mui/material";
-import { useState } from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 
-import NavBar from "./NavBar.js";
-import OrgDashboard from "./OrgDashboard.js";
-import OrgSelect from "./OrgSelect.js";
-import ProjDashboard from "./ProjDashboard.js";
+import { GET_ME_QUERY } from "../graphql";
+import Loading from "../components/Loading";
 
-function Dashboard({ username, userId, logout }) {
-  console.log('dashboard user', username, userId)
-  const [currentPage, setCurrentPage] = useState("org-select");
-  const [currentOrg, setCurrentOrg] = useState();
-  const [currentProj, setCurrentProj] = useState();
+export default function Dashboard() {
+  const { loading, error, data } = useQuery(GET_ME_QUERY);
+  const navigate = useNavigate();
 
-  const setCurrentOrgWrap = (org) => {
-    setCurrentOrg(org);
-    setCurrentPage("org");
-  };
-
-  const setCurrentProjWrap = (proj) => {
-    setCurrentProj(proj);
-    setCurrentPage("proj");
-  };
-
-  const getPageContent = () => {
-    switch (currentPage) {
-      case "org-select":
-        return (
-          <OrgSelect {...{
-            username,
-            userId,
-            currentOrg,
-            setCurrentOrg: setCurrentOrgWrap
-          }} />
-        );
-      case "org":
-        return (
-          <OrgDashboard {...{
-            username,
-            userId,
-            org: currentOrg,
-            setCurrentProj: setCurrentProjWrap,
-            exit: () => setCurrentPage("org-select"),
-          }} />
-        );
-      case "proj":
-        return (
-          <ProjDashboard {...{
-            username,
-            userId,
-            org: currentOrg,
-            proj: currentProj,
-            exit: () => setCurrentPage("org"),
-          }} />
-        );
-      default:
-        return (<div> constructing </div>);
-    }
-  };
+  if (loading) return <Loading />;
+  const { organizations } = data.me;
 
   return (
     <div>
-      <NavBar user={username} logout={logout} />
       <Container>
-        {getPageContent()}
+        <Box
+          sx={{
+            marginTop: 4,
+          }}
+        >
+          <Typography component="h1" variant="h4">
+            Your Organizations
+          </Typography>
+          <Divider />
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: 360,
+              bgcolor: "background.paper",
+            }}
+            component="nav"
+          >
+            {organizations.map((organization) => (
+              <ListItemButton
+                key={organization.id}
+                onClick={() => navigate(`/organization/${organization.id}`)}
+              >
+                <ListItemText primary={organization.name} />
+              </ListItemButton>
+            ))}
+          </List>
+        </Box>
       </Container>
     </div>
-  )
+  );
 }
-
-export default Dashboard;

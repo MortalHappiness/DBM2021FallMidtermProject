@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useContext } from "react";
 import { useQuery } from "@apollo/client";
 
 import { GET_ME_QUERY } from "./graphql";

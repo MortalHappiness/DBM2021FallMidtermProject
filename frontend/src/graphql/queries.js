@@ -6,6 +6,10 @@ export const GET_ME_QUERY = gql`
       id
       username
       displayName
+      organizations {
+        id
+        name
+      }
     }
   }
 `;
