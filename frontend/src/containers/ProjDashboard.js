@@ -60,7 +60,7 @@ function ProjDashboard({ user, org, proj, exit }) {
     if (deleteCountdown === 1) {
       console.log('yay deleted');
       // Do delete
-      exit();
+      return exit();
     }
 
     setDeleteCountdown(value => value - 1);

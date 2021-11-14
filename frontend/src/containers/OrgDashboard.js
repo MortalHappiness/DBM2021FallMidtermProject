@@ -1,10 +1,10 @@
 
 import { useState } from "react";
 import MuiCard from "@mui/material/Card";
-import { Button, CardActions, CardContent, Grid, Input, Typography } from "@mui/material";
+import { Button, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-function OrgDashboard({ user, org, setCurrentProj, exit }) {
+function OrgDashboard({ username, userId, org, setCurrentProj, exit }) {
   const [inputUsername, setInputUsername] = useState("");
   const [projList, setProjList] = useState([
     { name: "fake proj1", id: 1 },
@@ -29,7 +29,7 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
 
   const removeUserFromOrg = () => {
     if (inputUsername === "") return;
-    if (inputUsername === user.username) {
+    if (inputUsername === username) {
       return exitOrg();
     }
     // TODO
@@ -41,45 +41,121 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
   // TODO: fetch proj list for user
   // TODO: create proj
 
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [deleteCountdown, setDeleteCountdown] = useState(10);
+  const [hideShowCountdownTimeoutId, setHideShowCountdownTimeoutId] = useState(undefined);
+
+  const triggerDelete = () => {
+    setShowCountdown(true);
+    if (hideShowCountdownTimeoutId) {
+      clearTimeout(hideShowCountdownTimeoutId);
+    }
+    setHideShowCountdownTimeoutId(setTimeout(() => {
+      setShowCountdown(false);
+    }, 5000));
+
+    if (deleteCountdown === 1) {
+      console.log('yay exited');
+      return exitOrg();
+    }
+
+    setDeleteCountdown(value => value - 1);
+    setTimeout(() => setDeleteCountdown(value => value + 1), 1000);
+  };
+
+  const [showModifyUserForm, setShowModifyUserForm] = useState(false);
+
+  const openModifyUserForm = () => {
+    setShowModifyUserForm(true);
+  };
+
+  const closeModifyUserForm = () => {
+    setShowModifyUserForm(false);
+  };
+
   const orgHeader = () => {
     return (
       <Box m={2}>
-        <Box> <h1> {org.name} </h1> </Box>
-
-        <MuiCard variant="outlined">
-          <Box p={2}>
-            <Box>
-              <Box mx={2}>
-                <Input
-                  placeholder="username"
-                  defaultValue={inputUsername}
-                  onChange={e => setInputUsername(e.target.value)}
-                />
-              </Box>
-              <Box>
-                <Box sx={{ display: 'inline' }} mx={1}>
-                  <Button size="small" onClick={addUserToOrg}>
-                    Add User to organization
+        <Box m={2}>
+          <Grid
+            sx={{ justifyContent: "space-between", alignItems: "center" }}
+            container
+            spacing={24}
+          >
+            <Grid item>
+              <div>
+                <h1> Project: {org.name} </h1>
+              </div>
+            </Grid>
+            <Grid item>
+              <Grid
+                container
+                sx={{ justifyContent: "space-between", flexDirection: "column", alignItems: "flex-end" }}>
+                <Grid item>
+                  <Box mx={2} sx={{ display: "inline", color: "red" }} >
+                    {showCountdown ? deleteCountdown : ""}
+                  </Box>
+                  <Button variant="contained" color="error" sx={{ display: "inline" }} onClick={triggerDelete}>
+                    Exit this organization
                   </Button>
-                </Box>
-                <Box sx={{ display: 'inline' }} m={1}>
-                  <Button size="small" onClick={removeUserFromOrg}>
-                    Remove User from organization
+                </Grid>
+                <Grid item>
+                  <Button onClick={openModifyUserForm} sx={{ display: "block" }}>
+                    Modify users
                   </Button>
-                </Box>
-              </Box>
-            </Box>
-            <hr />
+                </Grid>
+                <Grid item>
+                  <Button onClick={exit} sx={{ display: "block" }}>
+                    Back to organization selection
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
 
-            <Box>
-              <Box mx={1}>
-                <Button size="small" onClick={exitOrg}>
-                  Exit organization
-                </Button>
-              </Box>
+        <Dialog
+          open={showModifyUserForm}
+          onClose={closeModifyUserForm}>
+          <DialogTitle>
+            Modify user
+          </DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              name="username"
+              label="Username"
+              fullWidth
+              variant="standard"
+              sx={{ my: 1 }}
+              onChange={e => setInputUsername(e.target.value)}
+              value={inputUsername}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Box
+              mx={"auto"} my={0}
+              sx={{ color: '#999999', fontSize: 13, display: 'inline' }}>
+              <span> The content will keep if temparary close the pop-up. </span>
             </Box>
-          </Box>
-        </MuiCard>
+            <Button
+              onClick={closeModifyUserForm}>
+              Cancel
+            </Button>
+            <Button
+              onClick={removeUserFromOrg}
+              variant="contained"
+              color="error">
+              Remove
+            </Button>
+            <Button
+              onClick={addUserToOrg}
+              variant="contained"
+              color="success">
+              Add
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     );
   };
@@ -88,8 +164,8 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
     return (
       <Box>
         <Box py={2}>
-          <Box> 
-          <h2> Project List </h2>
+          <Box>
+            <h2> Project List </h2>
           </Box>
           <hr />
         </Box>
@@ -143,7 +219,6 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
               }
             </Box>
           </Box>
-
         </MuiCard>
       </Box>
     );
@@ -152,6 +227,7 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
   return (
     <div>
       {orgHeader()}
+      <hr />
       <Grid container spacing={2} my={2}>
         <Grid item xs={9}>
           {orgProjectList()}
