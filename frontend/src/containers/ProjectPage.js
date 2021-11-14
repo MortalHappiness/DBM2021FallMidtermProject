@@ -14,9 +14,9 @@ export default function OrganizationPage() {
   const { loading, error, data } = useQuery(GET_PROJECT_QUERY, {
     variables: { projectId: parseInt(id) },
   });
-  const navigate = useNavigate();
 
   if (loading) return <Loading />;
+  if (error) return `Error ${error}`;
 
   return (
     <div>

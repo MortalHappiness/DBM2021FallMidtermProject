@@ -17,6 +17,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   if (loading) return <Loading />;
+  if (error) return `Error ${error}`;
   const { organizations } = data.me;
 
   return (

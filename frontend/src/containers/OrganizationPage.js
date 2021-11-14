@@ -20,6 +20,7 @@ export default function ProjectPage() {
   const navigate = useNavigate();
 
   if (loading) return <Loading />;
+  if (error) return `Error ${error}`;
 
   return (
     <div>
