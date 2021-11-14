@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
@@ -10,8 +9,9 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import { FormHelperText } from "@mui/material";
+import FormHelperText from "@mui/material/FormHelperText";
 
 import { LOGIN_MUTATION } from "../graphql";
 import { useAuth } from "../Auth";
@@ -93,9 +93,13 @@ export default function LoginPage() {
           >
             Sign In
           </Button>
-          <Link component={RouterLink} variant="body2" to="/register">
-            {"Don't have an account? Sign Up"}
-          </Link>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>
