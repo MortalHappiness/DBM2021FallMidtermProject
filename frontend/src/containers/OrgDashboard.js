@@ -20,7 +20,7 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
     // TODO
     exit();
   };
-  
+
   const addUserToOrg = () => {
     if (inputUsername === "") return;
     // TODO
@@ -44,83 +44,110 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
   const orgHeader = () => {
     return (
       <Box m={2}>
-        <div> <h1> {org.name} </h1> </div>
-        <div>
-          <Box>
-            <Box mx={3}>
-              <Input 
-                placeholder="username" 
-                defaultValue={inputUsername} 
-                onChange={e => setInputUsername(e.target.value)}
-              />
+        <Box> <h1> {org.name} </h1> </Box>
+
+        <MuiCard variant="outlined">
+          <Box p={2}>
+            <Box>
+              <Box mx={2}>
+                <Input
+                  placeholder="username"
+                  defaultValue={inputUsername}
+                  onChange={e => setInputUsername(e.target.value)}
+                />
+              </Box>
+              <Box>
+                <Box sx={{ display: 'inline' }} mx={1}>
+                  <Button size="small" onClick={addUserToOrg}>
+                    Add User to organization
+                  </Button>
+                </Box>
+                <Box sx={{ display: 'inline' }} m={1}>
+                  <Button size="small" onClick={removeUserFromOrg}>
+                    Remove User from organization
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+            <hr />
+
+            <Box>
+              <Box mx={1}>
+                <Button size="small" onClick={exitOrg}>
+                  Exit organization
+                </Button>
+              </Box>
             </Box>
           </Box>
-          <Box>
-            <Box sx={{ display: 'inline' }} mx={2}>
-              <Button size="small" onClick={addUserToOrg}>
-                Add User to organization
-              </Button>
-            </Box>
-            <Box sx={{ display: 'inline' }} m={2}>
-              <Button size="small" onClick={removeUserFromOrg}>
-                Remove User from organization
-              </Button>
-            </Box>
-          </Box>
-          <Box>
-            <Box m={2}>
-              <Button size="small" onClick={exitOrg}>
-                Exit organization
-              </Button>
-            </Box>
-          </Box>
-        </div>
+        </MuiCard>
       </Box>
     );
   };
 
   const orgProjectList = () => {
-    return projList.map(proj => {
-      return (
-        <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              {proj.name}
-            </Typography>
-            <Typography variant="body2">
-              {`Id: ${proj.id}`}
-            </Typography>
-            <Typography variant="body2">
-              Task count: {31}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" onClick={() => setCurrentProj(proj)}>
-              Enter
-            </Button>
-          </CardActions>
-        </MuiCard>
-      )
-    })
+    return (
+      <Box>
+        <Box py={2}>
+          <Box> 
+          <h2> Project List </h2>
+          </Box>
+          <hr />
+        </Box>
+        <Box px={1}>
+          {
+            projList.map(proj => {
+              return (
+                <Box my={1}>
+                  <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
+                    <CardContent>
+                      <Typography variant="h5" component="div">
+                        {proj.name}
+                      </Typography>
+                      <Typography variant="body2">
+                        {`Id: ${proj.id}`}
+                      </Typography>
+                      <Typography variant="body2">
+                        Task count: {31}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" onClick={() => setCurrentProj(proj)}>
+                        Enter
+                      </Button>
+                    </CardActions>
+                  </MuiCard>
+                </Box>
+              )
+            })
+          }
+        </Box>
+      </Box>
+    )
   };
 
   const orgUserList = () => {
     return (
       <Box>
-        <Box>
-          <h3>User list</h3>
-        </Box>
-        <Box m={2}>
-          {
-            userList.map(user => {
-              return (
-                <Box my={1}>
-                  {user.username}
-                </Box>
-              );
-            })
-          }
-        </Box>
+        <MuiCard variant="outlined">
+          <Box mx={2}>
+            <Box>
+              <h3>User list</h3>
+            </Box>
+            <hr />
+            <Box m={2}>
+              {
+                userList.map(user => {
+                  return (
+                    <Box my={1}>
+                      {user.username}
+                    </Box>
+                  );
+                })
+              }
+            </Box>
+          </Box>
+
+        </MuiCard>
       </Box>
     );
   };
@@ -128,7 +155,7 @@ function OrgDashboard({ user, org, setCurrentProj, exit }) {
   return (
     <div>
       {orgHeader()}
-      <Grid container spacing={2}>
+      <Grid container spacing={2} my={2}>
         <Grid item xs={9}>
           {orgProjectList()}
         </Grid>

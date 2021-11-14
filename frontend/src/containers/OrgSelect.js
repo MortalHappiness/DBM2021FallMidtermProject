@@ -4,6 +4,7 @@ import MuiCard from "@mui/material/Card";
 import { Button, CardActions, CardContent, Typography } from "@mui/material";
 import { GET_ORGS_BY_USER } from "../graphql/queries.js";
 import { useQuery } from "@apollo/client";
+import { Box } from "@mui/system";
 
 function OrgSelect({ username, userId, setCurrentOrg }) {
   const [orgList, setOrgList] = useState([
@@ -18,36 +19,49 @@ function OrgSelect({ username, userId, setCurrentOrg }) {
     },
   });
 
+  useEffect(() => {
+    console.log({ loading, error, data });
+  }, [loading, error, data])
+
   // TODO: fetch org list for user
   // TODO: be able to exit a organization
 
   return (
-    <div>
-      <div> <h1> Hello! { username } </h1> </div>
-      <div> <h1> Your Organizations </h1> </div>
-      {
-        orgList.map(org => {
-          return (
-            <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  { org.name }
-                </Typography>
-                <Typography variant="body2">{`Id: ${org.id}`}</Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small" onClick={() => setCurrentOrg(org)}>
-                  Enter
-                </Button>
-                <Button size="small" onClick={() => {}}>
-                  Exit Organization (Fake) (TODO)
-                </Button>
-              </CardActions>
-            </MuiCard>
-          )
-        })
-      }
-    </div>
+    <Box>
+      <Box> <h1> Hello! { username } </h1> </Box>
+      <Box> <h2> Your Organizations </h2> </Box>
+      <Box>
+        {
+          orgList.map(org => {
+            return (
+              <Box my={2}>
+                <MuiCard variant="outlined" sx={{ minWidth: 275 }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      { org.name }
+                    </Typography>
+                    {/* <Typography variant="body1">
+                      {`Id: ${org.id}`}
+                    </Typography> */}
+                    <Typography variant="body2">
+                      {`Project count: 12334(fake)`}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" onClick={() => setCurrentOrg(org)}>
+                      Enter
+                    </Button>
+                    <Button size="small" onClick={() => {}}>
+                      Exit Organization (Fake) (TODO)
+                    </Button>
+                  </CardActions>
+                </MuiCard>
+              </Box>
+            )
+          })
+        }
+      </Box>
+    </Box>
   )
 }
 
