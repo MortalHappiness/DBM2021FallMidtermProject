@@ -26,6 +26,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    localStorage.removeItem("token");
     const formData = new FormData(e.currentTarget);
     try {
       const { data } = await login({
