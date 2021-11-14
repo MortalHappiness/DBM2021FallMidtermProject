@@ -11,12 +11,14 @@ import LoginPage from "./containers/LoginPage";
 import RegisterPage from "./containers/RegisterPage";
 import Dashboard from "./containers/Dashboard";
 import NotFoundPage from "./containers/NotFoundPage";
+import NavBar from "./containers/NavBar";
 import Loading from "./components/Loading";
 
 export default function App() {
   return (
     <Router>
       <AuthProvider>
+        <NavBar />
         <Routes>
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<LoginPage />} />
