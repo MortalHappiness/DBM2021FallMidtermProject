@@ -15,7 +15,7 @@ export const GET_ME_QUERY = gql`
 `;
 
 export const GET_ORG_QUERY = gql`
-  query Query($organizationId: Int!) {
+  query GetOrgQuery($organizationId: Int!) {
     organization(id: $organizationId) {
       id
       name
@@ -23,6 +23,15 @@ export const GET_ORG_QUERY = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export const GET_PROJECT_QUERY = gql`
+  query GetProjectQuery($projectId: Int!) {
+    project(id: $projectId) {
+      id
+      name
     }
   }
 `;

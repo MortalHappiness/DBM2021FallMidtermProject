@@ -12,6 +12,7 @@ import RegisterPage from "./containers/RegisterPage";
 import Dashboard from "./containers/Dashboard";
 import NotFoundPage from "./containers/NotFoundPage";
 import OrganizationPage from "./containers/OrganizationPage";
+import ProjectPage from "./containers/ProjectPage";
 import NavBar from "./containers/NavBar";
 import Loading from "./components/Loading";
 
@@ -37,6 +38,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <OrganizationPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/project/:id"
+            element={
+              <RequireAuth>
+                <ProjectPage />
               </RequireAuth>
             }
           />

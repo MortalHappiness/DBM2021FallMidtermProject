@@ -12,7 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { GET_ORG_QUERY } from "../graphql";
 import Loading from "../components/Loading";
 
-export default function OrganizationPage() {
+export default function ProjectPage() {
   const { id } = useParams();
   const { loading, error, data } = useQuery(GET_ORG_QUERY, {
     variables: { organizationId: parseInt(id) },
