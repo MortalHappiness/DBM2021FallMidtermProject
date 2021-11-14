@@ -36,7 +36,7 @@ export default function TaskCreationForm() {
   };
 
   const handleSubmit = () => {
-    createTask({ variables: { data: formInput } });
+    // createTask({ variables: { data: formInput } });
     closeCreateForm();
     setFormInput({ title: "", content: "" });
   };
