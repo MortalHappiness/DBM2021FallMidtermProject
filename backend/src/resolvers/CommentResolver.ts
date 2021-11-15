@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { PubSubEngine } from "graphql-subscriptions";
 import {
   Ctx,
   Mutation,
@@ -8,16 +7,10 @@ import {
   Arg,
   InputType,
   Field,
-  Subscription,
-  Root,
-  ObjectType,
-  PubSub,
   Query,
 } from "type-graphql";
 import { Comment } from "@generated/type-graphql";
 import { Context } from "../interfaces/context";
-import MutationType from "./MutationType";
-import SubscriptionPayload from "./SubscriptionPayload";
 
 @InputType()
 class CreateCommentInput implements Partial<Comment> {
@@ -37,12 +30,6 @@ class UpdateCommentInput implements Partial<Comment> {
   content?: string;
 }
 
-@ObjectType({ implements: SubscriptionPayload })
-class CommentSubscriptionPayload extends SubscriptionPayload {
-  @Field((type) => Comment)
-  comment: Comment;
-}
-
 @Resolver(Comment)
 class CommentResolver {
   @Query((returns) => [Comment])
@@ -60,8 +47,7 @@ class CommentResolver {
   @Mutation((returns) => Comment)
   async createComment(
     @Arg("data") data: CreateCommentInput,
-    @Ctx() context: Context,
-    @PubSub() pubsub: PubSubEngine
+    @Ctx() context: Context
   ) {
     const { prisma } = context;
 
@@ -72,10 +58,6 @@ class CommentResolver {
         authorId: data.authorId,
       },
     });
-    pubsub.publish("COMMENT", {
-      mutationType: MutationType.CREATED,
-      comment,
-    });
     return comment;
   }
 
@@ -83,8 +65,7 @@ class CommentResolver {
   async updateComment(
     @Arg("id", (type) => Int) id: number,
     @Arg("data") data: UpdateCommentInput,
-    @Ctx() context: Context,
-    @PubSub() pubsub: PubSubEngine
+    @Ctx() context: Context
   ) {
     const { prisma } = context;
 
@@ -94,36 +75,18 @@ class CommentResolver {
         content: data.content,
       },
     });
-
-    pubsub.publish("COMMENT", {
-      mutationType: MutationType.UPDATED,
-      comment,
-    });
     return comment;
   }
 
   @Mutation((returns) => Comment)
   async deleteComment(
     @Arg("id", (type) => Int) id: number,
-    @Ctx() context: Context,
-    @PubSub() pubsub: PubSubEngine
+    @Ctx() context: Context
   ) {
     const { prisma } = context;
 
     const comment = await prisma.comment.delete({ where: { id } });
-
-    pubsub.publish("COMMENT", {
-      mutationType: MutationType.DELETED,
-      comment,
-    });
     return comment;
-  }
-
-  @Subscription({ topics: "COMMENT" })
-  commentSubscription(
-    @Root() commentSubscriptionPayload: CommentSubscriptionPayload
-  ): CommentSubscriptionPayload {
-    return commentSubscriptionPayload;
   }
 }
 

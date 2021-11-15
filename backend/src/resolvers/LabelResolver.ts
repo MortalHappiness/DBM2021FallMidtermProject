@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import { PubSubEngine } from "graphql-subscriptions";
 import {
   Ctx,
   Mutation,
@@ -8,16 +7,10 @@ import {
   Arg,
   InputType,
   Field,
-  Subscription,
-  Root,
-  ObjectType,
-  PubSub,
   Query,
 } from "type-graphql";
 import { Label } from "@generated/type-graphql";
 import { Context } from "../interfaces/context";
-import MutationType from "./MutationType";
-import SubscriptionPayload from "./SubscriptionPayload";
 
 @InputType()
 class CreateLabelInput implements Partial<Label> {
@@ -40,12 +33,6 @@ class UpdateLabelInput implements Partial<Label> {
   color?: string;
 }
 
-@ObjectType({ implements: SubscriptionPayload })
-class LabelSubscriptionPayload extends SubscriptionPayload {
-  @Field((type) => Label)
-  label: Label;
-}
-
 @Resolver(Label)
 class LabelResolver {
   @Query((returns) => [Label])
@@ -63,8 +50,7 @@ class LabelResolver {
   @Mutation((returns) => Label)
   async createLabel(
     @Arg("data") data: CreateLabelInput,
-    @Ctx() context: Context,
-    @PubSub() pubsub: PubSubEngine
+    @Ctx() context: Context
   ) {
     const { prisma } = context;
 
@@ -79,10 +65,6 @@ class LabelResolver {
         projectId: data.projectId,
       },
     });
-    pubsub.publish("LABEL", {
-      mutationType: MutationType.CREATED,
-      label,
-    });
     return label;
   }
 
@@ -90,8 +72,7 @@ class LabelResolver {
   async updateLabel(
     @Arg("id", (type) => Int) id: number,
     @Arg("data") data: UpdateLabelInput,
-    @Ctx() context: Context,
-    @PubSub() pubsub: PubSubEngine
+    @Ctx() context: Context
   ) {
     const { prisma } = context;
 
@@ -102,36 +83,19 @@ class LabelResolver {
         color: data.color,
       },
     });
-
-    pubsub.publish("LABEL", {
-      mutationType: MutationType.UPDATED,
-      label,
-    });
     return label;
   }
 
   @Mutation((returns) => Label)
   async deleteLabel(
     @Arg("id", (type) => Int) id: number,
-    @Ctx() context: Context,
-    @PubSub() pubsub: PubSubEngine
+    @Ctx() context: Context
   ) {
     const { prisma } = context;
 
     const label = await prisma.label.delete({ where: { id } });
 
-    pubsub.publish("LABEL", {
-      mutationType: MutationType.DELETED,
-      label,
-    });
     return label;
-  }
-
-  @Subscription({ topics: "LABEL" })
-  labelSubscription(
-    @Root() labelSubscriptionPayload: LabelSubscriptionPayload
-  ): LabelSubscriptionPayload {
-    return labelSubscriptionPayload;
   }
 }
 
