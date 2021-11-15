@@ -39,6 +39,16 @@ export const GET_PROJECT_QUERY = gql`
         status
         createdAt
         updatedAt
+        labels {
+          id
+          name
+          color
+        }
+      }
+      labels {
+        id
+        name
+        color
       }
     }
   }

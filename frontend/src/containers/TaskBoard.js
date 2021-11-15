@@ -1,5 +1,11 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -32,11 +38,10 @@ const grid = 8;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "lightgreen" : "white",
 
   // styles we need to apply on draggables
   ...draggableStyle,
@@ -97,11 +102,11 @@ export default function TaskBoard({
                 style={getListStyle(snapshot.isDraggingOver)}
                 {...provided.droppableProps}
               >
-                {columnNames[ind]}
+                <div style={{ userSelect: "none" }}>{columnNames[ind]}</div>
                 {el.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
-                      <div
+                      <Card
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
@@ -110,8 +115,22 @@ export default function TaskBoard({
                           provided.draggableProps.style
                         )}
                       >
-                        {item.title}
-                      </div>
+                        <CardContent>
+                          <Typography variant="h5" component="div" gutterBottom>
+                            {item.title}
+                          </Typography>
+                          <Stack direction="row" spacing={1}>
+                            {item.labels.map((label) => (
+                              <Chip
+                                key={label.id}
+                                label={label.name}
+                                size="small"
+                                sx={{ backgroundColor: label.color }}
+                              />
+                            ))}
+                          </Stack>
+                        </CardContent>
+                      </Card>
                     )}
                   </Draggable>
                 ))}
