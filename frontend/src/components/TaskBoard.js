@@ -43,6 +43,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "white",
 
+  cursor: "pointer",
+
   // styles we need to apply on draggables
   ...draggableStyle,
 });
@@ -59,6 +61,7 @@ export default function TaskBoard({
   lists,
   setLists,
   updateTask,
+  navigateToTask,
 }) {
   const onDragEnd = async (result) => {
     const { source, destination } = result;
@@ -114,6 +117,7 @@ export default function TaskBoard({
                           snapshot.isDragging,
                           provided.draggableProps.style
                         )}
+                        onClick={() => navigateToTask(item.id)}
                       >
                         <CardContent>
                           <Typography variant="h5" component="div" gutterBottom>

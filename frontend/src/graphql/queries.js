@@ -35,10 +35,7 @@ export const GET_PROJECT_QUERY = gql`
       tasks {
         id
         title
-        content
         status
-        createdAt
-        updatedAt
         labels {
           id
           name
@@ -50,6 +47,19 @@ export const GET_PROJECT_QUERY = gql`
         name
         color
       }
+    }
+  }
+`;
+
+export const GET_TASK_QUERY = gql`
+  query GetTaskQuery($taskId: Int!) {
+    task(id: $taskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
     }
   }
 `;

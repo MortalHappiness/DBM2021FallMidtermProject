@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { useMutation, useQuery } from "@apollo/client";
 import update from "immutability-helper";
 
@@ -9,17 +9,22 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 
 import { GET_PROJECT_QUERY, UPDATE_TASK_MUTATION } from "../graphql";
-import TaskBoard from "./TaskBoard";
+import TaskBoard from "../components/TaskBoard";
 import Loading from "../components/Loading";
+import TaskContentModal from "./TaskContentModal";
 
 export default function ProjectPage() {
   const { id } = useParams();
   const { loading, error, data } = useQuery(GET_PROJECT_QUERY, {
     variables: { projectId: parseInt(id) },
   });
+  const location = useLocation();
+  const navigate = useNavigate();
   const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
   const columnNames = ["TODO", "IN_PROGRESS", "DONE"];
   const [lists, setLists] = useState(null);
+  const search = new URLSearchParams(location.search);
+  const taskId = search.get("taskId");
 
   useEffect(() => {
     if (!data) return;
@@ -36,6 +41,10 @@ export default function ProjectPage() {
   if (loading) return <Loading />;
   if (error) return `Error ${error}`;
 
+  const navigateToTask = (id) => {
+    navigate(`${location.pathname}?taskId=${id}`);
+  };
+
   return (
     <div>
       <Container>
@@ -48,11 +57,19 @@ export default function ProjectPage() {
             {data.project.name}
           </Typography>
           <Divider />
+          {taskId !== null && (
+            <TaskContentModal
+              open={true}
+              onClose={() => navigate(location.pathname)}
+              taskId={taskId}
+            />
+          )}
           <TaskBoard
             columnNames={columnNames}
             lists={lists}
             setLists={setLists}
             updateTask={updateTask}
+            navigateToTask={navigateToTask}
           />
         </Box>
       </Container>
