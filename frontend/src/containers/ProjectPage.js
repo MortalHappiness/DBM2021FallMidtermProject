@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import update from "immutability-helper";
 
 import Container from "@mui/material/Container";
@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 
-import { GET_PROJECT_QUERY } from "../graphql";
+import { GET_PROJECT_QUERY, UPDATE_TASK_MUTATION } from "../graphql";
 import TaskBoard from "./TaskBoard";
 import Loading from "../components/Loading";
 
@@ -17,6 +17,7 @@ export default function ProjectPage() {
   const { loading, error, data } = useQuery(GET_PROJECT_QUERY, {
     variables: { projectId: parseInt(id) },
   });
+  const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
   const columnNames = ["TODO", "IN_PROGRESS", "DONE"];
   const [lists, setLists] = useState(null);
 
@@ -51,6 +52,7 @@ export default function ProjectPage() {
             columnNames={columnNames}
             lists={lists}
             setLists={setLists}
+            updateTask={updateTask}
           />
         </Box>
       </Container>

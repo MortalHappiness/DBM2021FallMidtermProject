@@ -1,12 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { useQuery } from "@apollo/client";
-import update from "immutability-helper";
-
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-import { GET_PROJECT_QUERY } from "../graphql";
-import Loading from "../components/Loading";
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -30,6 +22,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   const result = {};
   result[droppableSource.droppableId] = sourceClone;
   result[droppableDestination.droppableId] = destClone;
+  result.removed = removed;
 
   return result;
 };
@@ -56,8 +49,13 @@ const getListStyle = (isDraggingOver) => ({
   margin: 20,
 });
 
-export default function TaskBoard({ columnNames, lists, setLists }) {
-  const onDragEnd = (result) => {
+export default function TaskBoard({
+  columnNames,
+  lists,
+  setLists,
+  updateTask,
+}) {
+  const onDragEnd = async (result) => {
     const { source, destination } = result;
 
     // dropped outside the list
@@ -79,6 +77,12 @@ export default function TaskBoard({ columnNames, lists, setLists }) {
       newLists[dInd] = result[dInd];
 
       setLists(newLists);
+      await updateTask({
+        variables: {
+          updateTaskId: parseInt(result.removed.id),
+          data: { status: columnNames[dInd] },
+        },
+      });
     }
   };
 
