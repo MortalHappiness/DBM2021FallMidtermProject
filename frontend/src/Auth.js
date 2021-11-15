@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
     notifyOnNetworkStatusChange: true,
   });
 
+  if (error) localStorage.removeItem("token");
   const value = { user: data?.me, loading, refetch };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

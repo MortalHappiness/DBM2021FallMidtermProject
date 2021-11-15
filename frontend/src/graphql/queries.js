@@ -32,6 +32,14 @@ export const GET_PROJECT_QUERY = gql`
     project(id: $projectId) {
       id
       name
+      tasks {
+        id
+        title
+        content
+        status
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

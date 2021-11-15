@@ -35,9 +35,34 @@ async function main() {
   });
   await prisma.task.createMany({
     data: [
-      { title: "task_1", content: "task_1_content", authorId: 1, projectId: 1 },
-      { title: "task_2", content: "task_2_content", authorId: 1, projectId: 1 },
-      { title: "task_3", content: "task_3_content", authorId: 2, projectId: 1 },
+      {
+        title: "task_1",
+        content: "task_1_content",
+        status: "TODO",
+        authorId: 1,
+        projectId: 1,
+      },
+      {
+        title: "task_2",
+        content: "task_2_content",
+        status: "IN_PROGRESS",
+        authorId: 1,
+        projectId: 1,
+      },
+      {
+        title: "task_3",
+        content: "task_3_content",
+        status: "DONE",
+        authorId: 2,
+        projectId: 1,
+      },
+      {
+        title: "task_4",
+        content: "task_4_content",
+        status: "TODO",
+        authorId: 2,
+        projectId: 1,
+      },
     ],
   });
   await prisma.comment.createMany({

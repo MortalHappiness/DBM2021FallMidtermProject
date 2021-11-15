@@ -9,7 +9,7 @@ import { AuthProvider, useAuth } from "./Auth";
 import IndexPage from "./containers/IndexPage";
 import LoginPage from "./containers/LoginPage";
 import RegisterPage from "./containers/RegisterPage";
-import Dashboard from "./containers/Dashboard";
+import DashboardPage from "./containers/DashboardPage";
 import NotFoundPage from "./containers/NotFoundPage";
 import OrganizationPage from "./containers/OrganizationPage";
 import ProjectPage from "./containers/ProjectPage";
@@ -29,7 +29,7 @@ export default function App() {
             path="/dashboard"
             element={
               <RequireAuth>
-                <Dashboard />
+                <DashboardPage />
               </RequireAuth>
             }
           />

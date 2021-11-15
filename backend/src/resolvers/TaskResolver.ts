@@ -41,6 +41,9 @@ class UpdateTaskInput implements Partial<Task> {
 
   @Field({ nullable: true })
   content?: string;
+
+  @Field({ nullable: true })
+  status?: string;
 }
 
 @ObjectType({ implements: SubscriptionPayload })
@@ -75,6 +78,7 @@ class TaskResolver {
       data: {
         title: data.title,
         content: data.content ?? undefined,
+        status: "TODO",
         projectId: data.projectId,
         authorId: data.authorId,
       },
@@ -100,6 +104,7 @@ class TaskResolver {
       data: {
         title: data.title ?? undefined,
         content: data.content ?? undefined,
+        status: data.status ?? undefined,
       },
     });
 
