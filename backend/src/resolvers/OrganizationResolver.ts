@@ -8,6 +8,7 @@ import {
   InputType,
   Field,
   Query,
+  Authorized,
 } from "type-graphql";
 import { Organization } from "@generated/type-graphql";
 import { Context } from "../interfaces/context";
@@ -41,6 +42,7 @@ class OrganizationResolver {
     return await prisma.organization.findUnique({ where: { id } });
   }
 
+  @Authorized()
   @Mutation((returns) => Organization)
   async createOrganization(
     @Arg("data") data: CreateOrganizationInput,
@@ -51,6 +53,9 @@ class OrganizationResolver {
     const organization = await prisma.organization.create({
       data: {
         name: data.name,
+        users: {
+          connect: [{ id: context.user?.client_id }]
+        }
       },
     });
     return organization;

@@ -1,5 +1,9 @@
 import { gql } from "@apollo/client";
 
+// ###########################################################################
+//  user
+// ###########################################################################
+
 export const GET_ME_QUERY = gql`
   query GetMeQuery {
     me {
@@ -14,6 +18,10 @@ export const GET_ME_QUERY = gql`
   }
 `;
 
+// ###########################################################################
+//  organization
+// ###########################################################################
+
 export const GET_ORG_QUERY = gql`
   query GetOrgQuery($organizationId: Int!) {
     organization(id: $organizationId) {
@@ -26,6 +34,10 @@ export const GET_ORG_QUERY = gql`
     }
   }
 `;
+
+// ###########################################################################
+//  project
+// ###########################################################################
 
 export const GET_PROJECT_QUERY = gql`
   query GetProjectQuery($projectId: Int!) {
@@ -50,6 +62,10 @@ export const GET_PROJECT_QUERY = gql`
     }
   }
 `;
+
+// ###########################################################################
+//  task
+// ###########################################################################
 
 export const GET_TASK_QUERY = gql`
   query GetTaskQuery($taskId: Int!) {
