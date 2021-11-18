@@ -96,3 +96,53 @@ export const DELETE_TASK_MUTATION = gql`
     }
   }
 `;
+
+// ###########################################################################
+//  comment
+// ###########################################################################
+
+export const CREATE_COMMENT_MUTATION = gql`
+  mutation CreateComment($data: CreateCommentInput!) {
+    createComment(data: $data) {
+      id
+      content
+      commentedAt
+      updatedAt
+    }
+  }
+`;
+
+export const DELETE_COMMENT_MUTATION = gql`
+  mutation DeleteComment($deleteCommentId: Int!) {
+    deleteComment(id: $deleteCommentId) {
+      id
+      content
+      commentedAt
+      updatedAt
+    }
+  }
+`;
+
+// ###########################################################################
+//  label
+// ###########################################################################
+
+export const CREATE_LABEL_MUTATION = gql`
+  mutation CreateLabel($data: CreateLabelInput!) {
+    createLabel(data: $data) {
+      id
+      name
+      color
+    }
+  }
+`;
+
+export const DELETE_LABEL_MUTATION = gql`
+  mutation DeleteLabel($deleteLabelId: Int!) {
+    deleteLabel(id: $deleteLabelId) {
+      id
+      name
+      color
+    }
+  }
+`;
