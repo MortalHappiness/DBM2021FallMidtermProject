@@ -16,6 +16,34 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
+export const JOIN_ORG_MUTATION = gql`
+  mutation JoinOrganization($organizationId: Int!) {
+    joinOrganization(organizationId: $organizationId) {
+      id
+      username
+      displayName
+      organizations {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const LEAVE_ORG_MUTATION = gql`
+  mutation LeaveOrganization($organizationId: Int!) {
+    leaveOrganization(organizationId: $organizationId) {
+      id
+      username
+      displayName
+      organizations {
+        id
+        name
+      }
+    }
+  }
+`;
+
 // ###########################################################################
 //  organization
 // ###########################################################################
@@ -93,6 +121,120 @@ export const DELETE_TASK_MUTATION = gql`
       id
       title
       content
+    }
+  }
+`;
+
+export const ADD_LABEL_MUTATION = gql`
+  mutation AddLabel($labelId: Int!, $taskId: Int!) {
+    addLabel(labelId: $labelId, taskId: $taskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
+      labels {
+        id
+        name
+        color
+      }
+    }
+  }
+`;
+
+export const REMOVE_LABEL_MUTATION = gql`
+  mutation RemoveLabel($labelId: Int!, $taskId: Int!) {
+    removeLabel(labelId: $labelId, taskId: $taskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
+      labels {
+        id
+        name
+        color
+      }
+    }
+  }
+`;
+
+export const ASSIGN_TO_USER = gql`
+  mutation AssignToUser($userId: Int!, $taskId: Int!) {
+    assignToUser(userId: $userId, taskId: $taskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
+      users {
+        id
+        username
+        displayName
+      }
+    }
+  }
+`;
+
+export const UNASSIGN_FROM_USER = gql`
+  mutation UnassignFromUser($userId: Int!, $taskId: Int!) {
+    unassignFromUser(userId: $userId, taskId: $taskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
+      users {
+        id
+        username
+        displayName
+      }
+    }
+  }
+`;
+
+export const BLOCK_TASK_MUTATION = gql`
+  mutation BlockTask($blockingTaskId: Int!, $blockerTaskId: Int!) {
+    blockTask(blockingTaskId: $blockingTaskId, blockerTaskId: $blockerTaskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
+      blocking {
+        id
+        title
+        content
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const UNBLOCK_TASK_MUTATION = gql`
+  mutation UnblockTask($blockingTaskId: Int!, $blockerTaskId: Int!) {
+    unblockTask(blockingTaskId: $blockingTaskId, blockerTaskId: $blockerTaskId) {
+      id
+      title
+      content
+      status
+      createdAt
+      updatedAt
+      blocking {
+        id
+        title
+        content
+        status
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

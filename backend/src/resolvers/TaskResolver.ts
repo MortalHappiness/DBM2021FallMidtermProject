@@ -8,6 +8,7 @@ import {
   InputType,
   Field,
   Query,
+  Authorized,
 } from "type-graphql";
 import { Task } from "@generated/type-graphql";
 import { Context } from "../interfaces/context";
@@ -100,6 +101,126 @@ class TaskResolver {
     const { prisma } = context;
 
     const task = await prisma.task.delete({ where: { id } });
+
+    return task;
+  }
+
+  @Mutation((returns) => Task)
+  async addLabel(
+    @Arg("taskId", (type) => Int) taskId: number,
+    @Arg("labelId", (type) => Int) labelId: number,
+    @Ctx() context: Context
+  ) {
+    const { prisma } = context;
+
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        labels: {
+          connect: { id: labelId }
+        },
+      },
+    });
+
+    return task;
+  }
+
+  @Mutation((returns) => Task)
+  async removeLabel(
+    @Arg("taskId", (type) => Int) taskId: number,
+    @Arg("labelId", (type) => Int) labelId: number,
+    @Ctx() context: Context
+  ) {
+    const { prisma } = context;
+
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        labels: {
+          disconnect: { id: labelId }
+        },
+      },
+    });
+
+    return task;
+  }
+
+  @Mutation((returns) => Task)
+  async assignToUser(
+    @Arg("taskId", (type) => Int) taskId: number,
+    @Arg("userId", (type) => Int) userId: number,
+    @Ctx() context: Context
+  ) {
+    const { prisma } = context;
+
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        users: {
+          connect: { id: userId }
+        },
+      },
+    });
+
+    return task;
+  }
+
+  @Mutation((returns) => Task)
+  async unassignFromUser(
+    @Arg("taskId", (type) => Int) taskId: number,
+    @Arg("userId", (type) => Int) userId: number,
+    @Ctx() context: Context
+  ) {
+    const { prisma } = context;
+
+    const task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        users: {
+          disconnect: { id: userId }
+        },
+      },
+    });
+
+    return task;
+  }
+
+  @Mutation((returns) => Task)
+  async blockTask(
+    @Arg("blockerTaskId", (type) => Int) blockerTaskId: number,
+    @Arg("blockingTaskId", (type) => Int) blockingTaskId: number,
+    @Ctx() context: Context
+  ) {
+    const { prisma } = context;
+
+    const task = await prisma.task.update({
+      where: { id: blockerTaskId },
+      data: {
+        blocking: {
+          connect: { id: blockingTaskId }
+        },
+      },
+    });
+
+    return task;
+  }
+
+  @Mutation((returns) => Task)
+  async unblockTask(
+    @Arg("blockerTaskId", (type) => Int) blockerTaskId: number,
+    @Arg("blockingTaskId", (type) => Int) blockingTaskId: number,
+    @Ctx() context: Context
+  ) {
+    const { prisma } = context;
+
+    const task = await prisma.task.update({
+      where: { id: blockerTaskId },
+      data: {
+        blocking: {
+          disconnect: { id: blockingTaskId }
+        },
+      },
+    });
 
     return task;
   }
