@@ -62,9 +62,18 @@ export const CREATE_ORG_MUTATION = gql`
   }
 `;
 
+export const UPDATE_ORG_MUTATION = gql`
+  mutation UpdateOrganization($data: UpdateOrganizationInput!, $organizationId: Int!) {
+    updateOrganization(data: $data, id: $organizationId) {
+      id
+      name
+    }
+  }
+`;
+
 export const DELETE_ORG_MUTATION = gql`
-  mutation DeteteOrganization($deleteOrganizationId: Int!) {
-    deleteOrganization(id: $deleteOrganizationId) {
+  mutation DeteteOrganization($organizationId: Int!) {
+    deleteOrganization(id: $organizationId) {
       id
       name
     }
@@ -84,9 +93,18 @@ export const CREATE_PROJECT_MUTATION = gql`
   }
 `;
 
+export const UPDATE_PROJECT_MUTATION = gql`
+  mutation UpdateProject($data: UpdateProjectInput!, $projectId: Int!) {
+    updateProject(data: $data, id: $projectId) {
+      id
+      name
+    }
+  }
+`;
+
 export const DELETE_PROJECT_MUTATION = gql`
-  mutation DeteteProject($deleteProjectId: Int!) {
-    deleteProject(id: $deleteProjectId) {
+  mutation DeteteProject($projectId: Int!) {
+    deleteProject(id: $projectId) {
       id
       name
     }
@@ -103,14 +121,22 @@ export const CREATE_TASK_MUTATION = gql`
       id
       title
       content
+      status
+      createdAt
+      updatedAt
     }
   }
 `;
 
 export const UPDATE_TASK_MUTATION = gql`
-  mutation UpdateTask($updateTaskId: Int!, $data: UpdateTaskInput!) {
-    updateTask(data: $data, id: $updateTaskId) {
+  mutation UpdateTask($taskId: Int!, $data: UpdateTaskInput!) {
+    updateTask(data: $data, id: $taskId) {
       id
+      title
+      content
+      status
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -121,6 +147,9 @@ export const DELETE_TASK_MUTATION = gql`
       id
       title
       content
+      status
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -254,9 +283,20 @@ export const CREATE_COMMENT_MUTATION = gql`
   }
 `;
 
+export const UPDATE_COMMENT_MUTATION = gql`
+  mutation UpdateComment($data: UpdateCommentInput!, $commentId: Int!) {
+    updateComment(data: $data, id: $commentId) {
+      id
+      content
+      commentedAt
+      updatedAt
+    }
+  }
+`;
+
 export const DELETE_COMMENT_MUTATION = gql`
-  mutation DeleteComment($deleteCommentId: Int!) {
-    deleteComment(id: $deleteCommentId) {
+  mutation DeleteComment($commentId: Int!) {
+    deleteComment(id: $commentId) {
       id
       content
       commentedAt
@@ -279,9 +319,19 @@ export const CREATE_LABEL_MUTATION = gql`
   }
 `;
 
+export const UPDATE_LABEL_MUTATION = gql`
+  mutation UpdateLabel($data: UpdateLabelInput!, $labelId: Int!) {
+    updateLabel(data: $data, id: $labelId) {
+      id
+      name
+      color
+    }
+  }
+`;
+
 export const DELETE_LABEL_MUTATION = gql`
-  mutation DeleteLabel($deleteLabelId: Int!) {
-    deleteLabel(id: $deleteLabelId) {
+  mutation DeleteLabel($labelId: Int!) {
+    deleteLabel(id: $labelId) {
       id
       name
       color
