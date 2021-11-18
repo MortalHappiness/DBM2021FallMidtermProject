@@ -63,7 +63,10 @@ export const CREATE_ORG_MUTATION = gql`
 `;
 
 export const UPDATE_ORG_MUTATION = gql`
-  mutation UpdateOrganization($data: UpdateOrganizationInput!, $organizationId: Int!) {
+  mutation UpdateOrganization(
+    $data: UpdateOrganizationInput!
+    $organizationId: Int!
+  ) {
     updateOrganization(data: $data, id: $organizationId) {
       id
       name
@@ -249,7 +252,10 @@ export const BLOCK_TASK_MUTATION = gql`
 
 export const UNBLOCK_TASK_MUTATION = gql`
   mutation UnblockTask($blockingTaskId: Int!, $blockerTaskId: Int!) {
-    unblockTask(blockingTaskId: $blockingTaskId, blockerTaskId: $blockerTaskId) {
+    unblockTask(
+      blockingTaskId: $blockingTaskId
+      blockerTaskId: $blockerTaskId
+    ) {
       id
       title
       content

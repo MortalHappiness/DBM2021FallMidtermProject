@@ -87,7 +87,7 @@ export default function TaskBoard({
       setLists(newLists);
       await updateTask({
         variables: {
-          updateTaskId: parseInt(result.removed.id),
+          taskId: parseInt(result.removed.id),
           data: { status: columnNames[dInd] },
         },
       });
