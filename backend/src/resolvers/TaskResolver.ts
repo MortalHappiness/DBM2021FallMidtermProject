@@ -59,6 +59,10 @@ class TaskResolver {
   ) {
     const { prisma, user } = context;
 
+    if (!user?.client_id) {
+      throw new Error(`Cannot create task before login`);
+    }
+
     const task = await prisma.task.create({
       data: {
         title: data.title,
@@ -66,7 +70,7 @@ class TaskResolver {
         status: "TODO",
         projectId: data.projectId,
         // TODO: tell ts client_id will not be undefined after authorized
-        authorId: user?.client_id || 0,
+        authorId: user.client_id,
       },
     });
     return task;
