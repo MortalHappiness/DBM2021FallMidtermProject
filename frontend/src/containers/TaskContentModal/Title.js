@@ -1,7 +1,13 @@
+import { useMutation } from "@apollo/client";
+
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
-export const Title = styled(TextField)(({ theme }) => ({
+import { UPDATE_TASK_MUTATION } from "../../graphql";
+
+const ENTER_KEY = 13;
+
+const TitleTextFeild = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     "& input": {
       fontSize: "2rem",
@@ -19,3 +25,27 @@ export const Title = styled(TextField)(({ theme }) => ({
     },
   },
 }));
+
+export default function Title({ taskId, defaultValue }) {
+  const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
+
+  const handleTitleChange = async (e) => {
+    await updateTask({
+      variables: { taskId: parseInt(taskId), data: { title: e.target.value } },
+    });
+  };
+
+  return (
+    <TitleTextFeild
+      id="title"
+      fullWidth
+      defaultValue={defaultValue}
+      onBlur={handleTitleChange}
+      onKeyDown={(e) => {
+        if (e.keyCode === ENTER_KEY) {
+          e.target.blur();
+        }
+      }}
+    />
+  );
+}
