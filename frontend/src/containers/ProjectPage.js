@@ -14,11 +14,13 @@ import Loading from "../components/Loading";
 import TaskContentModal from "./TaskContentModal";
 import CreateTaskForm from "./CreateTaskForm";
 import { Grid } from '@mui/material';
+import CreateLabelForm from './CreateLabelForm';
 
 export default function ProjectPage() {
   const { id } = useParams();
+  const projectId = parseInt(id) || null;
   const { loading, error, data } = useQuery(GET_PROJECT_QUERY, {
-    variables: { projectId: parseInt(id) },
+    variables: { projectId },
   });
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,13 +58,16 @@ export default function ProjectPage() {
           }}
         >
           <Grid container direction="row" justifyContent="space-between">
-            <Grid item>
+            <Grid item xs>
               <Typography component="h1" variant="h4">
                 {data.project.name}
               </Typography>
             </Grid>
-            <Grid>
-              <CreateTaskForm projectId={parseInt(id)} />
+            <Grid item xs="auto">
+              <CreateTaskForm projectId={projectId} />
+            </Grid>
+              <CreateLabelForm projectId={projectId} />
+            <Grid item xs="auto">
             </Grid>
           </Grid>
           <Divider />

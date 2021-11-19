@@ -18,7 +18,7 @@ class CreateLabelInput implements Partial<Label> {
   name: string;
 
   @Field()
-  color?: string;
+  color: string;
 
   @Field()
   projectId: number;
