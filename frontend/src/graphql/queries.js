@@ -31,6 +31,10 @@ export const GET_ORG_QUERY = gql`
         id
         name
       }
+      users {
+        id
+        displayName
+      }
     }
   }
 `;

@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { GET_ORG_QUERY } from "../graphql";
 import Loading from "../components/Loading";
+import { Grid } from '@mui/material';
 
 export default function OrganizationPage() {
   const { id } = useParams();
@@ -34,27 +35,51 @@ export default function OrganizationPage() {
             {data.organization.name}
           </Typography>
           <Divider />
-          <Typography component="h1" variant="h5">
-            Projects
-          </Typography>
-          <Divider />
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: 360,
-              bgcolor: "background.paper",
-            }}
-            component="nav"
-          >
-            {data.organization.projects.map((project) => (
-              <ListItemButton
-                key={project.id}
-                onClick={() => navigate(`/project/${project.id}`)}
+
+          <Grid container spacing={2}>
+            <Grid item xs={8}>
+              <Typography component="h1" variant="h5">
+                Projects
+              </Typography>
+              <Divider />
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                  bgcolor: "background.paper",
+                }}
+                component="nav"
               >
-                <ListItemText primary={project.name} />
-              </ListItemButton>
-            ))}
-          </List>
+                {data.organization.projects.map((project) => (
+                  <ListItemButton
+                    key={project.id}
+                    onClick={() => navigate(`/project/${project.id}`)}
+                  >
+                    <ListItemText primary={project.name} />
+                  </ListItemButton>
+                ))}
+              </List>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography component="h1" variant="h5">
+                Members
+              </Typography>
+              <Divider />
+
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                  bgcolor: "background.paper",
+                }}
+                component="nav"
+              >
+                {data.organization.users.map((user) => (
+                  <ListItemText primary={user.displayName} />
+                ))}
+              </List>
+            </Grid>
+          </Grid>
         </Box>
       </Container>
     </div>
