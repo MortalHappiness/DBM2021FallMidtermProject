@@ -80,6 +80,11 @@ export const GET_TASK_QUERY = gql`
       status
       createdAt
       updatedAt
+      labels {
+        id
+        name
+        color
+      }
     }
   }
 `;

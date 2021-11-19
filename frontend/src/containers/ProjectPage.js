@@ -26,7 +26,7 @@ export default function ProjectPage() {
   const columnNames = ["TODO", "IN_PROGRESS", "DONE"];
   const [lists, setLists] = useState(null);
   const search = new URLSearchParams(location.search);
-  const taskId = search.get("taskId");
+  const taskId = parseInt(search.get("taskId")) || null;
 
   useEffect(() => {
     if (!data) return;

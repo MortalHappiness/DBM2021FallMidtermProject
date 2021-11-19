@@ -3,8 +3,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Label from '../components/Label';
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -125,12 +125,7 @@ export default function TaskBoard({
                           </Typography>
                           <Stack direction="row" spacing={1}>
                             {item.labels.map((label) => (
-                              <Chip
-                                key={label.id}
-                                label={label.name}
-                                size="small"
-                                sx={{ backgroundColor: label.color }}
-                              />
+                              <Label label={label} taskId={item.id} />
                             ))}
                           </Stack>
                         </CardContent>

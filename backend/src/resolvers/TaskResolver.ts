@@ -143,6 +143,9 @@ class TaskResolver {
           disconnect: { id: labelId }
         },
       },
+      include: {
+        labels: true
+      }
     });
 
     return task;

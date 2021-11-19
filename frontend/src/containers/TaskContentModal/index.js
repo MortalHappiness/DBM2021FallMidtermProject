@@ -9,6 +9,8 @@ import Title from "./Title";
 import Description from "./Description";
 import Comments from "./Comments";
 import Dates from "./Dates";
+import { Stack } from '@mui/material';
+import Label from '../../components/Label';
 
 const styles = {
   box: {
@@ -51,6 +53,11 @@ export default function TaskContentModal({ open, onClose, taskId }) {
             createdAt={data.task.createdAt}
             updatedAt={data.task.updatedAt}
           />
+          <Stack direction="row" spacing={1}>
+            {data.task.labels.map((label) => (
+              <Label label={label} taskId={taskId} canDelete />
+            ))}
+          </Stack>
         </Box>
       </Box>
     </Modal>
