@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "i": "npx concurrently \"cd frontend && yarn\" \"cd backend && yarn\" && npx prisma generate",
+    "i": "npx concurrently \"cd frontend && yarn\" \"cd backend && yarn && npx prisma generate\"",
     "start": "npx concurrently \"cd frontend && yarn start\" \"cd backend && yarn start\""
   },
   "dependencies": {
