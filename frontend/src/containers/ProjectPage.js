@@ -9,7 +9,7 @@ import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 
 import { GET_PROJECT_QUERY, UPDATE_TASK_MUTATION } from "../graphql";
-import TaskBoard from "../components/TaskBoard";
+import TaskBoard from "./TaskBoard";
 import Loading from "../components/Loading";
 import TaskContentModal from "./TaskContentModal";
 
