@@ -11,6 +11,8 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { GET_ME_QUERY } from "../graphql";
 import Loading from "../components/Loading";
+import { Button, Grid } from "@mui/material";
+import CreateOrganizationForm from "./CreateOrganizationForm.js";
 
 export default function Dashboard() {
   const { loading, error, data } = useQuery(GET_ME_QUERY);
@@ -28,9 +30,17 @@ export default function Dashboard() {
             marginTop: 4,
           }}
         >
-          <Typography component="h1" variant="h4">
-            Your Organizations
-          </Typography>
+          <Grid container direction="row" justifyContent="space-between">
+            <Grid item>
+              <Typography component="h1" variant="h4">
+                Your Organizations
+              </Typography>
+            </Grid>
+            <Grid>
+              <CreateOrganizationForm />
+            </Grid>
+          </Grid>
+
           <Divider />
           <List
             sx={{
