@@ -11,7 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { GET_ORG_QUERY } from "../graphql";
 import Loading from "../components/Loading";
-import { Grid } from '@mui/material';
+import { Grid } from "@mui/material";
 
 export default function OrganizationPage() {
   const { id } = useParams();
@@ -75,7 +75,7 @@ export default function OrganizationPage() {
                 component="nav"
               >
                 {data.organization.users.map((user) => (
-                  <ListItemText primary={user.displayName} />
+                  <ListItemText key={user.id} primary={user.displayName} />
                 ))}
               </List>
             </Grid>
