@@ -8,78 +8,162 @@ async function main() {
   const passwordHash = await bcrypt.hash(password, saltRounds);
   await prisma.organization.create({
     data: {
-      name: "org_1",
+      name: "Database Management Group E",
       users: {
         create: [
-          { username: "user_1", displayName: "Alice", passwordHash },
-          { username: "user_2", displayName: "Bob", passwordHash },
+          { username: "micc", displayName: "MiccWan", passwordHash },
+          { username: "edison", displayName: "edisonhello", passwordHash },
+          { username: "chisheng", displayName: "劉奇聖", passwordHash },
         ],
       },
       projects: {
         create: [
           {
-            name: "project_1",
+            name: "midterm project",
             labels: {
               create: [
-                { name: "label_1", color: "red" },
-                { name: "label_2", color: "blue" },
-                { name: "label_3", color: "yello" },
-                { name: "label_4", color: "green" },
+                { name: "frontend", color: "white" },
+                { name: "backend", color: "gray" },
+                { name: "priority", color: "red" },
               ],
             },
           },
-          { name: "project_2" },
+          {
+            name: "Group Homework#1: ER Diagram",
+            labels: {
+              create: [
+                { name: "todo", color: "yellow" },
+                { name: "priority", color: "red" },
+                { name: "done", color: "green" },
+              ]
+            }
+          },
         ],
       },
     },
   });
-  await prisma.task.createMany({
-    data: [
-      {
-        title: "task_1",
-        content: "task_1_content",
-        status: "TODO",
-        authorId: 1,
-        projectId: 1,
+  await prisma.task.create({
+    data: {
+      title: "基本架構",
+      content: "完成前後端基本架構，設計 API",
+      status: "DONE",
+      author: { connect: { id: 1 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 },
+          { id: 2 }
+        ]
       },
-      {
-        title: "task_2",
-        content: "task_2_content",
-        status: "IN_PROGRESS",
-        authorId: 1,
-        projectId: 1,
+      users: {
+        connect: [
+          { id: 3 }
+        ]
+      }
+    }
+  });
+  await prisma.task.create({
+    data: {
+      title: "CRUD Resolver",
+      content: "加 6 個 entity 的 CRUD resolver，4 個 M-N relation 的 Updates(connect/disconnect) resolver",
+      status: "IN_PROGRESS",
+      author: { connect: { id: 3 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 2 }
+        ]
       },
-      {
-        title: "task_3",
-        content: "task_3_content",
-        status: "DONE",
-        authorId: 2,
-        projectId: 1,
+      users: {
+        connect: [
+          { id: 1 }
+        ]
+      }
+    }
+  });
+  await prisma.task.create({
+    data: {
+      title: "index page",
+      content: "",
+      status: "DONE",
+      author: { connect: { id: 2 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 }
+        ]
       },
-      {
-        title: "task_4",
-        content: "task_4_content",
-        status: "TODO",
-        authorId: 2,
-        projectId: 1,
+      users: {
+        connect: [
+          { id: 2 }
+        ]
+      }
+    },
+  });
+  await prisma.task.create({
+    data: {
+      title: "organization page",
+      content: "",
+      status: "DONE",
+      author: { connect: { id: 2 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 }
+        ]
       },
-    ],
+      users: {
+        connect: [
+          { id: 2 }
+        ]
+      }
+    },
+  });
+  await prisma.task.create({
+    data: {
+      title: "task modal",
+      content: "comment, label, author, blocked by, assignedTo",
+      status: "IN_PROGRESS",
+      author: { connect: { id: 1 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 }
+        ]
+      },
+      users: {
+        connect: [
+          { id: 3 }
+        ]
+      }
+    },
+  });
+  await prisma.task.create({
+    data: {
+      title: "add react router dom",
+      content: "",
+      status: "DONE",
+      author: { connect: { id: 3 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 }
+        ]
+      },
+      users: {
+        connect: [
+          { id: 3 }
+        ]
+      }
+    }
   });
   await prisma.comment.createMany({
     data: [
-      { content: "comment_1", taskId: 1, authorId: 1 },
-      { content: "comment_2", taskId: 1, authorId: 1 },
-      { content: "comment_3", taskId: 1, authorId: 2 },
-      { content: "comment_4", taskId: 1, authorId: 1 },
+      { content: "這也太多了吧", taskId: 5, authorId: 1 },
+      { content: "有人要做這個嗎", taskId: 5, authorId: 1 },
+      { content: "我可", taskId: 5, authorId: 3 },
+      { content: "(y)", taskId: 5, authorId: 2 },
     ],
-  });
-  await prisma.task.update({
-    where: { id: 1 },
-    data: { labels: { connect: [{ id: 1 }, { id: 2 }, { id: 3 }] } },
-  });
-  await prisma.task.update({
-    where: { id: 2 },
-    data: { labels: { connect: [{ id: 2 }, { id: 4 }] } },
   });
 }
 
