@@ -23,9 +23,6 @@ class CreateTaskInput implements Partial<Task> {
 
   @Field()
   projectId: number;
-
-  @Field()
-  authorId: number;
 }
 
 @InputType()
@@ -54,12 +51,13 @@ class TaskResolver {
     return await prisma.task.findUnique({ where: { id } });
   }
 
+  @Authorized()
   @Mutation((returns) => Task)
   async createTask(
     @Arg("data") data: CreateTaskInput,
     @Ctx() context: Context
   ) {
-    const { prisma } = context;
+    const { prisma, user } = context;
 
     const task = await prisma.task.create({
       data: {
@@ -67,7 +65,8 @@ class TaskResolver {
         content: data.content ?? undefined,
         status: "TODO",
         projectId: data.projectId,
-        authorId: data.authorId,
+        // TODO: tell ts client_id will not be undefined after authorized
+        authorId: user?.client_id || 0,
       },
     });
     return task;

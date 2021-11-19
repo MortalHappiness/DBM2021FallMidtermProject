@@ -12,6 +12,8 @@ import { GET_PROJECT_QUERY, UPDATE_TASK_MUTATION } from "../graphql";
 import TaskBoard from "./TaskBoard";
 import Loading from "../components/Loading";
 import TaskContentModal from "./TaskContentModal";
+import CreateTaskForm from "./CreateTaskForm";
+import { Grid } from '@mui/material';
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -53,9 +55,16 @@ export default function ProjectPage() {
             marginTop: 4,
           }}
         >
-          <Typography component="h1" variant="h4">
-            {data.project.name}
-          </Typography>
+          <Grid container direction="row" justifyContent="space-between">
+            <Grid item>
+              <Typography component="h1" variant="h4">
+                {data.project.name}
+              </Typography>
+            </Grid>
+            <Grid>
+              <CreateTaskForm projectId={parseInt(id)} />
+            </Grid>
+          </Grid>
           <Divider />
           {taskId !== null && (
             <TaskContentModal

@@ -3,18 +3,21 @@ import { useMutation } from "@apollo/client";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { CREATE_ORG_MUTATION } from "../graphql/mutations.js";
+import { CREATE_TASK_MUTATION } from "../graphql/mutations.js";
 
-export default function CreateOrganizationForm() {
+export default function CreateTaskForm({ projectId }) {
   const [show, setShow] = useState(false);
-  const [name, setName] = useState("");
-  const [createOrg] = useMutation(CREATE_ORG_MUTATION);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [createTask] = useMutation(CREATE_TASK_MUTATION);
 
   const add = () => {
-    createOrg({
+    createTask({
       variables: {
         data: {
-          name,
+          title,
+          content,
+          projectId,
         },
       },
     });
@@ -24,25 +27,35 @@ export default function CreateOrganizationForm() {
   return (
     <Box>
       <Button onClick={() => setShow(true)}>
-        Create Organization
+        Create Task
       </Button>
 
       <Dialog
         open={show}
         onClose={() => setShow(false)}>
         <DialogTitle>
-          Create Organization
+          Create Task
         </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
-            name="name"
-            label="Organization Name"
+            name="title"
+            label="Title"
             fullWidth
             variant="standard"
             sx={{ my: 1 }}
-            onChange={e => setName(e.target.value)}
-            value={name}
+            onChange={e => setTitle(e.target.value)}
+            value={title}
+          />
+          <TextField
+            autoFocus
+            name="content"
+            label="Content"
+            fullWidth
+            variant="standard"
+            sx={{ my: 1 }}
+            onChange={e => setContent(e.target.value)}
+            value={content}
           />
         </DialogContent>
         <DialogActions>
