@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack";
 import Label from "../../components/Label";
 import LabelSelect from "../../components/LabelSelect";
 import Author from "./Author";
+import Assignees from "./Assignees";
 
 const styles = {
   box: {
@@ -62,10 +63,10 @@ export default function TaskContentModal({
         </Box>
         <Box sx={styles.right}>
           <Author author={data.task.author.displayName} />
-          <Divider />
-          <Dates
-            createdAt={data.task.createdAt}
-            updatedAt={data.task.updatedAt}
+          <Assignees
+            taskId={taskId}
+            users={data.task.project.organization.users}
+            assignees={data.task.users}
           />
           <Stack direction="row" spacing={1}>
             {data.task.labels.map((label) => (
@@ -73,6 +74,11 @@ export default function TaskContentModal({
             ))}
           </Stack>
           <LabelSelect labels={projectLabels} taskId={taskId} />
+          <Divider />
+          <Dates
+            createdAt={data.task.createdAt}
+            updatedAt={data.task.updatedAt}
+          />
         </Box>
       </Box>
     </Modal>

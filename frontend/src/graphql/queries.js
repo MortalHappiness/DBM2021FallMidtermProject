@@ -106,6 +106,10 @@ export const GET_TASK_QUERY = gql`
           }
         }
       }
+      users {
+        id
+        displayName
+      }
     }
   }
 `;

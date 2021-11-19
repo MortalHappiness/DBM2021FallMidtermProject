@@ -1,33 +1,20 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Avatar from "@mui/material/Avatar";
 
-import UsernameAvatar from "../../components/UsernameAvatar";
+import SectionTitle from "./SectionTitle";
 
 const styles = {
   box: {
     color: "text.primary",
-  },
-  username: {
-    display: "inline-flex",
-    gap: "5px",
-    alignItems: "center",
-    marginTop: "0 10px 0 0",
-    padding: "8px",
-    borderRadius: "4px",
-    background: "rgb(235, 236, 240)",
   },
 };
 
 export default function Author({ author }) {
   return (
     <Box sx={styles.box}>
-      <Typography variant="subtitle1" gutterBottom component="div">
-        AUTHOR
-      </Typography>
-      <Box sx={styles.username}>
-        <UsernameAvatar size={28} username={author} />
-        <div>{author}</div>
-      </Box>
+      <SectionTitle title="author" />
+      <Chip avatar={<Avatar>{author[0]}</Avatar>} label={author} />
     </Box>
   );
 }
