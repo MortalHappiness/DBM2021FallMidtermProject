@@ -71,6 +71,7 @@ export default function ProjectPage() {
               open={true}
               onClose={() => navigate(location.pathname)}
               taskId={taskId}
+              projectLabels={data.project.labels}
             />
           )}
           <TaskBoard

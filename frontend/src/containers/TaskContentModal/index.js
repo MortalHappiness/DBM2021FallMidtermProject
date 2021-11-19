@@ -11,6 +11,7 @@ import Comments from "./Comments";
 import Dates from "./Dates";
 import { Stack } from '@mui/material';
 import Label from '../../components/Label';
+import LabelSelect from '../../components/LabelSelect';
 
 const styles = {
   box: {
@@ -32,7 +33,7 @@ const styles = {
   },
 };
 
-export default function TaskContentModal({ open, onClose, taskId }) {
+export default function TaskContentModal({ open, onClose, taskId, projectLabels }) {
   const { loading, error, data } = useQuery(GET_TASK_QUERY, {
     variables: { taskId: parseInt(taskId) },
   });
@@ -55,9 +56,10 @@ export default function TaskContentModal({ open, onClose, taskId }) {
           />
           <Stack direction="row" spacing={1}>
             {data.task.labels.map((label) => (
-              <Label label={label} taskId={taskId} canDelete />
+              <Label key={label.id} label={label} taskId={taskId} canDelete />
             ))}
           </Stack>
+          <LabelSelect labels={projectLabels} taskId={taskId} />
         </Box>
       </Box>
     </Modal>
