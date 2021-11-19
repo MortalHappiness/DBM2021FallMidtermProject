@@ -9,11 +9,9 @@ const styles = {
 
 export default function Dates({ createdAt, updatedAt }) {
   return (
-    <>
-      <Box sx={styles.box}>
-        <div>Created at {moment(createdAt).fromNow()}</div>
-        <div>Updated at {moment(updatedAt).fromNow()}</div>
-      </Box>
-    </>
+    <Box sx={styles.box}>
+      <div>Created at {moment(createdAt).fromNow()}</div>
+      <div>Updated at {moment(updatedAt).fromNow()}</div>
+    </Box>
   );
 }

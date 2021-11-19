@@ -13,8 +13,8 @@ import TaskBoard from "./TaskBoard";
 import Loading from "../components/Loading";
 import TaskContentModal from "./TaskContentModal";
 import CreateTaskForm from "./CreateTaskForm";
-import { Grid } from '@mui/material';
-import CreateLabelForm from './CreateLabelForm';
+import CreateLabelForm from "./CreateLabelForm";
+import Grid from "@mui/material/Grid";
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -66,9 +66,8 @@ export default function ProjectPage() {
             <Grid item xs="auto">
               <CreateTaskForm projectId={projectId} />
             </Grid>
-              <CreateLabelForm projectId={projectId} />
-            <Grid item xs="auto">
-            </Grid>
+            <CreateLabelForm projectId={projectId} />
+            <Grid item xs="auto"></Grid>
           </Grid>
           <Divider />
           {taskId !== null && (

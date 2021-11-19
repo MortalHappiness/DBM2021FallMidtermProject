@@ -85,6 +85,27 @@ export const GET_TASK_QUERY = gql`
         name
         color
       }
+      author {
+        id
+        displayName
+      }
+      comments {
+        id
+        content
+        commentedAt
+        updatedAt
+        author {
+          id
+        }
+      }
+      project {
+        organization {
+          users {
+            id
+            displayName
+          }
+        }
+      }
     }
   }
 `;

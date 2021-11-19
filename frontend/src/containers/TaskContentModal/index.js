@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 
 import { GET_TASK_QUERY } from "../../graphql";
 import Loading from "../../components/Loading";
@@ -9,9 +10,10 @@ import Title from "./Title";
 import Description from "./Description";
 import Comments from "./Comments";
 import Dates from "./Dates";
-import { Stack } from '@mui/material';
-import Label from '../../components/Label';
-import LabelSelect from '../../components/LabelSelect';
+import Stack from "@mui/material/Stack";
+import Label from "../../components/Label";
+import LabelSelect from "../../components/LabelSelect";
+import Author from "./Author";
 
 const styles = {
   box: {
@@ -30,10 +32,19 @@ const styles = {
   },
   right: {
     width: "35%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
   },
 };
 
-export default function TaskContentModal({ open, onClose, taskId, projectLabels }) {
+export default function TaskContentModal({
+  open,
+  onClose,
+  taskId,
+  projectLabels,
+  users,
+}) {
   const { loading, error, data } = useQuery(GET_TASK_QUERY, {
     variables: { taskId: parseInt(taskId) },
   });
@@ -50,6 +61,8 @@ export default function TaskContentModal({ open, onClose, taskId, projectLabels 
           <Comments taskId={taskId} />
         </Box>
         <Box sx={styles.right}>
+          <Author author={data.task.author.displayName} />
+          <Divider />
           <Dates
             createdAt={data.task.createdAt}
             updatedAt={data.task.updatedAt}

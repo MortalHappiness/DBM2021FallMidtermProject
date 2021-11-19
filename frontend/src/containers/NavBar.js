@@ -7,39 +7,9 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
-import Avatar from "@mui/material/Avatar";
 
 import { useAuth } from "../Auth";
-
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = "#";
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.substr(-2);
-  }
-
-  return color;
-}
-
-function stringAvatar(name) {
-  const nameSplit = name.split(" ");
-  const first = nameSplit[0][0];
-  const second = nameSplit.length >= 2 ? nameSplit[1][0] : "";
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: first + second,
-  };
-}
+import UsernameAvatar from "../components/UsernameAvatar";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -68,8 +38,12 @@ function NavBar() {
               color="inherit"
               onClick={() => navigate("/dashboard")}
             >
-              <Avatar {...stringAvatar(auth.user.displayName)} />
-              <Typography variant="h6" component="div">
+              <UsernameAvatar username={auth.user.displayName} />
+              <Typography
+                sx={{ marginLeft: "5px" }}
+                variant="h6"
+                component="div"
+              >
                 {auth.user.displayName}
               </Typography>
             </IconButton>
