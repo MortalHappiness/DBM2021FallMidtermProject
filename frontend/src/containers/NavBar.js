@@ -15,6 +15,11 @@ function NavBar() {
   const navigate = useNavigate();
   const auth = useAuth();
 
+  const logout = async () => {
+    localStorage.removeItem("token");
+    window.location.href = '/login';
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -33,20 +38,25 @@ function NavBar() {
             Assuject
           </Typography>
           {Boolean(auth.user) ? (
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={() => navigate("/dashboard")}
-            >
-              <UsernameAvatar username={auth.user.displayName} />
-              <Typography
-                sx={{ marginLeft: "5px" }}
-                variant="h6"
-                component="div"
+            <Box>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={() => navigate("/dashboard")}
               >
-                {auth.user.displayName}
-              </Typography>
-            </IconButton>
+                <UsernameAvatar username={auth.user.displayName} />
+                <Typography
+                  sx={{ marginLeft: "5px" }}
+                  variant="h6"
+                  component="div"
+                >
+                  {auth.user.displayName}
+                </Typography>
+              </IconButton>
+              <Button sx={{ color: "white" }} onClick={logout}>
+                Log out
+              </Button>
+              </Box>
           ) : (
             <>
               <Button color="inherit" onClick={() => navigate("/login")}>
