@@ -52,8 +52,14 @@ export default function CreateOrganizationForm() {
               fullWidth
               variant="standard"
               sx={{ my: 1, minWidth: "20rem" }}
-              onChange={(e) => setName(e.target.value)}
               value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                console.log(e)
+                if (e.code === 'Enter') {
+                  add();
+                }
+              }}
             />
           </DialogContent>
           <DialogActions>

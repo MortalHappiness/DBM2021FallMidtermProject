@@ -51,8 +51,13 @@ export default function CreateProjectForm({ orgId }) {
             fullWidth
             variant="standard"
             sx={{ my: 1 }}
-            onChange={(e) => setName(e.target.value)}
             value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.code === 'Enter') {
+                add();
+              }
+            }}
           />
         </DialogContent>
         <DialogActions>
