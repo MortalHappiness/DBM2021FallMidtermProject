@@ -24,6 +24,7 @@ const styles = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "70%",
+    height: "90%",
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
@@ -33,6 +34,7 @@ const styles = {
   },
   left: {
     width: "60%",
+    overflowY: "auto",
   },
   right: {
     width: "40%",
@@ -59,15 +61,17 @@ export default function TaskContentModal({
     <Modal open={open} onClose={onClose}>
       <Box sx={styles.box}>
         <Box sx={styles.left}>
-          <Title taskId={taskId} defaultValue={data.task.title} />
-          <Description taskId={taskId} defaultValue={data.task.content} />
-          <LinkedTasks
-            taskId={taskId}
-            tasks={data.task.project.tasks}
-            blockedBy={data.task.blockedBy}
-            blocks={data.task.blocking}
-          />
-          <Comments taskId={taskId} />
+          <Box sx={{ margin: "15px" }}>
+            <Title taskId={taskId} defaultValue={data.task.title} />
+            <Description taskId={taskId} defaultValue={data.task.content} />
+            <LinkedTasks
+              taskId={taskId}
+              tasks={data.task.project.tasks}
+              blockedBy={data.task.blockedBy}
+              blocks={data.task.blocking}
+            />
+            <Comments taskId={taskId} />
+          </Box>
         </Box>
         <Divider sx={styles.verticalDivider} flexItem orientation="vertical" />
         <Box sx={styles.right}>
