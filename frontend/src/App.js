@@ -15,6 +15,8 @@ import OrganizationPage from "./containers/OrganizationPage";
 import ProjectPage from "./containers/ProjectPage";
 import NavBar from "./containers/NavBar";
 import Loading from "./components/Loading";
+import CreateOrganizationInvitation from "./containers/OrganizationInvitationPage.js";
+import OrganizationInvitationPage from "./containers/OrganizationInvitationPage.js";
 
 export default function App() {
   return (
@@ -46,6 +48,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <ProjectPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/oi/:id"
+            element={
+              <RequireAuth>
+                <OrganizationInvitationPage />
               </RequireAuth>
             }
           />
