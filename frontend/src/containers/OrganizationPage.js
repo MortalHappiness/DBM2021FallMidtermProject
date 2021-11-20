@@ -11,7 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { GET_ME_QUERY, GET_ORG_QUERY, LEAVE_ORG_MUTATION } from "../graphql";
 import Loading from "../components/Loading";
-import { Grid, IconButton, ListItem, ListItemIcon } from "@mui/material";
+import { Grid, IconButton, ListItem, ListItemIcon, Tooltip } from "@mui/material";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PersonIcon from '@mui/icons-material/Person';
 import CreateOrganizationInvitation from "./CreateOrganizationInvitation.js";
@@ -52,11 +52,13 @@ export default function OrganizationPage() {
               </Typography>
             </Grid>
             <Grid item xs="auto" mx={1}>
-              <IconButton
-                color="error"
-                onClick={leaveOrganization}>
-                <ExitToAppIcon />
-              </IconButton>
+              <Tooltip title="Leave Organization">
+                <IconButton
+                  color="error"
+                  onClick={leaveOrganization}>
+                  <ExitToAppIcon />
+                </IconButton>
+              </Tooltip>
             </Grid>
           </Grid>
 

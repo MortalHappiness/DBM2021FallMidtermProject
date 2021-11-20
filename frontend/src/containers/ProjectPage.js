@@ -71,7 +71,7 @@ export default function ProjectPage() {
               <CreateLabelForm projectId={projectId} labels={data.project.labels} />
             </Grid>
           </Grid>
-          <Box my={1}>
+          <Box my={2}>
             <Divider />
           </Box>
           {taskId !== null && (

@@ -28,12 +28,12 @@ export default function Dashboard() {
       <Container>
         <Box mt={4}>
           <Grid container direction="row">
-            <Grid item>
+            <Grid item xs>
               <Typography component="h2" variant="h4">
                 Your Organizations
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs="auto">
               <CreateOrganizationForm />
             </Grid>
           </Grid>
