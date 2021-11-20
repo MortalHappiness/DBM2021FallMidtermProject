@@ -21,6 +21,9 @@ export default function OrganizationPage() {
   });
   const navigate = useNavigate();
 
+  // TODO: subscribe to org change
+  // The user list is not updated when new user is join.
+
   if (loading) return <Loading />;
   if (error) return `Error ${error}`;
 

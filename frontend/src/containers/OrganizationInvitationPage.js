@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import { GET_ORG_QUERY } from "../graphql";
 import Loading from "../components/Loading";
 import { Button, Grid } from "@mui/material";
+import { JOIN_ORG_MUTATION } from "../graphql";
 
 export default function OrganizationInvitationPage() {
   const { id } = useParams();
@@ -16,12 +17,17 @@ export default function OrganizationInvitationPage() {
     variables: { organizationId: parseInt(id) },
   });
   const navigate = useNavigate();
+  const [joinOrg] = useMutation(JOIN_ORG_MUTATION);
 
   if (loading) return <Loading />;
   if (error) return `Error ${error}`;
 
   const join = () => {
-    // join mutation
+    joinOrg({
+      variables: {
+        organizationId: Number(id),
+      },
+    });
     navigate(`/organization/${id}`);
   };
 
