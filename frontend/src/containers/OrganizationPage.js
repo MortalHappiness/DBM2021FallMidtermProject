@@ -12,6 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { GET_ORG_QUERY } from "../graphql";
 import Loading from "../components/Loading";
 import { Grid } from "@mui/material";
+import CreateOrganizationInvitation from "./CreateOrganizationInvitation.js";
 
 export default function OrganizationPage() {
   const { id } = useParams();
@@ -61,9 +62,17 @@ export default function OrganizationPage() {
               </List>
             </Grid>
             <Grid item xs={4}>
-              <Typography component="h1" variant="h5">
+            <Grid container direction="row" justifyContent="space-between">
+            <Grid item>
+            <Typography component="h1" variant="h5">
                 Members
               </Typography>
+            </Grid>
+            <Grid>
+              <CreateOrganizationInvitation />
+            </Grid>
+          </Grid>
+              
               <Divider />
 
               <List
