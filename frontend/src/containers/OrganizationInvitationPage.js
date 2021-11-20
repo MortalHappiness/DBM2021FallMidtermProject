@@ -17,7 +17,9 @@ export default function OrganizationInvitationPage() {
     variables: { organizationId: parseInt(id) },
   });
   const navigate = useNavigate();
-  const [joinOrg] = useMutation(JOIN_ORG_MUTATION);
+  const [joinOrg] = useMutation(JOIN_ORG_MUTATION, {
+    refetchQueries: [GET_ORG_QUERY],
+  });
 
   if (loading) return <Loading />;
   if (error) return `Error ${error}`;

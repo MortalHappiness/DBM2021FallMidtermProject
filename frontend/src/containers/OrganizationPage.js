@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -9,9 +9,9 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
-import { GET_ORG_QUERY } from "../graphql";
+import { GET_ME_QUERY, GET_ORG_QUERY, LEAVE_ORG_MUTATION } from "../graphql";
 import Loading from "../components/Loading";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import CreateOrganizationInvitation from "./CreateOrganizationInvitation.js";
 
 export default function OrganizationPage() {
@@ -19,10 +19,19 @@ export default function OrganizationPage() {
   const { loading, error, data } = useQuery(GET_ORG_QUERY, {
     variables: { organizationId: parseInt(id) },
   });
+  const [leaveOrg] = useMutation(LEAVE_ORG_MUTATION, {
+    refetchQueries: [GET_ME_QUERY],
+  });
   const navigate = useNavigate();
 
-  // TODO: subscribe to org change
-  // The user list is not updated when new user is join.
+  const leaveOrganization = () => {
+    leaveOrg({
+      variables: {
+        organizationId: Number(id),
+      },
+    });
+    navigate('/dashboard');
+  }
 
   if (loading) return <Loading />;
   if (error) return `Error ${error}`;
@@ -35,9 +44,22 @@ export default function OrganizationPage() {
             marginTop: 4,
           }}
         >
-          <Typography component="h1" variant="h4">
+          <Grid container direction="row" justifyContent="space-between">
+                <Grid item>
+                <Typography component="h1" variant="h4">
             {data.organization.name}
           </Typography>
+                </Grid>
+                <Grid>
+                  <Button 
+                    variant="contained" 
+                    color="error"
+                    onClick={leaveOrganization}>
+                    Leave Organization
+                    </Button>
+                </Grid>
+              </Grid>
+          
           <Divider />
 
           <Grid container spacing={2}>
@@ -65,17 +87,17 @@ export default function OrganizationPage() {
               </List>
             </Grid>
             <Grid item xs={4}>
-            <Grid container direction="row" justifyContent="space-between">
-            <Grid item>
-            <Typography component="h1" variant="h5">
-                Members
-              </Typography>
-            </Grid>
-            <Grid>
-              <CreateOrganizationInvitation />
-            </Grid>
-          </Grid>
-              
+              <Grid container direction="row" justifyContent="space-between">
+                <Grid item>
+                  <Typography component="h1" variant="h5">
+                    Members
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <CreateOrganizationInvitation />
+                </Grid>
+              </Grid>
+
               <Divider />
 
               <List
