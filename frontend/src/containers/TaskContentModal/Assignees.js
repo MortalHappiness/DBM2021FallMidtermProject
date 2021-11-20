@@ -27,7 +27,11 @@ export default function Assignees({ taskId, users, assignees }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (userId) => {
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const handleAssign = (userId) => {
     assignToUser({ variables: { userId, taskId } });
     setAnchorEl(null);
   };
@@ -57,13 +61,13 @@ export default function Assignees({ taskId, users, assignees }) {
       <Menu
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleMenuClose}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
       >
         {unassignedUsers.map((user) => (
-          <MenuItem key={user.id} onClick={() => handleClose(user.id)}>
+          <MenuItem key={user.id} onClick={() => handleAssign(user.id)}>
             {user.displayName}
           </MenuItem>
         ))}

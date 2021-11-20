@@ -110,6 +110,14 @@ export const GET_TASK_QUERY = gql`
         id
         displayName
       }
+      blockedBy {
+        id
+        title
+      }
+      blocking {
+        id
+        title
+      }
     }
   }
 `;
