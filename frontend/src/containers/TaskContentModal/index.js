@@ -70,7 +70,7 @@ export default function TaskContentModal({
               blockedBy={data.task.blockedBy}
               blocks={data.task.blocking}
             />
-            <Comments taskId={taskId} />
+            <Comments taskId={taskId} comments={data.task.comments} />
           </Box>
         </Box>
         <Divider sx={styles.verticalDivider} flexItem orientation="vertical" />

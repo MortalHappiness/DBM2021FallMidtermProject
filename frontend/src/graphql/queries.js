@@ -100,6 +100,7 @@ export const GET_TASK_QUERY = gql`
         updatedAt
         author {
           id
+          displayName
         }
       }
       project {
