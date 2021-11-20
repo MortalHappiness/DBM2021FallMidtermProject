@@ -48,7 +48,7 @@ export default function TaskContentModal({
   taskId,
   projectLabels,
 }) {
-  const { loading, error, data } = useQuery(GET_TASK_QUERY, {
+  const { loading, error, data, refetch } = useQuery(GET_TASK_QUERY, {
     variables: { taskId },
   });
 
@@ -66,6 +66,7 @@ export default function TaskContentModal({
             tasks={data.task.project.tasks}
             blockedBy={data.task.blockedBy}
             blocks={data.task.blocking}
+            refetchTask={refetch}
           />
           <Comments taskId={taskId} />
         </Box>
