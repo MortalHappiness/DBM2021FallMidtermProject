@@ -20,7 +20,7 @@ const styles = {
   box: {
     display: "flex",
     position: "absolute",
-    top: "30%",
+    top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "70%",
@@ -48,7 +48,7 @@ export default function TaskContentModal({
   taskId,
   projectLabels,
 }) {
-  const { loading, error, data, refetch } = useQuery(GET_TASK_QUERY, {
+  const { loading, error, data } = useQuery(GET_TASK_QUERY, {
     variables: { taskId },
   });
 
@@ -66,7 +66,6 @@ export default function TaskContentModal({
             tasks={data.task.project.tasks}
             blockedBy={data.task.blockedBy}
             blocks={data.task.blocking}
-            refetchTask={refetch}
           />
           <Comments taskId={taskId} />
         </Box>
@@ -86,7 +85,7 @@ export default function TaskContentModal({
               activeLabels={data.task.labels}
               labels={projectLabels}
             />
-            <Divider />
+            <Divider sx={{ margin: "20px 0" }} />
             <Dates
               createdAt={data.task.createdAt}
               updatedAt={data.task.updatedAt}
