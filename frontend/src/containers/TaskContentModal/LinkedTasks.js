@@ -19,6 +19,7 @@ import Select from "@mui/material/Select";
 
 import { BLOCK_TASK_MUTATION, UNBLOCK_TASK_MUTATION } from "../../graphql";
 import TaskId from "./TaskId";
+import { Stack } from '@mui/material';
 
 const styles = {
   titleBox: {
@@ -90,7 +91,7 @@ export default function LinkedTasks({ taskId, tasks, blockedBy, blocks }) {
     refetchQueries: ["GetTaskQuery"],
   });
   const [linkType, setLinkType] = useState(linkTypes.BLOCKED_BY);
-  const [linkedTaskId, setLinkedTaskId] = useState(null);
+  const [linkedTask, setLinkedTask] = useState(null);
 
   const canLinkedTasks = tasks.filter(
     (task) =>
@@ -118,25 +119,25 @@ export default function LinkedTasks({ taskId, tasks, blockedBy, blocks }) {
     setLinkType(e.target.value);
   };
   const handleLinkedTaskIdChange = (e) => {
-    setLinkedTaskId(e.target.value);
+    setLinkedTask(e.target.value);
   };
 
   const handleLinkTaskFormSubmit = async () => {
     if (linkType === linkTypes.BLOCKED_BY) {
       await blockTask({
-        variables: { blockingTaskId: taskId, blockerTaskId: linkedTaskId },
+        variables: { blockingTaskId: taskId, blockerTaskId: linkedTask.id },
       });
     } else {
       await blockTask({
-        variables: { blockingTaskId: linkedTaskId, blockerTaskId: taskId },
+        variables: { blockingTaskId: linkedTask.id, blockerTaskId: taskId },
       });
     }
     setLinkType(linkTypes.BLOCKED_BY);
-    setLinkedTaskId(null);
+    setLinkedTask(null);
   };
   const handleLinkTaskFormCancel = () => {
     setLinkType(linkTypes.BLOCKED_BY);
-    setLinkedTaskId(null);
+    setLinkedTask(null);
   };
 
   return (
@@ -145,11 +146,9 @@ export default function LinkedTasks({ taskId, tasks, blockedBy, blocks }) {
         <Typography variant="h6" component="div" sx={{ mt: 2 }} gutterBottom>
           Linked Tasks
         </Typography>
-        <div>
-          <IconButton onClick={() => setLinkedTaskId("")}>
-            <AddIcon />
-          </IconButton>
-        </div>
+        <IconButton onClick={() => setLinkedTask("")}>
+          <AddIcon fontSize="large" />
+        </IconButton>
       </Box>
       <Box>
         {blockedBy.length !== 0 && (
@@ -184,14 +183,12 @@ export default function LinkedTasks({ taskId, tasks, blockedBy, blocks }) {
             />
           </>
         )}
-        {linkedTaskId !== null && (
+        {linkedTask !== null && (
           <Box sx={{ marginTop: "10px" }}>
             <Box sx={{ display: "flex" }}>
               <FormControl sx={{ minWidth: 150, marginRight: "20px" }}>
                 <Select value={linkType} onChange={handleLinkTypeChange}>
-                  <MenuItem value={linkTypes.BLOCKED_BY}>
-                    is blocked by
-                  </MenuItem>
+                  <MenuItem value={linkTypes.BLOCKED_BY}>is blocked by</MenuItem>
                   <MenuItem value={linkTypes.BLOCKS}>blocks</MenuItem>
                 </Select>
               </FormControl>
@@ -200,12 +197,24 @@ export default function LinkedTasks({ taskId, tasks, blockedBy, blocks }) {
                 <Select
                   labelId="linked-task-id-label"
                   id="linked-task-id"
-                  value={linkedTaskId}
+                  value={linkedTask}
                   label="Linked Task"
+                  renderValue={(task) => {
+                    return <Stack direction="row">
+                      <TaskId taskId={task.id} />
+                      <Typography
+                        sx={styles.linkedTaskBoxTitle}
+                        variant="body2"
+                        component="div"
+                      >
+                        {task.title}
+                      </Typography>
+                    </Stack>
+                  }}
                   onChange={handleLinkedTaskIdChange}
                 >
                   {canLinkedTasks.map((task) => (
-                    <MenuItem key={task.id} value={task.id}>
+                    <MenuItem key={task.id} value={task}>
                       <TaskId taskId={task.id} />
                       <Typography
                         sx={styles.linkedTaskBoxTitle}
@@ -233,7 +242,7 @@ export default function LinkedTasks({ taskId, tasks, blockedBy, blocks }) {
                 size="small"
                 type="submit"
                 variant="contained"
-                disabled={!Boolean(linkedTaskId)}
+                disabled={!Boolean(linkedTask)}
                 onClick={handleLinkTaskFormSubmit}
               >
                 Link

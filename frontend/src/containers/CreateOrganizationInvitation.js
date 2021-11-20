@@ -28,7 +28,7 @@ export default function CreateOrganizationInvitation({ organizationId }) {
     <Box>
       <Tooltip title="Invite To Organization">
         <IconButton onClick={() => setShow(true)}>
-          <GroupAddIcon onClick={() => setShow(true)} color="action" />
+          <GroupAddIcon color="action" />
         </IconButton>
       </Tooltip>
       <Dialog open={show} onClose={() => setShow(false)}>

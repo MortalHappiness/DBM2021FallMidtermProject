@@ -38,7 +38,7 @@ export default function CreateProjectForm({ orgId }) {
     <Box>
       <Tooltip title="Create Project">
         <IconButton onClick={() => setShow(true)}>
-          <AddCircleOutlineIcon onClick={() => setShow(true)} color="action" />
+          <AddCircleOutlineIcon color="action" />
         </IconButton>
       </Tooltip>
       <Dialog open={show} onClose={() => setShow(false)}>
