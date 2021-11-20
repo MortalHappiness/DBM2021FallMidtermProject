@@ -20,7 +20,7 @@ export default function Label({ label, taskId, canDelete }) {
       key={label.id}
       label={label.name}
       size="small"
-      sx={{ bgcolor: label.color, margin: "3px" }}
+      sx={{ bgcolor: label.color, color: "text.secondary", margin: "3px" }}
       variant="outlined"
       onDelete={canDelete ? remove : undefined}
     />

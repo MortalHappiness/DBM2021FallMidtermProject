@@ -1,5 +1,7 @@
 import bcrypt = require("bcrypt");
 import { PrismaClient } from "@prisma/client";
+import { labelColors } from "../src/resolvers/LabelColorsResolver";
+
 const prisma = new PrismaClient();
 
 async function main() {
@@ -26,12 +28,12 @@ async function main() {
             name: "midterm project",
             labels: {
               create: [
-                { name: "frontend", color: "white" },
-                { name: "backend", color: "gray" },
-                { name: "priority", color: "red" },
-                { name: "bugs", color: "red" },
-                { name: "issue", color: "yellow" },
-                { name: "feature", color: "green" },
+                { name: "frontend", color: labelColors.BLUE },
+                { name: "backend", color: labelColors.ORANGE },
+                { name: "priority", color: labelColors.YELLOW },
+                { name: "bugs", color: labelColors.RED },
+                { name: "issue", color: labelColors.GREEN },
+                { name: "feature", color: labelColors.PURPLE },
               ],
             },
           },
@@ -39,21 +41,21 @@ async function main() {
             name: "Group Homework#1: ER Diagram",
             labels: {
               create: [
-                { name: "todo", color: "yellow" },
-                { name: "priority", color: "red" },
-                { name: "done", color: "green" },
-              ]
-            }
+                { name: "todo", color: labelColors.PINK },
+                { name: "priority", color: labelColors.BROWN },
+                { name: "done", color: labelColors.GRAY },
+              ],
+            },
           },
           {
             name: "Group Homework#2: Normal Form",
             labels: {
               create: [
-                { name: "todo", color: "yellow" },
-                { name: "priority", color: "red" },
-                { name: "done", color: "green" },
-              ]
-            }
+                { name: "todo", color: labelColors.BLUE },
+                { name: "priority", color: labelColors.GREEN },
+                { name: "done", color: labelColors.YELLOW },
+              ],
+            },
           },
         ],
       },
@@ -68,10 +70,10 @@ async function main() {
           { username: "LJ", displayName: "LJ", passwordHash },
           { username: "song", displayName: "song", passwordHash },
           { username: "Panda", displayName: "Panda", passwordHash },
-        ]
+        ],
       },
-      projects: {}
-    }
+      projects: {},
+    },
   });
   await prisma.organization.create({
     data: {
@@ -79,8 +81,8 @@ async function main() {
       users: {
         connect: { id: 2 },
       },
-      projects: {}
-    }
+      projects: {},
+    },
   });
   await prisma.organization.create({
     data: {
@@ -88,8 +90,8 @@ async function main() {
       users: {
         connect: { id: 2 },
       },
-      projects: {}
-    }
+      projects: {},
+    },
   });
   await prisma.organization.create({
     data: {
@@ -97,8 +99,8 @@ async function main() {
       users: {
         connect: { id: 2 },
       },
-      projects: {}
-    }
+      projects: {},
+    },
   });
   await prisma.task.create({
     data: {
@@ -108,36 +110,28 @@ async function main() {
       author: { connect: { id: 1 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 },
-          { id: 2 }
-        ]
+        connect: [{ id: 1 }, { id: 2 }],
       },
       users: {
-        connect: [
-          { id: 3 }
-        ]
-      }
-    }
+        connect: [{ id: 3 }],
+      },
+    },
   });
   await prisma.task.create({
     data: {
       title: "CRUD Resolver",
-      content: "加 6 個 entity 的 CRUD resolver，4 個 M-N relation 的 Updates(connect/disconnect) resolver",
+      content:
+        "加 6 個 entity 的 CRUD resolver，4 個 M-N relation 的 Updates(connect/disconnect) resolver",
       status: "IN_PROGRESS",
       author: { connect: { id: 3 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 2 }
-        ]
+        connect: [{ id: 2 }],
       },
       users: {
-        connect: [
-          { id: 1 }
-        ]
-      }
-    }
+        connect: [{ id: 1 }],
+      },
+    },
   });
   await prisma.task.create({
     data: {
@@ -147,15 +141,11 @@ async function main() {
       author: { connect: { id: 2 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 }
-        ]
+        connect: [{ id: 1 }],
       },
       users: {
-        connect: [
-          { id: 2 }
-        ]
-      }
+        connect: [{ id: 2 }],
+      },
     },
   });
   await prisma.task.create({
@@ -166,15 +156,11 @@ async function main() {
       author: { connect: { id: 2 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 }
-        ]
+        connect: [{ id: 1 }],
       },
       users: {
-        connect: [
-          { id: 2 }
-        ]
-      }
+        connect: [{ id: 2 }],
+      },
     },
   });
   await prisma.task.create({
@@ -185,16 +171,11 @@ async function main() {
       author: { connect: { id: 1 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 },
-          { id: 3 },
-        ]
+        connect: [{ id: 1 }, { id: 3 }],
       },
       users: {
-        connect: [
-          { id: 3 }
-        ]
-      }
+        connect: [{ id: 3 }],
+      },
     },
   });
   await prisma.task.create({
@@ -205,17 +186,12 @@ async function main() {
       author: { connect: { id: 3 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 },
-          { id: 3 },
-        ]
+        connect: [{ id: 1 }, { id: 3 }],
       },
       users: {
-        connect: [
-          { id: 3 }
-        ]
-      }
-    }
+        connect: [{ id: 3 }],
+      },
+    },
   });
   await prisma.task.create({
     data: {
@@ -225,19 +201,12 @@ async function main() {
       author: { connect: { id: 2 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 },
-          { id: 3 },
-          { id: 4 },
-        ]
+        connect: [{ id: 1 }, { id: 3 }, { id: 4 }],
       },
       users: {
-        connect: [
-          { id: 2 },
-          { id: 3 },
-        ]
-      }
-    }
+        connect: [{ id: 2 }, { id: 3 }],
+      },
+    },
   });
   await prisma.task.create({
     data: {
@@ -247,18 +216,12 @@ async function main() {
       author: { connect: { id: 2 } },
       project: { connect: { id: 1 } },
       labels: {
-        connect: [
-          { id: 1 },
-          { id: 5 },
-          { id: 6 },
-        ]
+        connect: [{ id: 1 }, { id: 5 }, { id: 6 }],
       },
       users: {
-        connect: [
-          { id: 2 },
-        ]
-      }
-    }
+        connect: [{ id: 2 }],
+      },
+    },
   });
   await prisma.comment.createMany({
     data: [

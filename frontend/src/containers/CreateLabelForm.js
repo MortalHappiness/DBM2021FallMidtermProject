@@ -2,7 +2,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import {
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
@@ -16,6 +15,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import { useState } from "react";
@@ -27,6 +27,16 @@ import {
 import Label from "../components/Label";
 import Labels from "./TaskContentModal/Labels";
 import Loading from "../components/Loading";
+
+const LabelColorMenuItem = styled(MenuItem, {
+  shouldForwardProp: (prop) => prop !== "bgcolor",
+})(({ bgcolor }) => {
+  return {
+    "&.Mui-selected": {
+      backgroundColor: bgcolor,
+    },
+  };
+});
 
 export default function CreateLabelForm({ projectId, labels }) {
   const [show, setShow] = useState(false);
@@ -101,7 +111,7 @@ export default function CreateLabelForm({ projectId, labels }) {
             <FormControl>
               <InputLabel id="color">Color</InputLabel>
               <Select
-                sx={{ bgcolor: color }}
+                sx={{ bgcolor: color, color: "text.secondary" }}
                 fullWidth
                 labelId="color"
                 label="Color"
@@ -112,13 +122,17 @@ export default function CreateLabelForm({ projectId, labels }) {
               >
                 {Object.entries(labelColors).map(([colorName, colorValue]) => {
                   return (
-                    <MenuItem
-                      sx={{ bgcolor: colorValue }}
+                    <LabelColorMenuItem
+                      sx={{
+                        bgcolor: colorValue,
+                        color: "text.secondary",
+                      }}
+                      bgcolor={colorValue}
                       key={colorName}
                       value={colorValue}
                     >
                       {colorName}
-                    </MenuItem>
+                    </LabelColorMenuItem>
                   );
                 })}
               </Select>
