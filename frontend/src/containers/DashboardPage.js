@@ -11,7 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { GET_ME_QUERY } from "../graphql";
 import Loading from "../components/Loading";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import CreateOrganizationForm from "./CreateOrganizationForm.js";
 
 export default function Dashboard() {

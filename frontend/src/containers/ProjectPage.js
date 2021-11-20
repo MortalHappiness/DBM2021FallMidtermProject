@@ -16,6 +16,8 @@ import CreateTaskForm from "./CreateTaskForm";
 import CreateLabelForm from "./CreateLabelForm";
 import Grid from "@mui/material/Grid";
 
+const columnNames = ["TODO", "IN_PROGRESS", "DONE"];
+
 export default function ProjectPage() {
   const { id } = useParams();
   const projectId = parseInt(id) || null;
@@ -25,7 +27,6 @@ export default function ProjectPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
-  const columnNames = ["TODO", "IN_PROGRESS", "DONE"];
   const [lists, setLists] = useState(null);
   const search = new URLSearchParams(location.search);
   const taskId = parseInt(search.get("taskId")) || null;

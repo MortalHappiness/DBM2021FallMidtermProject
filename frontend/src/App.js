@@ -15,7 +15,6 @@ import OrganizationPage from "./containers/OrganizationPage";
 import ProjectPage from "./containers/ProjectPage";
 import NavBar from "./containers/NavBar";
 import Loading from "./components/Loading";
-import CreateOrganizationInvitation from "./containers/OrganizationInvitationPage.js";
 import OrganizationInvitationPage from "./containers/OrganizationInvitationPage.js";
 
 export default function App() {
