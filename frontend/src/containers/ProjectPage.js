@@ -68,7 +68,7 @@ export default function ProjectPage() {
               <CreateTaskForm projectId={projectId} />
             </Grid>
             <Grid item xs="auto" mx={1}>
-              <CreateLabelForm projectId={projectId} />
+              <CreateLabelForm projectId={projectId} labels={data.project.labels} />
             </Grid>
           </Grid>
           <Box my={1}>

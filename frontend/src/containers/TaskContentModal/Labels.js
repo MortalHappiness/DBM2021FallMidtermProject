@@ -11,14 +11,9 @@ import { ADD_LABEL_MUTATION } from "../../graphql";
 import Label from '../../components/Label';
 import SectionTitle from './SectionTitle';
 
-const styles = {
-  box: {
-    color: "text.primary",
-  },
-};
-
-export default function Labels({ taskId, labels, activeLabels, canAdd, canDelete }) {
+export default function Labels({ title, taskId, labels, activeLabels, canAdd, canDelete }) {
   const [addLabel] = useMutation(ADD_LABEL_MUTATION);
+  activeLabels = activeLabels || labels
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -39,8 +34,8 @@ export default function Labels({ taskId, labels, activeLabels, canAdd, canDelete
   );
 
   return (
-    <Box sx={styles.box}>
-      <SectionTitle title="labels" />
+    <Box>
+      <SectionTitle title={title || ""} />
       {activeLabels.map((label) => (
         <Label key={label.id} label={label} taskId={taskId} canDelete={canDelete} />
       ))}

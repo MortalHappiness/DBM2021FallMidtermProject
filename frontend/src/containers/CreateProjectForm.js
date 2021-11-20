@@ -61,13 +61,6 @@ export default function CreateProjectForm({ orgId }) {
           />
         </DialogContent>
         <DialogActions>
-          <Box
-            mx={"auto"}
-            my={0}
-            sx={{ color: "#999999", fontSize: 13, display: "inline" }}
-          >
-            <span> The content will keep if temparary close the pop-up. </span>
-          </Box>
           <Button onClick={() => setShow(false)}>Cancel</Button>
           <Button onClick={add} variant="contained" color="success">
             Add

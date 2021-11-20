@@ -16,6 +16,7 @@ export default function Label({ label, taskId, canDelete }) {
 
   return (
     <Chip
+      style={{ fontWeight: 500 }}
       key={label.id}
       label={label.name}
       size="small"

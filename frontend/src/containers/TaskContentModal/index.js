@@ -85,6 +85,7 @@ export default function TaskContentModal({
             <Labels
               canAdd
               canDelete
+              title="Labels"
               taskId={taskId}
               activeLabels={data.task.labels}
               labels={projectLabels}

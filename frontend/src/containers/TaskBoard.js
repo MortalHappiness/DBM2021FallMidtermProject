@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Label from "../components/Label";
 import TaskId from "./TaskContentModal/TaskId";
+import Labels from './TaskContentModal/Labels';
 
 
 const DisplayColumnNames = ["TODO", "IN PROGRESS", "DONE"];
@@ -56,6 +57,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = (isDraggingOver, listSize) => ({
   background: isDraggingOver ? "lightblue" : "hsl(0deg 0% 90%)",
+  width: "30%"
 });
 
 export default function TaskBoard({
@@ -97,7 +99,7 @@ export default function TaskBoard({
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", margin: "1rem" }}>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
       <DragDropContext onDragEnd={onDragEnd}>
         {lists?.map((el, ind) => (
           <Droppable key={ind} droppableId={`${ind}`}>
@@ -129,15 +131,7 @@ export default function TaskBoard({
                           <Typography variant="h5" component="div" gutterBottom>
                             {item.title}
                           </Typography>
-                          <Stack direction="row" spacing={1}>
-                            {item.labels.map((label) => (
-                              <Label
-                                key={label.id}
-                                label={label}
-                                taskId={item.id}
-                              />
-                            ))}
-                          </Stack>
+                          <Labels labels={item.labels}></Labels>
                         </CardContent>
                       </Card>
                     )}
