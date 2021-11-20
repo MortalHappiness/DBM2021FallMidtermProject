@@ -51,7 +51,10 @@ export default function TaskContentModal({
   projectLabels,
 }) {
   const { loading, error, data } = useQuery(GET_TASK_QUERY, {
-    variables: { taskId },
+    variables: {
+      taskId,
+      commentsOrderBy: [{ commentedAt: "desc" }],
+    },
   });
 
   if (loading) return <Loading />;
