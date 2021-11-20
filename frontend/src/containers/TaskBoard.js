@@ -107,7 +107,7 @@ export default function TaskBoard({
                 ref={provided.innerRef}
                 style={getListStyle(snapshot.isDraggingOver)}
                 {...provided.droppableProps}
-                sx={{ p: 2 }}
+                sx={{ p: 2, borderRadius: 2 }}
               >
                 <Typography
                   sx={{ userSelect: "none", fontWeight: "bold" }}
