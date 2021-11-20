@@ -8,16 +8,17 @@ import { GET_TASK_QUERY } from "../../graphql";
 import Loading from "../../components/Loading";
 import Title from "./Title";
 import Description from "./Description";
+import LinkedTasks from "./LinkedTasks";
 import Comments from "./Comments";
 import Dates from "./Dates";
 import Author from "./Author";
 import Assignees from "./Assignees";
-import Labels from './Labels';
+import Labels from "./Labels";
 
 const styles = {
   box: {
-    position: "absolute",
     display: "flex",
+    position: "absolute",
     top: "30%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -25,6 +26,9 @@ const styles = {
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
+  },
+  verticalDivider: {
+    margin: "0 25px",
   },
   left: {
     width: "65%",
@@ -42,7 +46,6 @@ export default function TaskContentModal({
   onClose,
   taskId,
   projectLabels,
-  users,
 }) {
   const { loading, error, data } = useQuery(GET_TASK_QUERY, {
     variables: { taskId: parseInt(taskId) },
@@ -57,8 +60,15 @@ export default function TaskContentModal({
         <Box sx={styles.left}>
           <Title taskId={taskId} defaultValue={data.task.title} />
           <Description taskId={taskId} defaultValue={data.task.content} />
+          <LinkedTasks
+            taskId={taskId}
+            tasks={data.task.project.tasks}
+            blockedBy={data.task.blockedBy}
+            blocks={data.task.blocking}
+          />
           <Comments taskId={taskId} />
         </Box>
+        <Divider sx={styles.verticalDivider} flexItem orientation="vertical" />
         <Box sx={styles.right}>
           <Author author={data.task.author.displayName} />
           <Assignees

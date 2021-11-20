@@ -105,6 +105,10 @@ export const GET_TASK_QUERY = gql`
             displayName
           }
         }
+        tasks {
+          id
+          title
+        }
       }
       users {
         id
