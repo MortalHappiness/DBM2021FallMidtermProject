@@ -30,7 +30,7 @@ function NavBar() {
             <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Meow
+            Assuject
           </Typography>
           {Boolean(auth.user) ? (
             <IconButton
