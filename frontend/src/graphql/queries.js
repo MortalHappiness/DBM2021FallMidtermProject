@@ -76,7 +76,10 @@ export const GET_PROJECT_QUERY = gql`
 // ###########################################################################
 
 export const GET_TASK_QUERY = gql`
-  query GetTaskQuery($taskId: Int!) {
+  query GetTaskQuery(
+    $taskId: Int!
+    $commentsOrderBy: [CommentOrderByWithRelationInput!]
+  ) {
     task(id: $taskId) {
       id
       title
@@ -93,7 +96,7 @@ export const GET_TASK_QUERY = gql`
         id
         displayName
       }
-      comments {
+      comments(orderBy: $commentsOrderBy) {
         id
         content
         commentedAt
