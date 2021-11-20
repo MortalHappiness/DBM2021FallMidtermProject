@@ -50,7 +50,6 @@ export default function CreateTaskForm({ projectId }) {
             value={title}
           />
           <TextField
-            autoFocus
             name="content"
             label="Content"
             fullWidth

@@ -56,7 +56,6 @@ export default function CreateLabelForm({ projectId }) {
           <InputLabel id="create-label-input">Color</InputLabel>
           <Input
             labelId="create-label-input"
-            autoFocus
             fullWidth
             name="color"
             label="Color"
