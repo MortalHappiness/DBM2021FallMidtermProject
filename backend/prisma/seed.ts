@@ -14,6 +14,10 @@ async function main() {
           { username: "micc", displayName: "MiccWan", passwordHash },
           { username: "edison", displayName: "edisonhello", passwordHash },
           { username: "chisheng", displayName: "劉奇聖", passwordHash },
+          { username: "professor", displayName: "教授", passwordHash },
+          { username: "cat", displayName: "喵", passwordHash },
+          { username: "dog", displayName: "汪", passwordHash },
+          { username: "not_us", displayName: "打手", passwordHash },
         ],
       },
       projects: {
@@ -25,6 +29,9 @@ async function main() {
                 { name: "frontend", color: "white" },
                 { name: "backend", color: "gray" },
                 { name: "priority", color: "red" },
+                { name: "bugs", color: "red" },
+                { name: "issue", color: "yellow" },
+                { name: "feature", color: "green" },
               ],
             },
           },
@@ -38,9 +45,60 @@ async function main() {
               ]
             }
           },
+          {
+            name: "Group Homework#2: Normal Form",
+            labels: {
+              create: [
+                { name: "todo", color: "yellow" },
+                { name: "priority", color: "red" },
+                { name: "done", color: "green" },
+              ]
+            }
+          },
         ],
       },
     },
+  });
+  await prisma.organization.create({
+    data: {
+      name: "Ansir website",
+      users: {
+        connect: { id: 2 },
+        create: [
+          { username: "LJ", displayName: "LJ", passwordHash },
+          { username: "song", displayName: "song", passwordHash },
+          { username: "Panda", displayName: "Panda", passwordHash },
+        ]
+      },
+      projects: {}
+    }
+  });
+  await prisma.organization.create({
+    data: {
+      name: "Google Chrome OS",
+      users: {
+        connect: { id: 2 },
+      },
+      projects: {}
+    }
+  });
+  await prisma.organization.create({
+    data: {
+      name: "GRTS",
+      users: {
+        connect: { id: 2 },
+      },
+      projects: {}
+    }
+  });
+  await prisma.organization.create({
+    data: {
+      name: "awesome.",
+      users: {
+        connect: { id: 2 },
+      },
+      projects: {}
+    }
   });
   await prisma.task.create({
     data: {
