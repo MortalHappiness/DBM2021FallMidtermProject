@@ -8,7 +8,6 @@ import Stack from "@mui/material/Stack";
 import Label from "../components/Label";
 import TaskId from "./TaskContentModal/TaskId";
 
-
 const DisplayColumnNames = ["TODO", "IN PROGRESS", "DONE"];
 
 // a little function to help us with reordering the result
@@ -97,7 +96,14 @@ export default function TaskBoard({
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", margin: "1rem" }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gap: "2rem",
+        margin: "1rem",
+      }}
+    >
       <DragDropContext onDragEnd={onDragEnd}>
         {lists?.map((el, ind) => (
           <Droppable key={ind} droppableId={`${ind}`}>
@@ -108,7 +114,12 @@ export default function TaskBoard({
                 {...provided.droppableProps}
                 sx={{ p: 2 }}
               >
-                <Typography style={{ userSelect: "none" }} variant="h5" gutterBottom component="div">
+                <Typography
+                  sx={{ userSelect: "none", fontWeight: "bold" }}
+                  variant="h5"
+                  gutterBottom
+                  component="div"
+                >
                   {DisplayColumnNames[ind]}
                 </Typography>
                 {el.map((item, index) => (
@@ -149,6 +160,6 @@ export default function TaskBoard({
           </Droppable>
         ))}
       </DragDropContext>
-    </div >
+    </div>
   );
 }
