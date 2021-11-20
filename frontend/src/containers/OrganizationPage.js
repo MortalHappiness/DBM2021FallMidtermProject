@@ -13,6 +13,7 @@ import { GET_ME_QUERY, GET_ORG_QUERY, LEAVE_ORG_MUTATION } from "../graphql";
 import Loading from "../components/Loading";
 import { Button, Grid } from "@mui/material";
 import CreateOrganizationInvitation from "./CreateOrganizationInvitation.js";
+import CreateProjectForm from "./CreateProjectForm.js";
 
 export default function OrganizationPage() {
   const { id } = useParams();
@@ -45,28 +46,35 @@ export default function OrganizationPage() {
           }}
         >
           <Grid container direction="row" justifyContent="space-between">
-                <Grid item>
-                <Typography component="h1" variant="h4">
-            {data.organization.name}
-          </Typography>
-                </Grid>
-                <Grid>
-                  <Button 
-                    variant="contained" 
-                    color="error"
-                    onClick={leaveOrganization}>
-                    Leave Organization
-                    </Button>
-                </Grid>
-              </Grid>
-          
+            <Grid item>
+              <Typography component="h1" variant="h4">
+                {data.organization.name}
+              </Typography>
+            </Grid>
+            <Grid>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={leaveOrganization}>
+                Leave Organization
+              </Button>
+            </Grid>
+          </Grid>
+
           <Divider />
 
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography component="h1" variant="h5">
-                Projects
-              </Typography>
+              <Grid container direction="row" justifyContent="space-between">
+                <Grid item>
+                  <Typography component="h1" variant="h5">
+                    Projects
+                  </Typography>
+                </Grid>
+                <Grid>
+                  <CreateProjectForm orgId={Number(id)} />
+                </Grid>
+              </Grid>
               <Divider />
               <List
                 sx={{
