@@ -38,7 +38,7 @@ function NavBar() {
             Assuject
           </Typography>
           {Boolean(auth.user) ? (
-            <Box>
+            <Box mx={2}>
               <IconButton
                 edge="start"
                 color="inherit"
@@ -53,10 +53,12 @@ function NavBar() {
                   {auth.user.displayName}
                 </Typography>
               </IconButton>
-              <Button sx={{ color: "white" }} onClick={logout}>
-                Log out
-              </Button>
+              <Box mx={2} sx={{ display: "inline" }}>
+                <Button sx={{ color: "white" }} onClick={logout}>
+                  Log out
+                </Button>
               </Box>
+            </Box>
           ) : (
             <>
               <Button color="inherit" onClick={() => navigate("/login")}>

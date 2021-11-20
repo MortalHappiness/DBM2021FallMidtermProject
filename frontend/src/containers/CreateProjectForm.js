@@ -28,6 +28,7 @@ export default function CreateProjectForm({ orgId }) {
       },
     });
     setShow(false);
+    setName("");
   };
 
   return (

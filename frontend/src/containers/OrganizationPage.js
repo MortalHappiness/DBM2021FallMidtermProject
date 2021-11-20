@@ -40,12 +40,8 @@ export default function OrganizationPage() {
   return (
     <div>
       <Container>
-        <Box
-          sx={{
-            marginTop: 4,
-          }}
-        >
-          <Grid container direction="row" justifyContent="space-between">
+        <Box mt={4}>
+          <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
             <Grid item>
               <Typography component="h1" variant="h4">
                 {data.organization.name}
@@ -61,11 +57,13 @@ export default function OrganizationPage() {
             </Grid>
           </Grid>
 
-          <Divider />
+          <Box my={2}>
+            <Divider />
+          </Box>
 
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Grid container direction="row" justifyContent="space-between">
+              <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
                 <Grid item>
                   <Typography component="h1" variant="h5">
                     Projects
@@ -75,7 +73,9 @@ export default function OrganizationPage() {
                   <CreateProjectForm orgId={Number(id)} />
                 </Grid>
               </Grid>
-              <Divider />
+              <Box my={1}>
+                <Divider />
+              </Box>
               <List
                 sx={{
                   width: "100%",
@@ -95,7 +95,7 @@ export default function OrganizationPage() {
               </List>
             </Grid>
             <Grid item xs={4}>
-              <Grid container direction="row" justifyContent="space-between">
+              <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
                 <Grid item>
                   <Typography component="h1" variant="h5">
                     Members
@@ -106,7 +106,9 @@ export default function OrganizationPage() {
                 </Grid>
               </Grid>
 
-              <Divider />
+              <Box my={1}>
+                <Divider />
+              </Box>
 
               <List
                 sx={{

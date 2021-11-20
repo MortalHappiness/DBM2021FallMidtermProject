@@ -64,11 +64,12 @@ export default function ProjectPage() {
                 {data.project.name}
               </Typography>
             </Grid>
-            <Grid item xs="auto">
+            <Grid item xs="auto" mx={1}>
               <CreateTaskForm projectId={projectId} />
             </Grid>
-            <CreateLabelForm projectId={projectId} />
-            <Grid item xs="auto"></Grid>
+            <Grid item xs="auto" mx={1}>
+              <CreateLabelForm projectId={projectId} />
+            </Grid>
           </Grid>
           <Divider />
           {taskId !== null && (

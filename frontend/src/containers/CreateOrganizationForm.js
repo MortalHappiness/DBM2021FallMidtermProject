@@ -27,6 +27,7 @@ export default function CreateOrganizationForm() {
       },
     });
     setShow(false);
+    setName("");
   };
 
   return (

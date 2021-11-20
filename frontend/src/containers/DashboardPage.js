@@ -25,12 +25,8 @@ export default function Dashboard() {
   return (
     <div>
       <Container>
-        <Box
-          sx={{
-            marginTop: 4,
-          }}
-        >
-          <Grid container direction="row" justifyContent="space-between">
+        <Box mt={4}>
+          <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
             <Grid item>
               <Typography component="h1" variant="h4">
                 Your Organizations
@@ -41,7 +37,10 @@ export default function Dashboard() {
             </Grid>
           </Grid>
 
-          <Divider />
+          <Box my={2}>
+            <Divider />
+          </Box>
+
           <List
             sx={{
               width: "100%",
@@ -61,6 +60,6 @@ export default function Dashboard() {
           </List>
         </Box>
       </Container>
-    </div>
+    </div >
   );
 }
