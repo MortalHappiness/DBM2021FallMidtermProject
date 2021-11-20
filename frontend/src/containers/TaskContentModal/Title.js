@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 
 import { UPDATE_TASK_MUTATION } from "../../graphql";
+import TaskId from "./TaskId";
 
 const ENTER_KEY = 13;
 
@@ -36,16 +37,19 @@ export default function Title({ taskId, defaultValue }) {
   };
 
   return (
-    <TitleTextFeild
-      id="title"
-      fullWidth
-      defaultValue={defaultValue}
-      onBlur={handleTitleChange}
-      onKeyDown={(e) => {
-        if (e.keyCode === ENTER_KEY) {
-          e.target.blur();
-        }
-      }}
-    />
+    <>
+      <TaskId taskId={taskId} />
+      <TitleTextFeild
+        id="title"
+        fullWidth
+        defaultValue={defaultValue}
+        onBlur={handleTitleChange}
+        onKeyDown={(e) => {
+          if (e.keyCode === ENTER_KEY) {
+            e.target.blur();
+          }
+        }}
+      />
+    </>
   );
 }

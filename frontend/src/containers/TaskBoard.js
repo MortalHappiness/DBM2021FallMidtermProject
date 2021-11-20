@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Label from "../components/Label";
+import TaskId from "./TaskContentModal/TaskId";
 
 
 const DisplayColumnNames = ["TODO", "IN PROGRESS", "DONE"];
@@ -124,6 +125,7 @@ export default function TaskBoard({
                         onClick={() => navigateToTask(item.id)}
                       >
                         <CardContent>
+                          <TaskId taskId={item.id} />
                           <Typography variant="h5" component="div" gutterBottom>
                             {item.title}
                           </Typography>
