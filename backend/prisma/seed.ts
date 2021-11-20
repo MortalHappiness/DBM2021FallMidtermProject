@@ -186,7 +186,8 @@ async function main() {
       project: { connect: { id: 1 } },
       labels: {
         connect: [
-          { id: 1 }
+          { id: 1 },
+          { id: 3 },
         ]
       },
       users: {
@@ -205,12 +206,56 @@ async function main() {
       project: { connect: { id: 1 } },
       labels: {
         connect: [
-          { id: 1 }
+          { id: 1 },
+          { id: 3 },
         ]
       },
       users: {
         connect: [
           { id: 3 }
+        ]
+      }
+    }
+  });
+  await prisma.task.create({
+    data: {
+      title: "Can't redirect in index page",
+      content: "I don't know how to redirect in index page <br> help me QAQ",
+      status: "TODO",
+      author: { connect: { id: 2 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 },
+          { id: 3 },
+          { id: 4 },
+        ]
+      },
+      users: {
+        connect: [
+          { id: 2 },
+          { id: 3 },
+        ]
+      }
+    }
+  });
+  await prisma.task.create({
+    data: {
+      title: "Allow user press enter to submit",
+      content: "In creation forms, listen on user's enter input to submit",
+      status: "TODO",
+      author: { connect: { id: 2 } },
+      project: { connect: { id: 1 } },
+      labels: {
+        connect: [
+          { id: 1 },
+          { id: 5 },
+          { id: 6 },
+        ]
+      },
+      users: {
+        connect: [
+          { id: 2 },
         ]
       }
     }
