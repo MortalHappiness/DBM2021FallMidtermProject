@@ -44,7 +44,7 @@ export default function Labels({ taskId, labels, activeLabels, canAdd, canDelete
       {activeLabels.map((label) => (
         <Label key={label.id} label={label} taskId={taskId} canDelete={canDelete} />
       ))}
-      {canAdd && (
+      {canAdd && !!inactiveLabels.length && (
         <Button onClick={handleClick}>+ Add more</Button>
       )}
       <Menu
