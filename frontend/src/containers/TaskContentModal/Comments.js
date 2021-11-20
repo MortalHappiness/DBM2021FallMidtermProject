@@ -29,7 +29,7 @@ function Comment({ comment }) {
             {moment(comment.commentedAt).fromNow()}
           </Typography>
         </Stack>
-        {comment.content}
+        <div style={{ whiteSpace: "pre-wrap" }}>{comment.content}</div>
       </Stack>
     </Stack>
   );
