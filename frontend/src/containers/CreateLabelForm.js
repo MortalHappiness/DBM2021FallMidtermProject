@@ -5,11 +5,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Input,
   InputLabel,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { useState } from "react";
 import { CREATE_LABEL_MUTATION, GET_PROJECT_QUERY } from "../graphql";
 
@@ -38,7 +41,11 @@ export default function CreateLabelForm({ projectId }) {
 
   return (
     <Box>
-      <Button onClick={() => setShow(true)}>Create Label</Button>
+      <Tooltip title="Create Label">
+        <IconButton onClick={() => setShow(true)}>
+          <LocalOfferOutlinedIcon color="action" />
+        </IconButton>
+      </Tooltip>
 
       <Dialog open={show} onClose={() => setShow(false)}>
         <DialogTitle>Create Label</DialogTitle>

@@ -1,10 +1,14 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Label from "../components/Label";
+
+
+const DisplayColumnNames = ["TODO", "IN PROGRESS", "DONE"];
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -49,11 +53,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-  margin: 20,
+const getListStyle = (isDraggingOver, listSize) => ({
+  background: isDraggingOver ? "lightblue" : "hsl(0deg 0% 90%)",
 });
 
 export default function TaskBoard({
@@ -95,17 +96,20 @@ export default function TaskBoard({
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", margin: "1rem" }}>
       <DragDropContext onDragEnd={onDragEnd}>
         {lists?.map((el, ind) => (
           <Droppable key={ind} droppableId={`${ind}`}>
             {(provided, snapshot) => (
-              <div
+              <Box
                 ref={provided.innerRef}
                 style={getListStyle(snapshot.isDraggingOver)}
                 {...provided.droppableProps}
+                sx={{ p: 2 }}
               >
-                <div style={{ userSelect: "none" }}>{columnNames[ind]}</div>
+                <Typography style={{ userSelect: "none" }} variant="h5" gutterBottom component="div">
+                  {DisplayColumnNames[ind]}
+                </Typography>
                 {el.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
@@ -138,11 +142,11 @@ export default function TaskBoard({
                   </Draggable>
                 ))}
                 {provided.placeholder}
-              </div>
+              </Box>
             )}
           </Droppable>
         ))}
       </DragDropContext>
-    </div>
+    </div >
   );
 }

@@ -11,14 +11,18 @@ import ListItemText from "@mui/material/ListItemText";
 
 import { GET_ME_QUERY, GET_ORG_QUERY, LEAVE_ORG_MUTATION } from "../graphql";
 import Loading from "../components/Loading";
-import { Button, Grid } from "@mui/material";
+import { Grid, IconButton, ListItem, ListItemIcon } from "@mui/material";
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import PersonIcon from '@mui/icons-material/Person';
 import CreateOrganizationInvitation from "./CreateOrganizationInvitation.js";
+import ExitToAppIcon from '@mui/icons-material/ExitToAppOutlined';
 import CreateProjectForm from "./CreateProjectForm.js";
 
 export default function OrganizationPage() {
   const { id } = useParams();
+  const organizationId = parseInt(id) || null;
   const { loading, error, data } = useQuery(GET_ORG_QUERY, {
-    variables: { organizationId: parseInt(id) },
+    variables: { organizationId },
   });
   const [leaveOrg] = useMutation(LEAVE_ORG_MUTATION, {
     refetchQueries: [GET_ME_QUERY],
@@ -28,7 +32,7 @@ export default function OrganizationPage() {
   const leaveOrganization = () => {
     leaveOrg({
       variables: {
-        organizationId: Number(id),
+        organizationId,
       },
     });
     navigate('/dashboard');
@@ -41,19 +45,18 @@ export default function OrganizationPage() {
     <div>
       <Container>
         <Box mt={4}>
-          <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
-            <Grid item>
+          <Grid container direction="row">
+            <Grid item xs>
               <Typography component="h1" variant="h4">
                 {data.organization.name}
               </Typography>
             </Grid>
-            <Grid>
-              <Button
-                variant="contained"
+            <Grid item xs="auto" mx={1}>
+              <IconButton
                 color="error"
                 onClick={leaveOrganization}>
-                Leave Organization
-              </Button>
+                <ExitToAppIcon />
+              </IconButton>
             </Grid>
           </Grid>
 
@@ -63,13 +66,13 @@ export default function OrganizationPage() {
 
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
-                <Grid item>
+              <Grid container direction="row">
+                <Grid item xs>
                   <Typography component="h1" variant="h5">
                     Projects
                   </Typography>
                 </Grid>
-                <Grid>
+                <Grid item xs="auto" mx={1}>
                   <CreateProjectForm orgId={Number(id)} />
                 </Grid>
               </Grid>
@@ -89,27 +92,29 @@ export default function OrganizationPage() {
                     key={project.id}
                     onClick={() => navigate(`/project/${project.id}`)}
                   >
-                    <ListItemText primary={project.name} />
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={project.name} secondary={`${project.tasks?.length} task(s)`} />
                   </ListItemButton>
                 ))}
               </List>
             </Grid>
             <Grid item xs={4}>
-              <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
-                <Grid item>
+              <Grid container direction="row">
+                <Grid item xs>
                   <Typography component="h1" variant="h5">
                     Members
                   </Typography>
                 </Grid>
-                <Grid>
-                  <CreateOrganizationInvitation />
+                <Grid item xs="auto" mx={1}>
+                  <CreateOrganizationInvitation organizationId={organizationId} />
                 </Grid>
               </Grid>
 
               <Box my={1}>
                 <Divider />
               </Box>
-
               <List
                 sx={{
                   width: "100%",
@@ -119,7 +124,12 @@ export default function OrganizationPage() {
                 component="nav"
               >
                 {data.organization.users.map((user) => (
-                  <ListItemText key={user.id} primary={user.displayName} />
+                  <ListItem key={user.id}>
+                    <ListItemIcon>
+                      <PersonIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={user.displayName} />
+                  </ListItem>
                 ))}
               </List>
             </Grid>

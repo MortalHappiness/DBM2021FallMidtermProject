@@ -5,9 +5,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from "react";
 import { CREATE_ORG_MUTATION, GET_ME_QUERY } from "../graphql";
 
@@ -32,35 +35,34 @@ export default function CreateOrganizationForm() {
 
   return (
     <Box>
-      <Button onClick={() => setShow(true)}>Create Organization</Button>
+      <Tooltip title="Create Organization">
+        <IconButton onClick={() => setShow(true)}>
+          <AddCircleOutlineIcon fontSize="large" color="action" />
+        </IconButton>
+      </Tooltip>
 
       <Dialog open={show} onClose={() => setShow(false)}>
-        <DialogTitle>Create Organization</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            name="name"
-            label="Organization Name"
-            fullWidth
-            variant="standard"
-            sx={{ my: 1 }}
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Box
-            mx={"auto"}
-            my={0}
-            sx={{ color: "#999999", fontSize: 13, display: "inline" }}
-          >
-            <span> The content will keep if temparary close the pop-up. </span>
-          </Box>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
-          <Button onClick={add} variant="contained" color="success">
-            Add
-          </Button>
-        </DialogActions>
+        <Box p={1}>
+          <DialogTitle>Create Organization</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              name="name"
+              label="Organization Name"
+              fullWidth
+              variant="standard"
+              sx={{ my: 1, minWidth: "20rem" }}
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShow(false)}>Cancel</Button>
+            <Button onClick={add} variant="contained" color="success">
+              Create
+            </Button>
+          </DialogActions>
+        </Box>
       </Dialog>
     </Box>
   );

@@ -30,6 +30,10 @@ export const GET_ORG_QUERY = gql`
       projects {
         id
         name
+        tasks {
+          id
+          title
+        }
       }
       users {
         id

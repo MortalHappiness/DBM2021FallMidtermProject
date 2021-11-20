@@ -71,7 +71,9 @@ export default function ProjectPage() {
               <CreateLabelForm projectId={projectId} />
             </Grid>
           </Grid>
-          <Divider />
+          <Box my={1}>
+            <Divider />
+          </Box>
           {taskId !== null && (
             <TaskContentModal
               open={true}

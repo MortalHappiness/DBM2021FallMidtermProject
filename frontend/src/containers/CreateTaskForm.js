@@ -5,9 +5,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import { useState } from "react";
 import { CREATE_TASK_MUTATION, GET_PROJECT_QUERY } from "../graphql";
 
@@ -34,45 +37,44 @@ export default function CreateTaskForm({ projectId }) {
 
   return (
     <Box>
-      <Button onClick={() => setShow(true)}>Create Task</Button>
+      <Tooltip title="Create Task">
+        <IconButton onClick={() => setShow(true)}>
+          <PlaylistAddOutlinedIcon color="action" />
+        </IconButton>
+      </Tooltip>
 
       <Dialog open={show} onClose={() => setShow(false)}>
-        <DialogTitle>Create Task</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            name="title"
-            label="Title"
-            fullWidth
-            variant="standard"
-            sx={{ my: 1 }}
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-          />
-          <TextField
-            name="content"
-            label="Content"
-            fullWidth
-            multiline
-            variant="standard"
-            sx={{ my: 1 }}
-            onChange={(e) => setContent(e.target.value)}
-            value={content}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Box
-            mx={"auto"}
-            my={0}
-            sx={{ color: "#999999", fontSize: 13, display: "inline" }}
-          >
-            <span> The content will keep if temparary close the pop-up. </span>
-          </Box>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
-          <Button onClick={add} variant="contained" color="success">
-            Add
-          </Button>
-        </DialogActions>
+        <Box p={1}>
+          <DialogTitle>Create Task</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              name="title"
+              label="Title"
+              fullWidth
+              variant="standard"
+              sx={{ my: 1 }}
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+            />
+            <TextField
+              name="content"
+              label="Content"
+              fullWidth
+              multiline
+              variant="standard"
+              sx={{ my: 1 }}
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShow(false)}>Cancel</Button>
+            <Button onClick={add} variant="contained" color="success">
+              Create
+            </Button>
+          </DialogActions>
+        </Box>
       </Dialog>
     </Box>
   );

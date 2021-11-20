@@ -5,10 +5,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CREATE_PROJECT_MUTATION, GET_ORG_QUERY } from "../graphql";
 
 export default function CreateProjectForm({ orgId }) {
@@ -33,8 +36,11 @@ export default function CreateProjectForm({ orgId }) {
 
   return (
     <Box>
-      <Button onClick={() => setShow(true)}>Create Project</Button>
-
+      <Tooltip title="Create Project">
+        <IconButton onClick={() => setShow(true)}>
+          <AddCircleOutlineIcon onClick={() => setShow(true)} color="action" />
+        </IconButton>
+      </Tooltip>
       <Dialog open={show} onClose={() => setShow(false)}>
         <DialogTitle>Create Project</DialogTitle>
         <DialogContent>

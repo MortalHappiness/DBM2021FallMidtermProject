@@ -8,10 +8,11 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 
 import { GET_ME_QUERY } from "../graphql";
 import Loading from "../components/Loading";
-import { Grid } from "@mui/material";
+import { Grid, ListItemIcon } from "@mui/material";
 import CreateOrganizationForm from "./CreateOrganizationForm.js";
 
 export default function Dashboard() {
@@ -26,13 +27,13 @@ export default function Dashboard() {
     <div>
       <Container>
         <Box mt={4}>
-          <Grid container direction="row" justifyContent="space-between" alignItems="flex-end">
+          <Grid container direction="row">
             <Grid item>
-              <Typography component="h1" variant="h4">
+              <Typography component="h2" variant="h4">
                 Your Organizations
               </Typography>
             </Grid>
-            <Grid>
+            <Grid item>
               <CreateOrganizationForm />
             </Grid>
           </Grid>
@@ -54,6 +55,9 @@ export default function Dashboard() {
                 key={organization.id}
                 onClick={() => navigate(`/organization/${organization.id}`)}
               >
+                <ListItemIcon>
+                  <CorporateFareIcon />
+                </ListItemIcon>
                 <ListItemText primary={organization.name} />
               </ListItemButton>
             ))}

@@ -34,9 +34,13 @@ function NavBar() {
           >
             <HomeIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Assuject
-          </Typography>
+          <Box sx={{ flexGrow: 1 }} >
+            <Button sx={{ color: "white" }} onClick={() => navigate("/")}>
+              <Typography style={{ userSelect: "none" }} variant="h6" >
+                Assuject
+              </Typography>
+            </Button>
+          </Box>
           {Boolean(auth.user) ? (
             <Box mx={2}>
               <IconButton

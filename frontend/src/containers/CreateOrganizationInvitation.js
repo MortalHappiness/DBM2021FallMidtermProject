@@ -4,13 +4,16 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-export default function CreateOrganizationInvitation() {
+export default function CreateOrganizationInvitation({ organizationId }) {
   const [show, setShow] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -19,51 +22,52 @@ export default function CreateOrganizationInvitation() {
     setTimeout(() => setCopied(false), 1000);
   }
 
-  const text = `${window.location.origin}/oi/${1}`; //TODO
+  const text = `${window.location.origin}/oi/${organizationId}  `; //TODO
 
   return (
     <Box>
-      <Button onClick={() => setShow(true)}>Get Invitation Link</Button>
-
+      <Tooltip title="Invite To Organization">
+        <IconButton onClick={() => setShow(true)}>
+          <GroupAddIcon onClick={() => setShow(true)} color="action" />
+        </IconButton>
+      </Tooltip>
       <Dialog open={show} onClose={() => setShow(false)}>
-        <DialogTitle>Invitation Link</DialogTitle>
+        <DialogTitle>Send the link to you friends!</DialogTitle>
         <DialogContent>
-        <CopyToClipboard
-          text={text}
-          onCopy={() => copy()}
-        >
-          <Tooltip
-            title={
-              copied
-                ? "This was Copied!"
-                : "Copy To Clipboard"
-            }
-            placement="top"
+          <CopyToClipboard
+            text={text}
+            onCopy={() => copy()}
           >
-            <Box
-              component="button"
-              fontFamily="inherit"
-              fontSize="16px"
-              fontWeight="400"
-              lineHeight="1.25"
-              display="inline-block"
-              width="100%"
-              padding="12px"
-              textAlign="left"
-              border="0"
-              borderRadius="4px"
-              data-clipboard-text="album-2"
-              type="button"
+            <Tooltip
+              title={
+                copied
+                  ? "Text Copied!"
+                  : "Copy To Clipboard"
+              }
+              placement="top"
             >
-              <div>
-                <span>{text}</span>
-              </div>
-            </Box>
-          </Tooltip>
-        </CopyToClipboard>
+              <Box
+                component="button"
+                fontFamily="inherit"
+                fontSize="16px"
+                fontWeight="400"
+                lineHeight="1.25"
+                display="inline-block"
+                width="100%"
+                padding="12px"
+                textAlign="left"
+                border="0"
+                borderRadius="4px"
+                data-clipboard-text="album-2"
+                type="button"
+              >
+                {text}
+                <ContentCopyIcon fontSize="small" />
+              </Box>
+            </Tooltip>
+          </CopyToClipboard>
         </DialogContent>
         <DialogActions>
-        
           <Button onClick={() => setShow(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>

@@ -13,6 +13,7 @@ import Dates from "./Dates";
 import Author from "./Author";
 import Assignees from "./Assignees";
 import Labels from './Labels';
+import { Container } from '@mui/material';
 
 const styles = {
   box: {
@@ -27,10 +28,10 @@ const styles = {
     p: 4,
   },
   left: {
-    width: "65%",
+    width: "60%",
   },
   right: {
-    width: "35%",
+    width: "40%",
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
@@ -45,7 +46,7 @@ export default function TaskContentModal({
   users,
 }) {
   const { loading, error, data } = useQuery(GET_TASK_QUERY, {
-    variables: { taskId: parseInt(taskId) },
+    variables: { taskId },
   });
 
   if (loading) return <Loading />;
@@ -56,28 +57,32 @@ export default function TaskContentModal({
       <Box sx={styles.box}>
         <Box sx={styles.left}>
           <Title taskId={taskId} defaultValue={data.task.title} />
-          <Description taskId={taskId} defaultValue={data.task.content} />
-          <Comments taskId={taskId} />
+          <Container>
+            <Description taskId={taskId} defaultValue={data.task.content} />
+            <Comments taskId={taskId} />
+          </Container>
         </Box>
         <Box sx={styles.right}>
-          <Author author={data.task.author.displayName} />
-          <Assignees
-            taskId={taskId}
-            users={data.task.project.organization.users}
-            assignees={data.task.users}
-          />
-          <Labels
-            canAdd
-            canDelete
-            taskId={taskId}
-            activeLabels={data.task.labels}
-            labels={projectLabels}
-          />
-          <Divider />
-          <Dates
-            createdAt={data.task.createdAt}
-            updatedAt={data.task.updatedAt}
-          />
+          <Container>
+            <Author author={data.task.author.displayName} />
+            <Assignees
+              taskId={taskId}
+              users={data.task.project.organization.users}
+              assignees={data.task.users}
+            />
+            <Labels
+              canAdd
+              canDelete
+              taskId={taskId}
+              activeLabels={data.task.labels}
+              labels={projectLabels}
+            />
+            <Divider />
+            <Dates
+              createdAt={data.task.createdAt}
+              updatedAt={data.task.updatedAt}
+            />
+          </Container>
         </Box>
       </Box>
     </Modal>
