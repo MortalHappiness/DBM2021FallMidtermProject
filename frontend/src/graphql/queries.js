@@ -133,3 +133,13 @@ export const GET_TASK_QUERY = gql`
     }
   }
 `;
+
+// ###########################################################################
+//  labelColors
+// ###########################################################################
+
+export const GET_LABEL_COLORS_QUERY = gql`
+  query GetLabelColorsQuery {
+    labelColors
+  }
+`;

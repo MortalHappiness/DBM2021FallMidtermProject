@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   Button,
   Dialog,
@@ -6,109 +6,141 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
+  FormControl,
   IconButton,
   MenuItem,
+  InputLabel,
   Select,
   Stack,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import { useState } from "react";
-import { CREATE_LABEL_MUTATION, GET_PROJECT_QUERY } from "../graphql";
-import Label from '../components/Label';
-import Labels from './TaskContentModal/Labels';
-
-const DefaultLabelColor = '#ffffff';
-const ColorSuggestions = [
-  '#FFFFFF',
-  '#EBECED',
-  '#E9E5E3',
-  '#FAEBDD',
-  '#FBF3DB',
-  '#DDEDEA',
-  '#DDEBF1',
-  '#EAE4F2',
-  '#F4DFEB',
-  '#FBE4E4'
-].map(t => t.toLowerCase());
+import {
+  CREATE_LABEL_MUTATION,
+  GET_PROJECT_QUERY,
+  GET_LABEL_COLORS_QUERY,
+} from "../graphql";
+import Label from "../components/Label";
+import Labels from "./TaskContentModal/Labels";
+import Loading from "../components/Loading";
 
 export default function CreateLabelForm({ projectId, labels }) {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
-  const [color, setColor] = useState(DefaultLabelColor);
+  const [color, setColor] = useState(null);
+  const { loading, error, data } = useQuery(GET_LABEL_COLORS_QUERY);
   const [createLabel] = useMutation(CREATE_LABEL_MUTATION, {
     refetchQueries: [GET_PROJECT_QUERY],
   });
 
-  const add = () => {
+  if (loading) return <Loading />;
+  if (error) return `Error ${error}`;
+
+  const labelColors = JSON.parse(data.labelColors);
+
+  const handleTooltipClick = () => {
+    setColor(labelColors.DEFAULT);
+    setShow(true);
+  };
+
+  const add = async () => {
     if (name && color) {
-      createLabel({
-        variables: {
-          data: {
-            name,
-            color,
-            projectId,
+      try {
+        await createLabel({
+          variables: {
+            data: {
+              name,
+              color,
+              projectId,
+            },
           },
-        },
-      });
-      setName('');
-      setColor(DefaultLabelColor);
-      // setShow(false);
+        });
+        setName("");
+        setColor(labelColors.DEFAULT);
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
   return (
     <Box>
       <Tooltip title="Create Label">
-        <IconButton onClick={() => setShow(true)}>
+        <IconButton onClick={handleTooltipClick}>
           <LocalOfferOutlinedIcon color="action" />
         </IconButton>
       </Tooltip>
 
-
       <Dialog open={show} onClose={() => setShow(false)}>
-        <DialogTitle>Create Label</DialogTitle>
+        <DialogTitle>Labels</DialogTitle>
         <DialogContent>
-          <Divider sx={{ my: 2 }} />
           <Labels labels={labels}></Labels>
           <Divider sx={{ my: 2 }} />
-          <Stack direction="row">
+          <Typography
+            sx={{ color: "text.secondary" }}
+            variant="subtitle2"
+            component="div"
+            gutterBottom
+          >
+            Create a new label
+          </Typography>
+          <Stack direction="column" spacing={2}>
             <TextField
               autoFocus
+              fullWidth
               name="name"
               label="Name"
-              fullWidth
-              variant="standard"
-              sx={{ my: 1, mx:2 }}
+              size="small"
               onChange={(e) => setName(e.target.value)}
               value={name}
             />
-            <Box>
+            <FormControl>
+              <InputLabel id="color">Color</InputLabel>
               <Select
-                style={{ backgroundColor: color }}
+                sx={{ bgcolor: color }}
+                fullWidth
+                labelId="color"
+                label="Color"
+                size="small"
                 name="color"
                 onChange={(e) => setColor(e.target.value)}
                 value={color}
               >
-                {
-                  ColorSuggestions.map(c => {
-                    return <MenuItem style={{ backgroundColor: c, color: 'gray' }} key={c} value={c}>{c}</MenuItem>
-                  })
-                }
+                {Object.entries(labelColors).map(([colorName, colorValue]) => {
+                  return (
+                    <MenuItem
+                      sx={{ bgcolor: colorValue }}
+                      key={colorName}
+                      value={colorValue}
+                    >
+                      {colorName}
+                    </MenuItem>
+                  );
+                })}
               </Select>
-            </Box>
+            </FormControl>
           </Stack>
+          <Divider sx={{ my: 2 }} />
+          <Typography
+            sx={{ color: "text.secondary" }}
+            variant="subtitle2"
+            component="div"
+            gutterBottom
+          >
+            Preview
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Label label={{ name: name || "label preview", color }}></Label>
+            <Button onClick={add} variant="contained" color="success">
+              Create
+            </Button>
+          </Box>
         </DialogContent>
-        <DialogActions>
-          <Label label={{ name: name || "label preview", color }}></Label>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
-          <Button onClick={add} variant="contained" color="success">
-            Create
-          </Button>
-        </DialogActions>
       </Dialog>
-    </Box >
+    </Box>
   );
 }

@@ -5,6 +5,7 @@ import OrganizationResolver from "./OrganizationResolver";
 import ProjectResolver from "./ProjectResolver";
 import TaskResolver from "./TaskResolver";
 import UserResolver from "./UserResolver";
+import LabelColorsResolver from "./LabelColorsResolver";
 
 import { relationResolvers } from "@generated/type-graphql";
 
@@ -17,4 +18,5 @@ export const resolvers = [
   ProjectResolver,
   TaskResolver,
   UserResolver,
+  LabelColorsResolver,
 ] as const;
