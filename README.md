@@ -18,7 +18,7 @@ Assuject is a task progress tracking system, inspired by [JIRA](https://www.atla
 
 ### Install dependencies
 
-In the root directory, simply run:
+In the project root directory, simply run:
 
 ```bash
 $ yarn i
@@ -55,7 +55,7 @@ $ npx prisma migrate dev
 
 ### Start the Project
 
-Go back to the root directory
+Go back to the project root directory
 
 ```bash
 $ cd ..
