@@ -67,7 +67,7 @@ Run the following command:
 $ yarn start
 ```
 
-Go to http://localhost:4000 to see the app.
+Go to http://localhost:3000 to see the app.
 
 ## Development Guide
 
