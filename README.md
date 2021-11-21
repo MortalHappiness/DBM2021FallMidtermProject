@@ -8,6 +8,8 @@ Assuject is a task progress tracking system, inspired by [JIRA](https://www.atla
 
 ## Demo Video
 
+https://youtu.be/1gihyPMOPIA
+
 ## Quick Start
 
 ### Prerequisites
