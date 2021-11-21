@@ -8,18 +8,31 @@ async function main() {
   const saltRounds = 10;
   const password = "password";
   const passwordHash = await bcrypt.hash(password, saltRounds);
+
+  await prisma.user.createMany({
+    data: [
+      { username: "admin", displayName: "Admin", passwordHash },
+      { username: "micc", displayName: "MiccWan", passwordHash },
+      { username: "edison", displayName: "edisonhello", passwordHash },
+      { username: "chisheng", displayName: "劉奇聖", passwordHash },
+      { username: "professor", displayName: "教授", passwordHash },
+      { username: "ta", displayName: "助教", passwordHash },
+      { username: "cat", displayName: "喵", passwordHash },
+      { username: "dog", displayName: "汪", passwordHash },
+      { username: "not_us", displayName: "打手", passwordHash },
+    ],
+  });
   await prisma.organization.create({
     data: {
       name: "Database Management Group E",
       users: {
-        create: [
-          { username: "micc", displayName: "MiccWan", passwordHash },
-          { username: "edison", displayName: "edisonhello", passwordHash },
-          { username: "chisheng", displayName: "劉奇聖", passwordHash },
-          { username: "professor", displayName: "教授", passwordHash },
-          { username: "cat", displayName: "喵", passwordHash },
-          { username: "dog", displayName: "汪", passwordHash },
-          { username: "not_us", displayName: "打手", passwordHash },
+        connect: [
+          { username: "admin" },
+          { username: "micc" },
+          { username: "edison" },
+          { username: "chisheng" },
+          { username: "professor" },
+          { username: "ta" },
         ],
       },
       projects: {
@@ -29,11 +42,12 @@ async function main() {
             labels: {
               create: [
                 { name: "frontend", color: labelColors.BLUE },
-                { name: "backend", color: labelColors.ORANGE },
-                { name: "priority", color: labelColors.YELLOW },
-                { name: "bugs", color: labelColors.RED },
-                { name: "issue", color: labelColors.GREEN },
+                { name: "backend", color: labelColors.BROWN },
+                { name: "important", color: labelColors.RED },
+                { name: "bugs", color: labelColors.ORANGE },
+                { name: "issue", color: labelColors.YELLOW },
                 { name: "feature", color: labelColors.PURPLE },
+                { name: "database", color: labelColors.GRAY },
               ],
             },
           },
@@ -41,9 +55,8 @@ async function main() {
             name: "Group Homework#1: ER Diagram",
             labels: {
               create: [
-                { name: "todo", color: labelColors.PINK },
-                { name: "priority", color: labelColors.BROWN },
-                { name: "done", color: labelColors.GRAY },
+                { name: "low priority", color: labelColors.GREEN },
+                { name: "important", color: labelColors.RED },
               ],
             },
           },
@@ -51,9 +64,8 @@ async function main() {
             name: "Group Homework#2: Normal Form",
             labels: {
               create: [
-                { name: "todo", color: labelColors.BLUE },
-                { name: "priority", color: labelColors.GREEN },
-                { name: "done", color: labelColors.YELLOW },
+                { name: "low priority", color: labelColors.GREEN },
+                { name: "important", color: labelColors.RED },
               ],
             },
           },
@@ -65,7 +77,7 @@ async function main() {
     data: {
       name: "Ansir website",
       users: {
-        connect: { id: 2 },
+        connect: { username: "admin" },
         create: [
           { username: "LJ", displayName: "LJ", passwordHash },
           { username: "song", displayName: "song", passwordHash },
@@ -79,7 +91,7 @@ async function main() {
     data: {
       name: "Google Chrome OS",
       users: {
-        connect: { id: 2 },
+        connect: { username: "admin" },
       },
       projects: {},
     },
@@ -88,7 +100,7 @@ async function main() {
     data: {
       name: "GRTS",
       users: {
-        connect: { id: 2 },
+        connect: { username: "admin" },
       },
       projects: {},
     },
@@ -97,7 +109,7 @@ async function main() {
     data: {
       name: "awesome.",
       users: {
-        connect: { id: 2 },
+        connect: { username: "admin" },
       },
       projects: {},
     },
@@ -107,13 +119,40 @@ async function main() {
       title: "基本架構",
       content: "完成前後端基本架構，設計 API",
       status: "DONE",
-      author: { connect: { id: 1 } },
+      author: { connect: { username: "chisheng" } },
       project: { connect: { id: 1 } },
+      createdAt: new Date("2021/10/25 16:00:00"),
+      updatedAt: new Date("2021/10/25 18:30:00"),
       labels: {
-        connect: [{ id: 1 }, { id: 2 }],
+        connect: [{ id: 1 }, { id: 2 }, { id: 7 }],
       },
       users: {
-        connect: [{ id: 3 }],
+        connect: [{ username: "chisheng" }],
+      },
+      comments: {
+        create: [
+          {
+            author: { connect: { username: "chisheng" } },
+            content:
+              "1. 前端會用 React\n2. 後端會用 NodeJS typeGraphQL\n3. 前後端使用 GraphQL 溝通\n4. 資料庫使用 PostgreSQL, 使用 prisma ORM 串接",
+            commentedAt: new Date("2021/10/25 16:00:00"),
+          },
+          {
+            author: { connect: { username: "micc" } },
+            content: "我可以幫忙後端",
+            commentedAt: new Date("2021/10/25 16:30:00"),
+          },
+          {
+            author: { connect: { username: "edison" } },
+            content: "那我先去寫前端",
+            commentedAt: new Date("2021/10/25 17:00:00"),
+          },
+          {
+            author: { connect: { username: "chisheng" } },
+            content: "那我架構弄完之後就前後端都寫，看心情",
+            commentedAt: new Date("2021/10/25 18:30:00"),
+          },
+        ],
       },
     },
   });
@@ -121,16 +160,19 @@ async function main() {
     data: {
       title: "CRUD Resolver",
       content:
-        "加 6 個 entity 的 CRUD resolver，4 個 M-N relation 的 Updates(connect/disconnect) resolver",
-      status: "IN_PROGRESS",
-      author: { connect: { id: 3 } },
+        "1. 加 6 個 entity 的 CRUD resolver\n2. 加 4 個 M-N relation 的 Updates(connect/disconnect) resolver",
+      status: "DONE",
+      author: { connect: { username: "micc" } },
+      createdAt: new Date("2021/11/01 16:00:00"),
+      updatedAt: new Date("2021/11/01 16:00:00"),
       project: { connect: { id: 1 } },
       labels: {
         connect: [{ id: 2 }],
       },
       users: {
-        connect: [{ id: 1 }],
+        connect: [{ username: "micc" }],
       },
+      blockedBy: { connect: [{ id: 1 }] },
     },
   });
   await prisma.task.create({
@@ -175,6 +217,14 @@ async function main() {
       },
       users: {
         connect: [{ id: 3 }],
+      },
+      comments: {
+        create: [
+          { content: "這也太多了吧", authorId: 1 },
+          { content: "有人要做這個嗎", authorId: 1 },
+          { content: "我可", authorId: 3 },
+          { content: "(y)", authorId: 2 },
+        ],
       },
     },
   });
@@ -222,14 +272,6 @@ async function main() {
         connect: [{ id: 2 }],
       },
     },
-  });
-  await prisma.comment.createMany({
-    data: [
-      { content: "這也太多了吧", taskId: 5, authorId: 1 },
-      { content: "有人要做這個嗎", taskId: 5, authorId: 1 },
-      { content: "我可", taskId: 5, authorId: 3 },
-      { content: "(y)", taskId: 5, authorId: 2 },
-    ],
   });
 }
 
