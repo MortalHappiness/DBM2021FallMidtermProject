@@ -1,14 +1,22 @@
-# DBM2021FallMidtermProject
+# DBM2021FallMidtermProject - Assuject
 
 Midterm project for "Database Management", 2021 Fall
+
+## Description
+
+Assuject is a task progress tracking system, inspired by [JIRA](https://www.atlassian.com/software/jira), [Trello](https://trello.com/) and [Notion](https://www.notion.so/).
+
+## Demo Video
 
 ## Quick Start
 
 ### Prerequisites
 
 - NodeJS v14
+- [yarn package manager](https://www.npmjs.com/package/yarn)
+- [PostgreSQL](https://www.postgresql.org/)
 
-### Installation
+### Install dependencies
 
 In the root directory, simply run:
 
@@ -43,7 +51,29 @@ $ cd backend/
 $ npx prisma migrate dev
 ```
 
-Everytime the file `prisma/schema.prisma` is changed, you need to run the command above again.
+### Start the Project
+
+Go back to the root directory
+
+```bash
+$ cd ..
+```
+
+Run the following command:
+
+```bash
+$ yarn start
+```
+
+Go to http://localhost:4000 to see the app.
+
+## Development Guide
+
+Everytime the file `prisma/schema.prisma` is changed, you need to run the command below again.
+
+```bash
+$ npx prisma migrate dev
+```
 
 Seeding the database (inject fake data for development):
 
@@ -55,12 +85,4 @@ To reset all data in db, run:
 
 ```bash
 $ npx prisma migrate reset
-```
-
-### Start the Project
-
-In the root directory, run:
-
-```bash
-$ yarn start
 ```
