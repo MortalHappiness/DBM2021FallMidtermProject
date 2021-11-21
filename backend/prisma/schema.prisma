@@ -14,10 +14,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ##########################################################
-//  entities
-// ##########################################################
-
 model User {
   id           Int    @id @default(autoincrement())
   username     String @unique
@@ -101,43 +97,3 @@ model Label {
 
   @@unique([projectId, name])
 }
-
-// ##########################################################
-//  M-to-N relations
-// ##########################################################
-
-// disabled, use implicit relation instead
-// @see: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations#implicit-many-to-many-relations
-
-// model MemberOf {
-//   user   User @relation(fields: [userId], references: [id])
-//   userId Int  @map("user_id")
-
-//   organization   Organization @relation(fields: [organizationId], references: [id])
-//   organizationId Int          @map("organization_id")
-//   @@id([organizationId, userId])
-// }
-
-// model AttachedWith {
-//   label   Label @relation(fields: [labelId], references: [id])
-//   labelId Int   @map("label_id")
-
-//   task   Task @relation(fields: [taskId], references: [id])
-//   taskId Int  @map("task_id")
-
-//   @@id([labelId, taskId])
-// }
-
-// model AssignedTo {
-//   user   User @relation(fields: [userId], references: [id])
-//   userId Int  @map("user_id")
-
-//   task   Task @relation(fields: [taskId], references: [id])
-//   taskId Int  @map("task_id")
-
-//   @@id([userId, taskId])
-// }
-
-// model BlockedBy {
-//   // blocker Task
-// }
