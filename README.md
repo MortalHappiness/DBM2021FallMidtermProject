@@ -36,12 +36,14 @@ Write the following content into `backend/.env` file.
 
 ```
 postgresql://<USER>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>?schema=<SCHEMA>
+SECRET="SECRET_STRING"
 ```
 
 For example:
 
 ```
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/dbm2021fall?schema=public"
+SECRET="44c81ac827830431b3c5cd3fe777be793777172cd3c1f461b729de89984d84a0540cf784122bf99b7bd67408803067a2"
 ```
 
 Run the following command:
